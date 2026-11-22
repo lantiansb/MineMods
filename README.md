@@ -91,8 +91,22 @@ MineMods Studio 是一个**做 Minecraft 模组的桌面工具**。
    ```powershell
    bun run dev
    ```
-4. 连接 AI：点右上角的「连接 AI」，选 Claude 桌面版或 Codex（工具会帮你写好它那边的 MCP 配置），或者填一个 OpenAI 兼容的服务地址和 Key。
-5. 新建工程，说一句话，然后照上面「用起来是什么样」走。
+4. 连接 AI：点右上角的「AI 没连接」（首页中间也有一个「连接 AI」链接），打开连接向导。有两种接法：
+   - **用你自己的 AI 助手（Codex 或 Claude 桌面版）**：
+     1. 选「用我自己的 AI 助手来做」，点下一步，再点「接到 Codex」或「接到 Claude 桌面版」。
+     2. 工具会把 MCP 配置写进那边的设置文件，原来的文件会先备份一份。如果那边已经有旧的 `minemods-studio` 配置，会被更新成新的。
+     3. 完全退出 Codex 或 Claude 桌面版，再重新打开，新开一个对话。
+     4. 把向导第 3 步给的「起步说明」粘贴进去。
+   - **让工具直接调 AI**：填一个 OpenAI 兼容的服务地址和 Key。
+5. 说一句话开工：
+   - 用 AI 助手的话，这句话是在 **Codex 或 Claude 的对话里**说，不是在 Studio 里说。
+   - 直接调 AI 的话，就在 Studio 里说。
+
+   然后照上面「用起来是什么样」走。
+
+用 AI 助手时要注意两点：
+- 整个过程中 Studio 要一直开着。
+- 换了 Studio 的版本或位置（比如重新克隆了一份），要回向导再点一次「接到 Codex」或「接到 Claude 桌面版」。
 
 想自己打 Windows 包：在 `packages/studio` 里运行 `bun run package`，产物在 `packages/studio/release/win-unpacked/`。
 
@@ -121,6 +135,9 @@ MineMods Studio 是一个**做 Minecraft 模组的桌面工具**。
 
 **会联网吗？**
 连 AI、第一次下载 Java 和 Gradle 时要联网。工程和做出来的模组都存在你自己的电脑上。
+
+**AI 说「连不上 MineMods Studio」或者「现在还用不了 MineMods Studio」怎么办？**
+打开 Studio，点右上角的 AI 连接状态，在里面把 AI 接上，再让 AI 重试一次就行，不用重启 AI 客户端。
 
 ## <img src="docs/assets/icon-code.png" width="24" alt=""> 给想改代码的人
 

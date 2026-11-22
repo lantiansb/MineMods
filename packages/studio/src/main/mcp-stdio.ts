@@ -108,22 +108,46 @@ export async function callExternalMcpBridge(
   return result.value
 }
 
+/** r29g: what a tool call says when nothing answers at the descriptor's address. */
+export const STUDIO_UNREACHABLE = "连不上 MineMods Studio：Studio 没有在运行，或者现在开着的 Studio 不是写这份连接文件的那一个。请用户打开 MineMods Studio，在顶栏的 AI 连接状态里选「用我自己的 AI 助手」接上，然后再试一次（不用重启 AI 客户端）"
+
+/** r29g: the first lines of the server's instructions while Studio is not ready, so the AI tells the person what to do instead of reporting a dropped connection. */
+export function notReadyWords(problem: string) {
+  return `【现在还用不了 MineMods Studio】${problem}\n请先把这句话转告用户，等他在 Studio 里接上以后直接重试工具，不用重启。`
+}
+
 export async function runExternalMcpStdio(input?: string | URL) {
   const connectionIndex = process.argv.indexOf("--connection")
   const argument = input ?? (connectionIndex >= 0 ? process.argv[connectionIndex + 1] : undefined)
   if (!argument) throw new Error("缺少 --connection <descriptor.json>。")
   const sessionId = randomUUID()
-  const call = async (method: string, value: unknown) =>
-    callExternalMcpBridge(await descriptorFrom(argument), method, value, sessionId)
+  const call = async (method: string, value: unknown) => {
+    // r29g: Studio closed, or the descriptor written by another Studio that has since quit: said in words, not as a socket error.
+    const descriptor = await descriptorFrom(argument).catch((error: unknown) => {
+      throw new Error(`${STUDIO_UNREACHABLE}（读不到连接文件 ${String(argument)}：${error instanceof Error ? error.message : String(error)}）`)
+    })
+    return callExternalMcpBridge(descriptor, method, value, sessionId).catch((error: unknown) => {
+      const code = (error as { code?: string; cause?: { code?: string } }).code ?? (error as { cause?: { code?: string } }).cause?.code
+      if (code === "ECONNREFUSED" || code === "ECONNRESET" || code === "UND_ERR_SOCKET" || /fetch failed/i.test(String((error as Error)?.message)))
+        throw new Error(`${STUDIO_UNREACHABLE}（${descriptor.url} 没有回应）`)
+      throw error
+    })
+  }
 
-  await call("listProjects", { detail: "summary" })
+  // r29g: a Studio not ready yet (not running, or not accepting outside AI) used to end this process before the handshake, and the AI client saw only
+  // "connection closed". The handshake goes ahead: the server's instructions and every tool call then say why, in the person's words, and the next call
+  // after the person fixes it works without restarting the client (the descriptor is read again on every call).
+  const notReady = await call("listProjects", { detail: "summary" }).then(
+    () => null,
+    (error: unknown) => (error instanceof Error ? error.message : String(error)),
+  )
   const report = (shutdown = false) => call("heartbeat", { sessionId, client: "minemods-studio-mcp-stdio", presenceVersion: 1, pid: process.pid, shutdown })
-  await report()
+  if (!notReady) await report().catch(() => undefined)
 
   const server = new McpServer(
     { name: "minemods-studio-external", version: "0.1.0" },
     {
-      instructions: MCP_SERVER_INSTRUCTIONS,
+      instructions: notReady ? `${notReadyWords(notReady)}\n\n${MCP_SERVER_INSTRUCTIONS}` : MCP_SERVER_INSTRUCTIONS,
     },
   )
 
