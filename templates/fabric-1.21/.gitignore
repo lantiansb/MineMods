@@ -1,0 +1,25 @@
+# Build artifacts
+build/
+out/
+.gradle/
+*.class
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+.classpath
+.project
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# MineMods local config (may contain API keys)
+.minemods/
+
+# Fabric run dir
+run/

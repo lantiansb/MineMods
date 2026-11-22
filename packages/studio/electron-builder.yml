@@ -1,0 +1,57 @@
+appId: com.minemods.studio
+productName: MineMods Studio
+directories:
+  output: release
+files:
+  - dist/**/*
+  - package.json
+extraResources:
+  - from: src/renderer/assets/fonts/ArkPixel-OFL.txt
+    to: licenses/ArkPixel-OFL.txt
+  - from: src/renderer/assets/fonts/Cubic11-OFL.txt
+    to: licenses/Cubic11-OFL.txt
+  - from: src/renderer/assets/fonts/README.md
+    to: licenses/MineMods-fonts.md
+  - from: node_modules/zod
+    to: node_modules/zod
+    filter:
+      - "**/*"
+  - from: vendor/blockbench/source/blockbench-5.1.6/LICENSE.MD
+    to: licenses/Blockbench-LICENSE.MD
+  - from: vendor/blockbench/source/blockbench-5.1.6
+    to: blockbench-source
+    filter:
+      - "**/*"
+      - "!node_modules/**"
+      - "!.git/**"
+      - "!dist/**"
+  - from: vendor/blockbench/runtime/SOURCE-NOTICE.md
+    to: licenses/Blockbench-source-notice.md
+  - from: ../../LICENSE
+    to: licenses/MineMods-LICENSE.txt
+  - from: ../../THIRD_PARTY_NOTICES.md
+    to: licenses/THIRD_PARTY_NOTICES.md
+  - from: src/renderer/model-core/README.md
+    to: licenses/Blockbench-extracted-core.md
+  - from: src/renderer/model-core
+    to: model-core-source
+  - from: src/renderer/assets/minecraft/1.21.1/README.md
+    to: licenses/Minecraft-textures.md
+  - from: src/renderer/assets/minecraft/1.21.1/item-names.provenance.json
+    to: licenses/Minecraft-item-names-provenance.json
+  - from: ../ai-service/node_modules/undici/LICENSE
+    to: licenses/Undici-LICENSE
+  - from: ../../templates/fabric-1.21
+    to: templates/fabric-1.21
+  # The other targets' templates sit beside Fabric's: the build finds each target's template next to the one named in MINEMODS_STUDIO_TEMPLATES.
+  - from: ../../templates/forge-1.20.1
+    to: templates/forge-1.20.1
+  - from: ../../templates/neoforge-1.21.1
+    to: templates/neoforge-1.21.1
+win:
+  target: dir
+  signAndEditExecutable: false
+asar: true
+asarUnpack:
+  - dist/main/look-plan-worker.js
+npmRebuild: false

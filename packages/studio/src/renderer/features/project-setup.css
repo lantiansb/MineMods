@@ -1,0 +1,450 @@
+/*
+ * What a project is set up for: 「游戏和加载器」, 「预装模组」, 「运行环境」. The same cards on the create page, in the
+ * build panel and in 存储空间, so they stack in one column and never ask for more width than the narrowest of those
+ * (the build panel's 480 px). Frames are the quiet sunk boxes of the create page; the slot and the well are skin.css's.
+ */
+.setup-summary {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.setup-summary > span {
+  flex: 1 1 260px;
+  min-width: 0;
+}
+.setup-cards {
+  display: grid;
+  gap: 12px;
+  margin-top: 12px;
+}
+.setup-cards[hidden] {
+  display: none;
+}
+.setup-card {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  padding: 10px 12px 12px;
+  border: 2px solid var(--line);
+  background: var(--panel-soft);
+  color: var(--text);
+  font-size: 13px;
+}
+.setup-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  min-width: 0;
+}
+:root:root .setup-card-head h3 {
+  margin: 0;
+  color: var(--text);
+  font-size: 15px;
+}
+.setup-card .studio-button,
+.setup-summary .studio-button {
+  min-height: 30px;
+  padding: 3px 10px;
+  gap: 6px;
+  font-size: 12px;
+}
+.setup-card .studio-button svg,
+.setup-summary .studio-button svg {
+  width: 14px;
+  height: 14px;
+}
+.setup-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+/* ---------- 游戏和加载器 ---------- */
+.target-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 150px) minmax(0, 1fr);
+  gap: 10px 14px;
+  align-items: start;
+}
+.target-loaders {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+:root:root .target-loaders button {
+  min-height: 32px;
+  padding: 3px 12px;
+  border: 2px solid var(--outline);
+  background: var(--stone);
+  color: #ffffff;
+  font-size: 12px;
+  text-shadow: 1px 1px 0 #2a2a2a;
+  box-shadow:
+    inset 2px 2px 0 var(--stone-light),
+    inset -2px -2px 0 var(--stone-dark);
+  cursor: pointer;
+}
+:root:root .target-loaders button[aria-checked="true"] {
+  background: var(--accent);
+  box-shadow:
+    inset 2px 2px 0 var(--accent-shine),
+    inset -2px -2px 0 var(--accent-lip);
+  text-shadow: 1px 1px 0 #143a0c;
+}
+/* Greyed like a disabled stone button, but still pointed at and pressed: that is how its reason is read. */
+:root:root .target-loaders button[aria-disabled="true"] {
+  background: #3a3a3a;
+  color: #9a9a9a;
+  box-shadow: none;
+  text-shadow: none;
+  cursor: help;
+}
+.target-line {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+.target-line select {
+  max-width: 220px;
+}
+.target-why {
+  margin: 0;
+  padding: 6px 8px;
+  border-left: 3px solid var(--warning);
+  background: var(--warning-bg);
+  color: #2b2410;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* ---------- 运行环境 ---------- */
+.java-mode {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.java-rows {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.java-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 2px 10px;
+  align-items: center;
+  min-width: 0;
+  padding: 6px 8px;
+  border: 2px solid var(--line);
+  border-left-width: 4px;
+  background: var(--panel);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.java-row.using {
+  border-left-color: var(--success);
+}
+.java-row > span,
+.java-row-head {
+  grid-column: 1;
+  min-width: 0;
+}
+.java-row > .studio-button {
+  grid-column: 2;
+  grid-row: 1 / span 4;
+}
+.java-row-head {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 2px 8px;
+}
+.java-row-head strong {
+  font-size: 13px;
+  font-weight: 400;
+}
+.java-row-head span,
+.java-kind {
+  color: var(--muted);
+}
+.java-where {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--muted);
+}
+.java-badge {
+  padding: 0 6px;
+  background: var(--success);
+  color: #ffffff;
+}
+.java-row-head .java-badge {
+  color: #ffffff;
+}
+.java-fits {
+  color: var(--success);
+}
+.java-why {
+  color: var(--warning);
+}
+.java-all .fold-summary {
+  color: var(--muted);
+  font-size: 12px;
+  cursor: pointer;
+}
+.java-all .java-rows {
+  margin-top: 4px;
+}
+.java-none {
+  display: grid;
+  gap: 8px;
+  justify-items: start;
+}
+.java-none p {
+  margin: 0;
+  line-height: 1.55;
+}
+.java-confirm {
+  display: grid;
+  gap: 10px;
+  padding: 10px 12px;
+  font-size: 12px;
+  line-height: 1.55;
+}
+.java-confirm dl {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 6px 12px;
+  margin: 0;
+}
+.java-confirm dt {
+  color: #a0a0a0;
+  white-space: nowrap;
+}
+.java-confirm dd {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+  margin: 0;
+}
+.java-path {
+  overflow-wrap: anywhere;
+}
+.java-confirm-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.java-problem {
+  margin: 0;
+  color: var(--danger);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.java-confirm .java-problem {
+  color: #ff8a80;
+}
+.java-install {
+  position: relative;
+  display: grid;
+  gap: 4px;
+  padding: 8px 36px 8px 10px;
+  border: 2px solid var(--line);
+  border-left-width: 4px;
+  background: var(--panel);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.java-install.running,
+.java-install.canceling {
+  border-left-color: var(--accent);
+}
+.java-install.completed {
+  border-left-color: var(--success);
+}
+.java-install.failed,
+.java-install.canceled {
+  border-left-color: var(--danger);
+}
+.java-install p {
+  margin: 0;
+  max-height: 72px;
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.java-install-close {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+}
+.java-install-close svg {
+  width: 15px;
+  height: 15px;
+}
+.java-card.compact .java-row > .studio-button {
+  grid-row: auto;
+  grid-column: 1;
+  justify-self: start;
+}
+
+/* ---------- 预装模组 ---------- */
+.mod-list,
+.mod-results,
+.mod-lines {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.mod-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  padding: 6px 8px;
+  border: 2px solid var(--line);
+  background: var(--panel);
+}
+.mod-list-copy {
+  display: grid;
+  flex: 1;
+  min-width: 0;
+  font-size: 12px;
+}
+.mod-list-copy strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 400;
+}
+.mod-list-copy small,
+.mod-list-copy span {
+  color: var(--muted);
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+.mod-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.mod-chips li {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  max-width: 100%;
+  padding: 3px 4px 3px 10px;
+  color: #ffffff;
+  font-size: 12px;
+  text-shadow: 1px 1px 0 #2a2a2a;
+}
+.mod-chips span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mod-chips button {
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  flex: none;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #ffffff;
+}
+.mod-chips button svg {
+  width: 13px;
+  height: 13px;
+}
+:root:root .mod-search {
+  width: 100%;
+  max-width: none;
+}
+.mod-results {
+  max-height: 320px;
+  overflow: auto;
+}
+.mod-results li {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  padding: 6px 8px;
+  border: 2px solid var(--line);
+  background: var(--panel);
+}
+.mod-icon {
+  width: 40px;
+  height: 40px;
+  padding: 4px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+span.mod-icon {
+  display: block;
+}
+.mod-result-copy {
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+  font-size: 12px;
+}
+.mod-result-copy strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 400;
+}
+.mod-result-copy span {
+  color: var(--muted);
+}
+.mod-result-copy p {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  color: var(--muted);
+  line-height: 1.45;
+}
+.mod-lines li {
+  font-size: 12px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 560px) {
+  .target-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

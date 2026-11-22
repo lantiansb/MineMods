@@ -1,0 +1,62 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '{{mdg_version}}'
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+    archivesName = project.archives_base_name
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(Integer.parseInt(project.java_version))
+
+neoForge {
+    version = project.neo_version
+    if (project.parchment_mappings_version) {
+        parchment {
+            minecraftVersion = project.parchment_minecraft_version
+            mappingsVersion = project.parchment_mappings_version
+        }
+    }
+    runs {
+        client { client() }
+        server { server() }
+    }
+    mods {
+        "${project.mod_id}" { sourceSet(sourceSets.main) }
+    }
+}
+
+repositories {
+    maven {
+        name = 'GeckoLib'
+        url = project.geckolib_repository
+        content { includeGroup('software.bernie.geckolib') }
+    }
+}
+
+dependencies {
+    implementation project.geckolib_coordinate
+}
+
+processResources {
+    inputs.property "version", project.version
+    // The filter reads and writes text in the platform charset unless told: on a Chinese Windows (GBK) the UTF-8 name and description came out with ? in them.
+    filteringCharset = "UTF-8"
+    filesMatching("META-INF/neoforge.mods.toml") {
+        filter { line -> line.replace('${version}', project.version.toString()) }
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.encoding = 'UTF-8'
+    it.options.release = Integer.parseInt(project.java_version)
+}
+
+jar {
+    from("LICENSE") {
+        rename { "${it}_${project.base.archivesName.get()}" }
+    }
+}

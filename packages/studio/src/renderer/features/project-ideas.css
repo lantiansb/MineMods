@@ -1,0 +1,647 @@
+/* 想法卡片：一句话展开成几组做法，像在箱子里挑东西一样一组选一个。 */
+.pi-chooser {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  gap: 10px;
+}
+.pi-side {
+  width: 300px;
+  flex: none;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 12px 6px 12px 14px;
+}
+.pi-side-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-right: 8px;
+}
+.pi-side section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+:root:root .pi-side h3,
+:root:root .pi-required h3 {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+}
+.pi-tech {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+/* ---------- 你说的要求 ---------- */
+.pi-lock {
+  width: 14px;
+  height: 14px;
+  flex: none;
+}
+.pi-required {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.pi-required h3 small,
+.pi-play h3 small {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 400;
+}
+.pi-required ul {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.pi-required li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 6px 8px;
+  border: 2px solid var(--outline);
+  background: #2f2f2f;
+  color: #ffffff;
+  box-shadow: inset 2px 2px 0 #151515;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.pi-required li > .pi-lock {
+  margin-top: 4px;
+  color: #ffd83d;
+}
+.pi-required li.lifted {
+  background: transparent;
+  box-shadow: none;
+  border-style: dashed;
+  color: var(--muted);
+}
+.pi-required li.lifted > .pi-lock {
+  color: var(--muted);
+}
+.pi-required li.lifted q {
+  text-decoration: line-through;
+}
+.pi-required-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  word-break: break-word;
+}
+.pi-required q {
+  quotes: "「" "」";
+}
+.pi-required-text em {
+  align-self: flex-start;
+  padding: 0 4px;
+  background: #505050;
+  font-size: 11px;
+  font-style: normal;
+}
+.pi-required-text small {
+  color: #ffe680;
+  font-size: 12px;
+}
+.pi-required li.lifted small {
+  color: var(--text);
+}
+.pi-required-text small.pi-honour {
+  color: #cfe8c8;
+}
+.pi-required li .pa-link {
+  flex: none;
+  color: #c6c6c6;
+  font-size: 12px;
+  line-height: 22px;
+  white-space: nowrap;
+}
+.pi-required li.lifted .pa-link {
+  color: var(--accent-text);
+}
+.pi-required li .pa-link:hover {
+  color: #ffffff;
+}
+.pi-required li.lifted .pa-link:hover {
+  color: var(--text);
+}
+/* The person's own actions on one requirement: change its words, give it up. */
+.pi-actions {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+.pi-required-text small.pi-earlier {
+  color: #c6c6c6;
+}
+.pi-required-text small.pi-edit-note {
+  color: #c6c6c6;
+}
+.pi-required-text small.pi-unanswered {
+  color: #ffe680;
+}
+.pi-required li.editing {
+  border-color: var(--accent-text);
+}
+:root:root .pi-required li textarea.pa-input {
+  width: 100%;
+  padding: 4px 8px;
+  font-size: 13px;
+  resize: vertical;
+}
+.pi-checked {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.pi-add {
+  display: flex;
+  gap: 6px;
+}
+:root:root .pi-add .pa-input {
+  padding: 4px 8px;
+  font-size: 13px;
+}
+.pi-add .studio-button {
+  flex: none;
+}
+
+/* ---------- the chooser ---------- */
+.pi-main {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 12px 12px;
+}
+.pi-top {
+  flex: none;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--line);
+}
+.pi-top > div {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.pi-top strong {
+  font-size: 18px;
+  font-weight: 400;
+}
+.pi-top span {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.pi-steps {
+  flex: none;
+  display: flex;
+  gap: 4px;
+  margin: 2px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 13px;
+}
+.pi-steps li {
+  padding: 2px 8px;
+  border: 2px solid var(--outline);
+  background: var(--slot);
+  color: #d6d6d6;
+  white-space: nowrap;
+}
+.pi-steps li.done {
+  background: #3c8527;
+  color: #ffffff;
+}
+.pi-steps li[aria-current="step"] {
+  border-color: #ffffff;
+  background: #2f2f2f;
+  color: #ffffff;
+}
+.pi-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px 6px 4px 0;
+}
+
+/* A question about one of the person's own requirements: apart from every group, and unlike any of them. */
+.pi-question {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px;
+  border: 2px solid #1e1e1e;
+  outline: 2px solid #ffd83d;
+  outline-offset: -4px;
+  background: #3a2b00;
+  color: #ffffff;
+}
+.pi-question header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #ffd83d;
+}
+.pi-question header strong {
+  font-size: 14px;
+  font-weight: 400;
+}
+.pi-question header em {
+  margin-left: auto;
+  font-size: 12px;
+  font-style: normal;
+  opacity: 0.85;
+}
+.pi-ask {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.5;
+}
+.pi-question dl {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 2px 12px;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.pi-question dt {
+  color: #e6d9a8;
+}
+.pi-question dd {
+  margin: 0;
+}
+.pi-question q {
+  quotes: "「" "」";
+}
+.pi-answers {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding-top: 2px;
+}
+.pi-answer {
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 14px;
+  border: 2px solid #1e1e1e;
+  background: var(--stone);
+  color: #ffffff;
+  font-size: 15px;
+  box-shadow:
+    inset 2px 2px 0 var(--stone-light),
+    inset -2px -2px 0 var(--stone-dark);
+}
+.pi-answer:hover:not(:disabled),
+.pi-answer:focus-visible {
+  border-color: #ffffff;
+  outline: 0;
+}
+.pi-answer[aria-pressed="true"] {
+  border-color: #ffffff;
+  background: #3c8527;
+  box-shadow:
+    inset 2px 2px 0 #2a5d1b,
+    inset -2px -2px 0 #5fb347;
+}
+.pi-answer.yes[aria-pressed="true"] {
+  background: #b5651d;
+  box-shadow:
+    inset 2px 2px 0 #7d440f,
+    inset -2px -2px 0 #e89b4a;
+}
+.pi-question .pa-hint.warn {
+  color: #ffd83d;
+}
+
+/* One group: a row with its options as slots. */
+.pi-group {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 10px 10px;
+  border: 2px solid var(--outline);
+  background: var(--slot);
+  box-shadow:
+    inset 2px 2px 0 var(--slot-dark),
+    inset -2px -2px 0 var(--slot-light);
+}
+.pi-group > header {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  color: #ffffff;
+}
+.pi-group > header strong {
+  flex: none;
+  max-width: 50%;
+  font-size: 16px;
+  font-weight: 400;
+}
+.pi-group > header span {
+  min-width: 0;
+  color: #d6d6d6;
+  font-size: 13px;
+}
+.pi-group.chosen > header strong::after {
+  content: " ✓";
+  color: #b9f0a8;
+}
+.pi-options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) 84px;
+  gap: 6px;
+}
+.pi-option {
+  position: relative;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 7px 9px 8px;
+  border: 2px solid #1e1e1e;
+  background: var(--panel);
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  box-shadow:
+    inset 2px 2px 0 var(--edge-light),
+    inset -2px -2px 0 var(--edge-dark);
+}
+.pi-option:hover:not(:disabled),
+.pi-option:focus-visible {
+  border-color: #ffffff;
+  outline: 0;
+}
+.pi-option[aria-checked="true"] {
+  border-color: #ffffff;
+  background: #e9f6e3;
+  box-shadow:
+    inset 0 0 0 2px #3c8527,
+    inset 4px 4px 0 #ffffff;
+}
+.pi-option-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.pi-option-head strong {
+  flex: 1;
+  min-width: 0;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.4;
+  word-break: break-word;
+}
+.pi-best {
+  flex: none;
+  padding: 0 5px;
+  border: 2px solid #1e1e1e;
+  background: #ffd83d;
+  color: #4a3500;
+  font-size: 12px;
+  font-style: normal;
+  line-height: 16px;
+}
+.pi-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.pi-lines > span {
+  display: block;
+  word-break: break-word;
+}
+.pi-lines i,
+.pi-wrote i {
+  margin-right: 5px;
+  padding: 0 3px;
+  background: #5b5b5b;
+  color: #ffffff;
+  font-size: 11px;
+  font-style: normal;
+  white-space: nowrap;
+  vertical-align: 1px;
+}
+.pi-lines [data-from="ai"] i {
+  background: #2c5aa0;
+}
+.pi-limit {
+  display: block;
+  margin-top: auto;
+  padding: 4px 6px;
+  border: 2px dashed #6e4f00;
+  background: #fff3c4;
+  color: #4a3500;
+  font-size: 12px;
+  line-height: 1.5;
+  word-break: break-word;
+}
+.pi-limit b {
+  display: block;
+  font-weight: 400;
+  color: #8a2a00;
+}
+.pi-option code {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+.pi-else {
+  grid-column: 4;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.pi-none {
+  flex: 1;
+  min-height: 34px;
+  padding: 0 4px;
+  border: 2px dashed #1e1e1e;
+  background: transparent;
+  color: #e6e6e6;
+  font-size: 13px;
+}
+.pi-none:hover:not(:disabled),
+.pi-none:focus-visible {
+  border-color: #ffffff;
+  color: #ffffff;
+  outline: 0;
+}
+.pi-none[aria-checked="true"] {
+  border-style: solid;
+  border-color: #ffffff;
+  background: #2f2f2f;
+  color: #ffffff;
+}
+.pi-own {
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+}
+.pi-own .studio-button {
+  flex: none;
+}
+.pi-wrote {
+  margin: 0;
+  padding: 5px 8px;
+  border: 2px solid #ffffff;
+  background: #2f2f2f;
+  color: #ffffff;
+  font-size: 13px;
+  line-height: 1.6;
+  word-break: break-word;
+}
+
+/* ---------- summary ---------- */
+.pi-summary {
+  flex: 1;
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+:root:root .pi-summary .pa-input {
+  flex: 1;
+  min-height: 0;
+  padding: 10px 12px;
+  font-size: 15px;
+  line-height: 1.8;
+}
+.pi-summary .pa-hint {
+  display: flex;
+  gap: 12px;
+}
+
+/* ---------- the two decisions stay in view ---------- */
+.pi-foot {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px 10px;
+  padding-top: 10px;
+  border-top: 2px solid var(--line);
+}
+.pi-count {
+  margin-right: auto;
+  font-size: 14px;
+}
+.pi-count .pi-to-question {
+  margin-left: 10px;
+  color: var(--warning);
+  font-size: 14px;
+}
+:root:root .pi-foot .pi-go {
+  min-height: 42px;
+  padding: 0 20px;
+  font-size: 16px;
+}
+@media (max-width: 1340px) {
+  .pi-side {
+    width: 250px;
+  }
+  .pi-options {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) 72px;
+  }
+  .pi-top span {
+    font-size: 12px;
+  }
+}
+@media (max-width: 980px) {
+  .pi-chooser {
+    flex-direction: column;
+  }
+  .pi-side {
+    width: auto;
+    max-height: 30%;
+  }
+  .pi-options {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .pi-else {
+    grid-column: 1;
+    flex-direction: row;
+  }
+}
+
+/* The requirements beside the first sentence box, when a plan was refused over one of them. */
+.pa-first .pi-required,
+.pa-fresh .pi-required {
+  padding-top: 10px;
+  border-top: 2px solid var(--line);
+}
+
+/* A plan an AI handed in and Studio turned back: stands where the plan should be, with the reason and what the person can do. */
+.pi-refused {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 2px solid var(--warning);
+  background: var(--warning-bg);
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.6;
+}
+:root:root .pi-refused h3 {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font-size: 14px;
+}
+.pi-refused p {
+  margin: 0;
+}
+.pi-refused q {
+  quotes: "「" "」";
+}
+.pi-refused-why,
+.pi-refused-next {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  word-break: break-word;
+}
+.pi-refused-why strong,
+.pi-refused-next strong {
+  font-size: 12px;
+  color: var(--muted);
+}

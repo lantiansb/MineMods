@@ -1,0 +1,1 @@
+{"name":"greets-walking","kind":"logic","why":"Plays an animation its creature's model really has.","skeleton":"crystal-guardian","document":{"kind":"logic","entity_id":"00000000-0000-4000-8000-00000000a001","trigger":"player_near","action":"play_animation","item":null,"animation":"walk","enabled":true}}

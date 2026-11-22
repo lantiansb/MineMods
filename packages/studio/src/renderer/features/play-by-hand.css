@@ -1,0 +1,25 @@
+/* The steps for seeing the mod's things in a game opened on its main menu. */
+.play-by-hand {
+  display: grid;
+  gap: 6px;
+  padding: 10px 12px;
+  border: 2px solid var(--line);
+  border-left-width: 4px;
+  border-left-color: var(--accent, var(--line));
+  font-size: 12px;
+  line-height: 1.6;
+}
+:root:root .play-by-hand h4 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 400;
+}
+.play-by-hand ol {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding-left: 20px;
+}
+.play-by-hand li {
+  overflow-wrap: anywhere;
+}

@@ -1,0 +1,4 @@
+# Preserve the byte-for-byte upstream wrapper checksums on every platform.
+gradlew -text
+gradlew.bat -text
+gradle/wrapper/gradle-wrapper.jar binary

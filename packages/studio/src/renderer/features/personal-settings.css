@@ -1,0 +1,368 @@
+/*
+ * 个人设置: one composed page in the look of a Minecraft options screen. Two columns of titled windows with shared
+ * edges (who I am · what I like · the words I keep | connection · this computer); one column when the window is narrow.
+ * Frames, slots and wells are skin.css's own pieces (`mc-window`, `mc-slot`, `mc-well`); nothing here is a picture.
+ */
+.ps-page {
+  width: min(100%, 1500px);
+}
+.ps-heading {
+  align-items: flex-end;
+  margin-bottom: 18px;
+}
+.ps-heading p {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+/* Where the person came from, in the accent: the first thing seen on a page they were sent to from a project. */
+.ps-heading p.ps-from {
+  color: var(--accent);
+}
+.ps-heading-side {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+}
+.ps-saved {
+  color: var(--muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+.ps-saved.saved {
+  color: var(--success);
+}
+.ps-saved.failed {
+  max-width: 320px;
+  white-space: normal;
+  color: var(--danger);
+}
+.ps-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+.ps-column {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+.ps-section {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+  padding: 14px 18px 18px;
+}
+.ps-section > header {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--line);
+  box-shadow: 0 2px 0 var(--edge-light);
+}
+:root:root .ps-section > header h2 {
+  font-size: 17px;
+}
+.ps-section > header p {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.ps-label {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--text);
+  font-size: 13px;
+}
+.ps-label small {
+  color: var(--muted);
+  font-size: 12px;
+}
+.ps-count {
+  color: var(--muted);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.ps-count.full {
+  color: var(--danger);
+}
+.ps-field {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+}
+.ps-field textarea {
+  display: block;
+  min-height: 58px;
+  resize: vertical;
+  line-height: 1.65;
+}
+.ps-field textarea.ps-standing {
+  min-height: 118px;
+}
+.ps-note {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.ps-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 16px;
+  flex-wrap: wrap;
+  min-height: 36px;
+}
+.ps-row > .ps-label {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+/* who I am */
+.ps-who {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+.ps-face {
+  display: grid;
+  place-items: center;
+  width: 84px;
+  height: 84px;
+}
+.ps-who-fields {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+}
+.ps-page .avatar {
+  display: block;
+  width: 36px;
+  height: 36px;
+  border-radius: 0;
+  box-shadow: none;
+  image-rendering: pixelated;
+}
+.ps-face .avatar {
+  width: 64px;
+  height: 64px;
+}
+.ps-faces {
+  display: flex;
+  gap: 6px;
+}
+.ps-faces button {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+}
+.ps-faces button:hover {
+  background: #a6a6a6;
+}
+/* the picked face: the white frame a hotbar puts round the slot in hand */
+.ps-faces button.on {
+  outline: 3px solid #ffffff;
+  outline-offset: -3px;
+  box-shadow:
+    inset 2px 2px 0 var(--slot-dark),
+    inset -2px -2px 0 var(--slot-light),
+    0 0 0 2px var(--outline);
+}
+
+/* a row of stone buttons, one pressed */
+.ps-choice {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+:root:root .ps-choice button {
+  min-height: 34px;
+  padding: 5px 14px;
+  border: 2px solid var(--outline);
+  background: var(--button-face);
+  color: var(--text);
+  font-size: 13px;
+  box-shadow:
+    inset 2px 2px 0 var(--edge-light),
+    inset -2px -3px 0 var(--button-lip);
+  cursor: pointer;
+}
+:root:root .ps-choice button:hover {
+  background: var(--surface-hover);
+}
+:root:root .ps-choice button.on {
+  background: var(--accent);
+  color: var(--on-accent);
+  text-shadow: 1px 1px 0 var(--accent-lip);
+  box-shadow:
+    inset 2px 2px 0 var(--accent-shine),
+    inset -2px -3px 0 var(--accent-lip);
+}
+.ps-when {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding-left: 18px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+/* this computer */
+:root:root .ps-select {
+  width: auto;
+  min-width: 170px;
+}
+.ps-path {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: start;
+}
+.ps-path output {
+  display: block;
+  min-width: 0;
+  padding: 8px 10px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+  word-break: break-all;
+}
+.ps-path-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+:root:root .ps-switch input,
+:root:root .ps-connection .review-switch input {
+  appearance: none;
+  position: relative;
+  flex-shrink: 0;
+  width: 46px;
+  height: 24px;
+  min-height: 24px;
+  margin: 0;
+  padding: 0;
+  border: 2px solid var(--outline);
+  background: var(--slot);
+  box-shadow:
+    inset 2px 2px 0 var(--slot-dark),
+    inset -2px -2px 0 var(--slot-light);
+  cursor: pointer;
+}
+:root:root .ps-switch input::after,
+:root:root .ps-connection .review-switch input::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  background: var(--button-face);
+  box-shadow:
+    inset 2px 2px 0 var(--edge-light),
+    inset -2px -2px 0 var(--button-lip);
+  transform: none;
+  transition: none;
+}
+:root:root .ps-switch input:checked,
+:root:root .ps-connection .review-switch input:checked {
+  background: var(--accent);
+}
+:root:root .ps-switch input:checked::after,
+:root:root .ps-connection .review-switch input:checked::after {
+  left: 22px;
+  transform: none;
+}
+
+/* connection: the wizard, sitting in this page's window instead of a frame of its own */
+:root:root .ps-connection .connection-settings {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.ps-connection .connection-heading {
+  justify-content: flex-end;
+}
+.ps-connection .connection-heading > div {
+  display: none;
+}
+.ps-connection .connection-step-heading {
+  margin: 4px 0 14px;
+}
+:root:root .ps-connection .connection-step-heading h1 {
+  margin-top: 4px;
+  font-size: 18px;
+}
+.ps-connection .connection-modes {
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+}
+.ps-connection .connection-modes button,
+.ps-connection .provider-list button {
+  padding: 12px 14px;
+}
+.ps-connection .connection-advanced-fields {
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+.ps-connection .connection-mcp-stage {
+  max-width: none;
+}
+/* 「审查」 is the same kind of switch as the ones in this page: its name on the left, the switch on the right */
+.ps-connection .review-switch input {
+  order: 3;
+}
+.ps-connection .review-switch label strong,
+.ps-connection .review-switch label em {
+  white-space: nowrap;
+}
+.ps-connection .connection-settings > footer {
+  flex-wrap: wrap;
+}
+
+/* the home page says hello by name when a name was given */
+.home-hello {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text);
+  font-size: 14px;
+}
+.home-hello .avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+@media (max-width: 1040px) {
+  .ps-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 620px) {
+  .ps-heading {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .ps-path {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

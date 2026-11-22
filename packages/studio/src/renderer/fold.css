@@ -1,0 +1,42 @@
+/* The fold (fold.tsx), in place of <details>/<summary>. The content wrapper takes no box of its own, so what sat inside a <details> lays out inside the fold as it did. */
+.fold-summary {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  word-spacing: normal;
+  text-indent: 0;
+  text-transform: none;
+  text-shadow: none;
+  /* A button keeps its line unbroken by default; a summary's long text wrapped. */
+  white-space: normal;
+  text-align: left;
+  cursor: pointer;
+}
+.fold-content {
+  display: contents;
+}
+.fold-content[hidden] {
+  display: none;
+}
+/* The arrow a <summary> had of its own (the disclosure triangle, pointing right when closed and down when open), for the places that did not draw another. */
+.fold:not([data-arrow="none"]) > .fold-summary::before {
+  content: "";
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-right: 0.5em;
+  border-top: 0.3em solid transparent;
+  border-bottom: 0.3em solid transparent;
+  border-left: 0.5em solid currentColor;
+  vertical-align: 0.05em;
+  transition: transform 100ms;
+}
+.fold[data-open]:not([data-arrow="none"]) > .fold-summary::before {
+  transform: rotate(90deg);
+}

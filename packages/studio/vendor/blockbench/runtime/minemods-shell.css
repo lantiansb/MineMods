@@ -1,0 +1,18 @@
+/* Host chrome only. Texture images and model materials keep their source data. */
+body {
+  --color-ui: #232c31;
+  --color-back: #1b2226;
+  --color-dark: #1b2226;
+  --color-border: #1b2226;
+  --color-selected: #3a454b;
+  --color-elevated: #2b353b;
+  --color-button: #303b42;
+  --color-accent: #c77a45;
+  --color-accent_text: #fff;
+  --color-text: #eef1f3;
+  --color-subtle_text: #b3bdc5;
+  --color-grid: #3a444a;
+  --color-checkerboard: #20282d;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+}
+#web_download_button { display: none !important; }

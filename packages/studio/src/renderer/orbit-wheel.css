@@ -1,0 +1,17 @@
+:where(.orbit-wheel-host) {
+  position: relative;
+}
+
+.orbit-wheel-hint {
+  position: absolute;
+  z-index: 2;
+  inset-block-end: 8px;
+  inset-inline-start: 8px;
+  padding: 4px 8px;
+  color: var(--text);
+  background: var(--surface-solid);
+  border: 1px solid var(--glass-border);
+  border-radius: 4px;
+  font-size: 12px;
+  pointer-events: none;
+}

@@ -1,0 +1,73 @@
+plugins {
+    id 'fabric-loom' version '1.7.4'
+    id 'maven-publish'
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+    archivesName = project.archives_base_name
+}
+
+repositories {
+    maven {
+        name = 'GeckoLib'
+        url = 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+        content { includeGroup('software.bernie.geckolib') }
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    modImplementation "software.bernie.geckolib:geckolib-fabric-1.21.1:${project.geckolib_version}"
+}
+
+// Loom 1.7 cannot use argument files for Unicode paths. Gradle may then shorten
+// the classpath to a manifest-only JAR, which Fabric Loader does not expand.
+// This development-only entrypoint restores the original path before DLI runs.
+sourceSets {
+    studioDev {}
+}
+
+tasks.withType(net.fabricmc.loom.task.AbstractRunTask).configureEach {
+    dependsOn tasks.named('studioDevClasses')
+    classpath(sourceSets.studioDev.output)
+    mainClass = 'com.minemods.studio.dev.ClasspathBootstrap'
+    doFirst {
+        def classpathFile = layout.buildDirectory.file("studio-dev/${name}.classpath").get().asFile
+        classpathFile.parentFile.mkdirs()
+        classpathFile.setText(classpath.asPath, 'UTF-8')
+        systemProperty 'minemods.dev.classpath', classpathFile.absolutePath
+    }
+}
+
+processResources {
+    inputs.property "version", project.version
+    // The filter reads and writes text in the platform charset unless told: on a Chinese Windows (GBK) the UTF-8 name and description came out with ? in them.
+    filteringCharset = "UTF-8"
+    filesMatching("fabric.mod.json") {
+        filter { line -> line.replace('${version}', project.version.toString()) }
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.encoding = 'UTF-8'
+    it.options.release = Integer.parseInt(project.java_version)
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(Integer.parseInt(project.java_version))
+    withSourcesJar()
+    sourceCompatibility = JavaVersion.toVersion(Integer.parseInt(project.java_version))
+    targetCompatibility = JavaVersion.toVersion(Integer.parseInt(project.java_version))
+}
+
+jar {
+    from("LICENSE") {
+        rename { "${it}_${project.base.archivesName.get()}" }
+    }
+}

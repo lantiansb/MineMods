@@ -1,0 +1,52 @@
+/* A finished version waits for a reviewing window: what waits, for how long, and the two ways on. */
+.rw {
+  flex: none;
+  display: grid;
+  gap: 6px;
+  padding: 8px 12px;
+  border: 2px solid var(--warning);
+  background: var(--warning-bg);
+}
+.rw-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+}
+.rw-head strong {
+  font-size: 15px;
+  font-weight: 400;
+  overflow-wrap: anywhere;
+}
+.rw-clock {
+  color: var(--muted);
+  font-size: 13px;
+}
+.rw-line {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.rw-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+}
+.rw-choice {
+  flex: 1 1 260px;
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+  justify-items: start;
+}
+.rw-choice small {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.rw-trouble {
+  margin: 0;
+  color: var(--warning);
+  font-size: 13px;
+}

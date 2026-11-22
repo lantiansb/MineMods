@@ -1,0 +1,5 @@
+# Compared byte for byte by tests: never convert line endings on checkout.
+packages/mod-core/test/fixtures/pre-0a/** -text
+# The same reason one step earlier: what a build assembles is copied from these as they are, so a checkout that
+# converts them (core.autocrlf on Windows) assembles other bytes than the fixtures above were taken from.
+templates/** -text

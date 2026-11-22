@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.minemods/
+*.log
+.DS_Store
+coverage/
+.turbo/
+*.tsbuildinfo
+.artifacts/
+packages/studio/release/
+packages/studio/release-*/
+work/
+__pycache__/

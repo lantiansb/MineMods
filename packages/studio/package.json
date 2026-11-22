@@ -1,0 +1,49 @@
+{
+  "name": "@minemods/studio",
+  "version": "0.1.0",
+  "description": "A standalone Minecraft mod creation studio",
+  "author": "MineMods contributors",
+  "private": true,
+  "type": "commonjs",
+  "main": "dist/main/index.js",
+  "scripts": {
+    "dev": "bun run build && electron .",
+    "build": "bun run build:main && bun run build:renderer",
+    "build:main": "bun build src/main/index.ts src/main/worker.ts src/main/preload.ts src/main/mcp-stdio.ts --target=node --format=cjs --external electron --external zod --outdir dist/main && bun build src/main/look-plan-worker.ts --target=node --format=cjs --outfile dist/main/look-plan-worker.js",
+    "build:renderer": "vite build --config vite.config.mts",
+    "test:e2e:prepare": "bun build src/main/blockbench-transaction.ts --target=node --format=cjs --external electron --outfile ../../.artifacts/studio/native-transaction.cjs",
+    "typecheck": "tsgo --noEmit",
+    "test": "bun test --timeout 30000 test/build-warnings.test.ts test/inspection-wait.test.ts test/creature-look-sheets.test.ts test/creature-tabs-connection.test.ts test/steady-setting.test.ts test/sound-music-service.test.ts test/theme-contrast.test.ts test/worker-graph.test.ts test/share-repeats.test.ts test/external-asset-status.test.ts test/overview-cache.test.ts test/project-status.test.ts test/service.test.ts test/loader-install-words.test.ts test/nav-groups.test.ts test/model-transform.test.ts test/model-framing.test.ts test/project-entry.test.ts test/blockbench-bridge.test.ts test/recipe-state.test.ts test/recipe-text.test.ts test/content-service.test.ts test/asset-edit-form.test.ts test/asset-edit-parts.test.ts test/authoring-workflow.test.ts test/codex-authoring.test.ts test/model-core.test.ts test/model-core-session.test.ts test/model-core-preview.test.ts test/project-routing.test.ts test/project-runner.test.ts test/speech.test.ts test/connection.test.ts test/external-mcp.test.ts test/external-book.test.ts test/handoff.test.ts test/model-quality-flow.test.ts test/import-ai.test.ts test/import-mcp.test.ts test/import-analysis-service.test.ts test/import-restoration.test.ts test/import-storage.test.ts test/reverse-service.test.ts test/import-assets-service.test.ts test/import-asset-graph-ai.test.ts test/safe-audio-mime.test.ts test/model-edit.test.ts test/import-backpack-recipes.test.ts test/blueprint-pipeline.test.ts test/plan-run-entry.test.ts test/making-loop.test.ts test/plain-reasons.test.ts test/ideas-activity.test.ts test/gameplay-loop.test.ts test/activity-panel.test.ts test/data-gameplay.test.ts test/texture-look.test.ts test/ability-look.test.ts test/effect-look.test.ts test/boss-bar-look.test.ts test/sound-words.test.ts test/looked-is-saveable.test.ts test/look-record-clips.test.ts test/step2-motion-look.test.ts test/hitbox-look.test.ts test/blind-naming.test.ts test/test-scene.test.ts test/fix-findings.test.ts test/mod-id.test.ts test/play-chain.test.ts test/words.test.ts test/ui-glossary.test.ts test/read-before-declared.test.ts test/project-setup-model.test.ts test/system-proxy.test.ts test/project-setup.test.ts test/three-view-model.test.ts test/fold.test.ts test/ai-client-connect.test.ts test/model-annotation.test.ts test/model-annotation-service.test.ts test/item-display.test.ts test/static-item-gates.test.ts test/six-view-mcp.test.ts test/shelf-presence.test.ts test/making-p1.test.ts test/making-history-model.test.ts test/home-p2.test.ts test/ui-p3.test.ts test/resource-manager-model.test.ts test/boss-stage-look.test.ts test/boss-show-look.test.ts test/arena-look.test.ts test/model-paint-facts.test.ts test/packaged-templates.test.ts test/tool-runner.test.ts test/tool-service.test.ts test/tool-sound.test.ts test/tool-video.test.ts test/terrain-look.test.ts test/acceptance-plain.test.ts test/asset-edit-memory.test.ts test/audio-look.test.ts test/block-shape-look.test.ts test/blockbench-import.test.ts test/bone-stop.test.ts test/brief-and-rows.test.ts test/broad16-consistency.test.ts test/broad17-handmade.test.ts test/broad19-blueprint-wait.test.ts test/broad19-counts.test.ts test/broad20-build-panel.test.ts test/broad20-connect.test.ts test/broad20-making-friction.test.ts test/broad20-status-words.test.ts test/broad21-prepare-panel.test.ts test/broad22-deepseek-preset.test.ts test/broad22-drafts.test.ts test/broad23-consistency.test.ts test/broad23-v-external.test.ts test/broad24-export-jar.test.ts test/build-counts.test.ts test/check-versus-review.test.ts test/creature-held-by-gameplay.test.ts test/effect-staging.test.ts test/finding-targets.test.ts test/flight-card.test.ts test/floor-idle.test.ts test/ipc-error.test.ts test/job-marks.test.ts test/look-caption.test.ts test/look-moments.test.ts test/look-travel.test.ts test/look-receipts.test.ts test/making-compare.test.ts test/making-floor.test.ts test/making-lock.test.ts test/mcp-guide.test.ts test/mod-info.test.ts test/motion-play.test.ts test/person-words-lock.test.ts test/personal-settings.test.ts test/play-chain-run.test.ts test/prepare-ahead.test.ts test/project-made.test.ts test/renderer-boundary.test.ts test/review-motions.test.ts test/review-wait.test.ts test/scene-crash.test.ts test/shown-matches-saved.test.ts test/still-walk.test.ts test/target-words.test.ts test/title-repair.test.ts test/unknown-reference-refusal.test.ts test/view-reference.test.ts test/waiting-for-you.test.ts test/project-import-service.test.ts test/project-import-words.test.ts test/checkbox-field-style.test.ts",
+    "test:import-assets": "bun run build && playwright test --config playwright.import-assets.config.ts",
+    "test:e2e": "bun run build && playwright test",
+    "test:storage": "bun run build && playwright test --config playwright.storage.config.ts",
+    "package": "bun run build && electron-builder --win dir",
+    "test:reverse": "bun run build && playwright test --config playwright.reverse.config.ts",
+    "test:workbench": "bun run build && playwright test --config playwright.workbench.config.ts",
+    "test:weapon": "bun run build && playwright test --config playwright.weapon.config.ts",
+    "test:weapon:unit": "bun test test/model-annotation.test.ts test/model-annotation-service.test.ts test/item-display.test.ts test/static-item-gates.test.ts",
+    "test:six-view-handoff": "bun run build && playwright test --config playwright.three-view-handoff.config.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.27.1",
+    "@minemods/mod-core": "workspace:*",
+    "@minemods/studio-ai": "workspace:*",
+    "@minemods/ai-service": "workspace:*",
+    "smol-toml": "1.9.0",
+    "solid-js": "catalog:",
+    "three": "^0.172.0",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@playwright/test": "catalog:",
+    "@types/bun": "catalog:",
+    "@types/node": "catalog:",
+    "@types/three": "^0.172.0",
+    "@typescript/native-preview": "catalog:",
+    "electron": "^35.0.0",
+    "electron-builder": "26.0.12",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vite-plugin-solid": "catalog:"
+  }
+}

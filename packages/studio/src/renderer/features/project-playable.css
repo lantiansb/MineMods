@@ -1,0 +1,291 @@
+/* 「能不能玩」：每样东西对四个问题的回答，一行一个，前面的小牌子写着这是谁的答案。 */
+.pp-answers {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.pp-thing {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 10px;
+  border: 2px solid var(--outline);
+  background: #c6c6c6;
+  box-shadow: inset 2px 2px 0 #ffffff, inset -2px -2px 0 #8b8b8b;
+  color: #1c1c1c;
+}
+.pp-thing[data-open="yes"] {
+  background: #d9cfa6;
+}
+.pp-thing header {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.pp-thing header strong {
+  font-size: 15px;
+  font-weight: 400;
+}
+.pp-thing header em {
+  color: #4a4a4a;
+  font-size: 12px;
+  font-style: normal;
+}
+.pp-thing header small {
+  margin-left: auto;
+  font-size: 12px;
+}
+.pp-thing header small.warn {
+  color: #8a2a00;
+}
+.pp-thing dl {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 3px 8px;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.55;
+}
+.pp-thing dt {
+  color: #3a3a3a;
+  white-space: nowrap;
+}
+.pp-thing dd {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin: 0;
+  min-width: 0;
+}
+.pp-thing dd > i {
+  flex: none;
+  margin-top: 2px;
+  padding: 0 4px;
+  background: #5b5b5b;
+  color: #ffffff;
+  font-size: 11px;
+  font-style: normal;
+  line-height: 17px;
+  white-space: nowrap;
+}
+.pp-thing dd[data-mark="ai"] > i {
+  background: #2c5aa0;
+}
+.pp-thing dd[data-mark="made"] > i {
+  background: #2f7d32;
+}
+.pp-thing dd[data-mark="constraint"] > i {
+  background: #2f2f2f;
+  color: #ffd83d;
+}
+.pp-thing dd[data-mark="person"] > i,
+.pp-thing dd[data-mark="proposed"] > i {
+  background: transparent;
+  color: #2f2f2f;
+  box-shadow: inset 0 0 0 1px #2f2f2f;
+}
+.pp-thing dd[data-mark="gap"] > i {
+  background: #8a2a00;
+}
+.pp-thing dd > span:not(.pp-acts) {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  word-break: break-word;
+}
+.pp-thing dd[data-state="declined"] > span:not(.pp-acts) {
+  color: #4a4a4a;
+}
+.pp-thing dd[data-state="gap"] > span:not(.pp-acts) {
+  color: #8a2a00;
+}
+.pp-acts {
+  flex: none;
+  display: flex;
+  gap: 10px;
+  white-space: nowrap;
+}
+.pp-thing .pp-acts .pa-link {
+  color: #1c3f7a;
+  font-size: 13px;
+}
+.pp-thing .pp-acts .pa-link:hover:not(:disabled) {
+  color: #000000;
+}
+.pp-loop {
+  margin: 2px 0 0;
+  padding: 3px 6px;
+  border: 2px dashed #8a2a00;
+  color: #8a2a00;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* 在纸上玩了一遍 */
+.pp-paper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 10px;
+  border: 2px solid var(--outline);
+  background: #2f2f2f;
+  box-shadow: inset 2px 2px 0 #151515;
+  color: #ffffff;
+  font-size: 13px;
+  line-height: 1.55;
+}
+.pp-paper header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.pp-paper header strong {
+  font-size: 14px;
+  font-weight: 400;
+}
+.pp-paper header small {
+  color: #c6c6c6;
+  font-size: 12px;
+}
+:root:root .pp-paper h4 {
+  margin: 4px 0 0;
+  color: #cfe8c8;
+  font-size: 13px;
+  font-weight: 400;
+}
+.pp-paper[data-stuck="yes"] h4:first-of-type {
+  color: #ffe680;
+}
+.pp-paper ul {
+  margin: 0;
+  padding-left: 18px;
+}
+.pp-paper ul.must li {
+  color: #ffe680;
+}
+.pp-fine {
+  margin: 0;
+  color: #cfe8c8;
+}
+.pp-paper .pa-link {
+  align-self: flex-start;
+  color: #ffffff;
+}
+
+/* 想法卡片旁边那一栏：窄，深色。 */
+.pp-answers.side {
+  gap: 6px;
+}
+.pp-answers.side .pp-thing {
+  padding: 6px 8px;
+  background: #2f2f2f;
+  box-shadow: inset 2px 2px 0 #151515;
+  color: #ffffff;
+}
+.pp-answers.side .pp-thing[data-open="yes"] {
+  border-style: dashed;
+  border-color: #ffd83d;
+}
+.pp-answers.side .pp-thing header strong {
+  font-size: 14px;
+}
+.pp-answers.side .pp-thing header em {
+  color: #c6c6c6;
+}
+.pp-answers.side .pp-thing header small.warn,
+.pp-answers.side .pp-thing dd[data-state="gap"] > span:not(.pp-acts) {
+  color: #ffe680;
+}
+.pp-answers.side .pp-thing dl {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  font-size: 12px;
+}
+.pp-answers.side .pp-thing dt {
+  margin-top: 4px;
+  color: #c6c6c6;
+}
+.pp-answers.side .pp-thing dd[data-state="declined"] > span:not(.pp-acts) {
+  color: #c6c6c6;
+}
+.pp-answers.side .pp-thing dd[data-mark="constraint"] > i {
+  background: #ffd83d;
+  color: #1c1c1c;
+}
+.pp-answers.side .pp-thing dd[data-mark="person"] > i,
+.pp-answers.side .pp-thing dd[data-mark="proposed"] > i {
+  color: #ffffff;
+  box-shadow: inset 0 0 0 1px #c6c6c6;
+}
+.pp-answers.side .pp-thing dd[data-mark="gap"] > i {
+  background: #b4441a;
+}
+
+/* 总览和蓝图上的那一行小结，点开就是上面的清单。 */
+.pp-summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  padding: 4px 10px;
+  border: 2px solid var(--outline);
+  background: #c6c6c6;
+  box-shadow: inset 2px 2px 0 #ffffff, inset -2px -2px 0 #8b8b8b;
+  color: #1c1c1c;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+.pp-summary:hover {
+  background: #d6d6d6;
+}
+.pp-summary[aria-expanded="true"] {
+  box-shadow: inset 2px 2px 0 #8b8b8b, inset -2px -2px 0 #ffffff;
+}
+.pp-summary b {
+  font-weight: 400;
+}
+.pp-summary i {
+  width: 10px;
+  height: 10px;
+  flex: none;
+  background: #2f7d32;
+  box-shadow: inset -2px -2px 0 rgba(0, 0, 0, 0.35);
+}
+.pp-summary[data-open="yes"] i {
+  background: #d98a00;
+}
+.pp-summary small {
+  color: #3a3a3a;
+  font-size: 12px;
+}
+.pp-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.pp-panel > p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.pp-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.pp-head small {
+  color: var(--muted);
+  font-size: 12px;
+}
+.pp-head .studio-button {
+  margin-left: auto;
+}
+
+.boss-answer { margin-block: 4px; }
+.boss-answer > .fold-summary { cursor: pointer; font-weight: bold; }
+.boss-answer .fold-content > span { display: block; margin: 3px 0 3px 1em; }

@@ -1,0 +1,2814 @@
+/* 模组总览：整个工程像一个打开的箱子，一格一样东西；蓝图像一本任务书。 */
+.project-assets {
+  position: relative;
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 14px 14px;
+}
+.project-assets svg {
+  flex: none;
+}
+.pa-header {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+:root:root .pa-header h1 {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  font-size: 20px;
+}
+.pa-header h1 small {
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pa-advanced {
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  border: 2px solid transparent;
+  background: transparent;
+  color: var(--muted);
+  font-size: 13px;
+}
+.pa-advanced svg {
+  width: 14px;
+  height: 14px;
+}
+.pa-advanced:hover {
+  border-color: var(--outline);
+  color: var(--text);
+}
+.pa-advanced[aria-pressed="true"] {
+  border-color: var(--outline);
+  background: var(--slot);
+  color: #ffffff;
+  box-shadow:
+    inset 2px 2px 0 var(--slot-dark),
+    inset -2px -2px 0 var(--slot-light);
+}
+
+/* ---------- small shared pieces ---------- */
+.pa-hint {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+.pa-hint.warn {
+  color: var(--warning);
+}
+.pa-link {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--accent-text);
+  font-size: 13px;
+  text-decoration: underline;
+}
+.pa-link:hover {
+  color: var(--text);
+}
+.pa-mini {
+  height: 28px;
+  min-width: 28px;
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  padding: 0 8px;
+  border: 2px solid var(--outline);
+  background: var(--stone);
+  color: #ffffff;
+  box-shadow:
+    inset 2px 2px 0 var(--stone-light),
+    inset -2px -2px 0 var(--stone-dark);
+  font-size: 13px;
+}
+.pa-mini svg {
+  width: 12px;
+  height: 12px;
+}
+.pa-mini:hover,
+.pa-mini:focus-visible {
+  border-color: #ffffff;
+  outline: 0;
+}
+.pa-error {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  padding: 6px 6px 6px 10px;
+  border: 2px solid var(--outline);
+  background: var(--error-bg);
+  color: var(--error-text);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.pa-error span {
+  flex: 1;
+  min-width: 0;
+}
+.pa-warn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 8px 8px 12px;
+  border: 2px solid var(--warning);
+  background: var(--warning-bg);
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.pa-warn > span {
+  flex: 1;
+  min-width: 0;
+}
+/* The sentence was handed in with no AI connected: kept, shown back, and beside it the one thing left to do. */
+.pa-parked {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 2px solid var(--warning);
+  background: var(--warning-bg);
+  color: var(--text);
+}
+.pa-parked > strong {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+.pa-parked-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+}
+.pa-parked-actions > span {
+  flex: 1 1 220px;
+  min-width: 0;
+  font-size: 13px;
+  line-height: 1.6;
+}
+:root:root .pa-parked-actions .studio-button {
+  flex: none;
+  align-self: auto;
+}
+.pa-copied {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 0;
+  padding: 8px 10px;
+  border: 2px solid var(--accent-lip);
+  background: var(--accent-dim);
+  color: var(--accent-text);
+  font-size: 13px;
+  line-height: 1.7;
+}
+.pa-copied svg {
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+}
+.pa-copied strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 400;
+}
+.pa-bar {
+  height: 14px;
+  display: block;
+  border: 2px solid var(--outline);
+  background: #2f2f2f;
+  overflow: hidden;
+}
+.pa-bar i {
+  width: 40%;
+  height: 100%;
+  display: block;
+  background: repeating-linear-gradient(90deg, #5fb347 0 10px, #3c8527 10px 20px);
+  animation: pa-run 1.4s steps(14) infinite;
+}
+@keyframes pa-run {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(250%);
+  }
+}
+.reduce-motion .pa-bar i {
+  width: 100%;
+}
+:root:root .pa-input {
+  width: 100%;
+  min-width: 0;
+  padding: 8px 10px;
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.6;
+  resize: none;
+}
+
+/* ---------- status mark ---------- */
+.pa-mark {
+  --tile: #8b8b8b;
+  --ink: #262626;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ink);
+  font-size: 13px;
+  white-space: nowrap;
+}
+.pa-mark svg {
+  width: 20px;
+  height: 20px;
+  box-sizing: border-box;
+  padding: 3px;
+  border: 2px solid var(--outline);
+  background: var(--tile);
+  image-rendering: pixelated;
+}
+.pa-mark em {
+  color: var(--text);
+  font-style: normal;
+}
+.pa-mark[data-status="planned"] {
+  --tile: #c6c6c6;
+  --ink: #505050;
+}
+.pa-mark[data-status="making"] {
+  --tile: #f0dc8c;
+  --ink: #5a4100;
+}
+.pa-mark[data-status="review"] {
+  --tile: #8fb7e8;
+  --ink: #12305c;
+}
+.pa-mark[data-status="redo"] {
+  --tile: #e89b4a;
+  --ink: #4a2300;
+}
+.pa-mark[data-status="saved"] {
+  --tile: #d8efcf;
+  --ink: #1d4d13;
+}
+.pa-mark[data-status="built"] {
+  --tile: #3c8527;
+  --ink: #ffffff;
+}
+.pa-mark[data-status="verified"] {
+  --tile: #ffd83d;
+  --ink: #4a3500;
+}
+.pa-mark[data-status="failed"] {
+  --tile: #a3221a;
+  --ink: #ffffff;
+}
+.pa-mark[data-status="blocked"] {
+  --tile: #6e4f00;
+  --ink: #ffffff;
+}
+.pa-mark[data-status="out_of_scope"] {
+  --tile: #2f2f2f;
+  --ink: #b8b8b8;
+}
+.pa-mark[data-status="making"] svg {
+  animation: pa-blink 1s steps(2) infinite;
+}
+@keyframes pa-blink {
+  50% {
+    background: #ffffff;
+  }
+}
+
+/* ---------- slot ---------- */
+.pa-slot {
+  width: 108px;
+  min-width: 0;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+}
+.pa-cell {
+  position: relative;
+  width: 76px;
+  height: 76px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  color: #ffffff;
+}
+/* The thing's own picture. Until there is one, the mark of its kind stands in. */
+.pa-picture {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+  padding: 6px;
+  color: #ffffff;
+}
+.pa-picture img {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  object-fit: contain;
+  filter: drop-shadow(2px 2px 0 rgba(0, 0, 0, 0.35));
+}
+.pa-picture.pixel img {
+  image-rendering: pixelated;
+}
+.pa-picture svg {
+  width: 36px;
+  height: 36px;
+  stroke-width: 1.5;
+  filter: drop-shadow(2px 2px 0 #3f3f3f);
+}
+/* Rules, notes and other things with no look of their own get a plaque in their kind's colour. */
+.pa-slot:not(.ghost) .pa-picture.sign svg,
+.pa-view.still:not(.ghost) .pa-picture.sign svg {
+  width: 52px;
+  height: 52px;
+  box-sizing: border-box;
+  padding: 9px;
+  border: 2px solid #1e1e1e;
+  background: var(--plaque, #6b6b6b);
+  box-shadow:
+    inset 2px 2px 0 rgba(255, 255, 255, 0.32),
+    inset -2px -2px 0 rgba(0, 0, 0, 0.36);
+  filter: none;
+}
+[data-kind="logic"] {
+  --plaque: #6a4fa3;
+}
+[data-kind="animation"] {
+  --plaque: #2f6f8a;
+}
+[data-kind="worldview"] {
+  --plaque: #8a6a2e;
+}
+[data-kind="biome"] {
+  --plaque: #3d7a3d;
+}
+[data-kind="dimension"] {
+  --plaque: #3a4d8a;
+}
+[data-kind="terrain"] {
+  --plaque: #7a5a3a;
+}
+.pa-cell .pa-mark {
+  position: absolute;
+  right: -3px;
+  bottom: -3px;
+}
+/* Being made: a strip that keeps moving. The tile stays in place between refreshes, so it never restarts. */
+.pa-working {
+  position: absolute;
+  left: 5px;
+  right: 22px;
+  bottom: 5px;
+  height: 8px;
+  box-sizing: border-box;
+  border: 2px solid #1e1e1e;
+  background: repeating-linear-gradient(90deg, #ffe680 0 6px, #b89b2e 6px 12px);
+  background-size: 24px 100%;
+  animation: pa-work 0.8s steps(4) infinite;
+}
+@keyframes pa-work {
+  to {
+    background-position: 24px 0;
+  }
+}
+.pa-slot[data-status="making"] .pa-picture svg {
+  animation: pa-bob 0.8s steps(2) infinite;
+}
+.pa-slot[data-status="making"] .pa-picture img {
+  opacity: 0.55;
+}
+@keyframes pa-bob {
+  50% {
+    transform: translateY(-3px);
+  }
+}
+.pa-slot:hover .pa-cell::after,
+.pa-slot:focus-visible .pa-cell::after,
+.pa-skip:hover .pa-cell::after,
+.pa-skip:focus-visible .pa-cell::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  background: rgba(255, 255, 255, 0.5);
+  pointer-events: none;
+}
+.pa-slot:focus-visible,
+.pa-skip:focus-visible {
+  outline: 0;
+}
+/* Not made yet: an empty outline with the shadow of its kind, nothing like a finished thing. */
+.pa-slot.ghost .pa-cell {
+  background: transparent;
+  box-shadow: none;
+  outline: 2px dashed #7d7d7d;
+  outline-offset: -3px;
+}
+.pa-slot.ghost .pa-picture svg {
+  color: #6f6f6f;
+  filter: none;
+}
+.pa-slot.ghost .pa-name {
+  color: var(--muted);
+}
+.pa-slot.ghost[data-status="making"] .pa-cell {
+  outline-color: #8a6d00;
+}
+.pa-slot.ghost[data-status="making"] .pa-picture svg {
+  color: #5a4100;
+}
+.pa-slot[data-status="failed"] .pa-cell {
+  outline: 2px solid var(--danger);
+  outline-offset: -2px;
+}
+.pa-slot[data-status="blocked"] .pa-cell {
+  outline: 2px dashed #6e4f00;
+  outline-offset: -2px;
+}
+.pa-slot[data-status="redo"] .pa-cell {
+  outline: 2px solid #b8651a;
+  outline-offset: -2px;
+}
+.pa-skip .pa-cell > svg {
+  opacity: 0.45;
+}
+.pa-name {
+  width: 100%;
+  height: 36px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 18px;
+  text-align: center;
+  word-break: break-all;
+}
+.pa-slot.small {
+  width: 88px;
+}
+.pa-slot.small .pa-cell {
+  width: 56px;
+  height: 56px;
+}
+.pa-slot.small .pa-picture {
+  padding: 4px;
+}
+.pa-slot.small .pa-picture svg {
+  width: 26px;
+  height: 26px;
+}
+.pa-slot.small:not(.ghost) .pa-picture.sign svg {
+  width: 40px;
+  height: 40px;
+  padding: 6px;
+}
+.pa-slot.small .pa-mark svg {
+  width: 18px;
+  height: 18px;
+  padding: 2px;
+}
+.pa-slot.small .pa-working {
+  right: 18px;
+  height: 7px;
+}
+.pa-slot.small .pa-name {
+  height: 32px;
+  padding: 0 2px;
+  font-size: 13px;
+  line-height: 16px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pa-working,
+  .pa-slot[data-status="making"] .pa-picture svg,
+  .pa-stop[data-state="now"] .pa-stop-frame {
+    animation: none;
+  }
+}
+
+/* ---------- the road from a sentence to the game ---------- */
+.pa-road {
+  flex: none;
+  display: flex;
+  align-items: center;
+  padding: 5px 8px;
+}
+.pa-stop {
+  min-width: 0;
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 10px 3px 3px;
+  border: 2px solid transparent;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+}
+.pa-stop:disabled {
+  cursor: default;
+}
+.pa-stop:not(:disabled):hover,
+.pa-stop:focus-visible {
+  border-color: var(--outline);
+  background: var(--surface-hover);
+  outline: 0;
+}
+.pa-stop[aria-pressed="true"],
+.pa-stop[aria-pressed="true"]:not(:disabled):hover {
+  border-color: var(--outline);
+  background: var(--slot);
+  color: #ffffff;
+  box-shadow:
+    inset 2px 2px 0 var(--slot-dark),
+    inset -2px -2px 0 var(--slot-light);
+  text-shadow: 1px 1px 0 #2a2a2a;
+}
+/* Framed like an advancement: grey until reached, gold while it is the step in hand, green once done. */
+.pa-stop-frame {
+  width: 38px;
+  height: 38px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--outline);
+  background: #8b8b8b;
+  color: #4d4d4d;
+  box-shadow:
+    inset 2px 2px 0 rgba(255, 255, 255, 0.35),
+    inset -2px -2px 0 rgba(0, 0, 0, 0.35);
+}
+.pa-stop-frame svg {
+  width: 21px;
+  height: 21px;
+}
+.pa-stop[data-state="done"] .pa-stop-frame {
+  background: #3c8527;
+  color: #ffffff;
+}
+.pa-stop[data-state="now"] .pa-stop-frame {
+  background: #ffd83d;
+  color: #4a3500;
+  animation: pa-now 1.2s steps(2) infinite;
+}
+@keyframes pa-now {
+  50% {
+    background: #fff3b0;
+  }
+}
+.pa-stop[data-state="skip"] .pa-stop-frame {
+  border-style: dashed;
+  background: transparent;
+  box-shadow: none;
+  color: #8b8b8b;
+}
+.pa-stop-words {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.pa-stop-words strong {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 18px;
+  white-space: nowrap;
+}
+.pa-stop-words small {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 15px;
+  white-space: nowrap;
+}
+.pa-stop[aria-pressed="true"] small {
+  color: #e0e0e0;
+}
+.pa-stop[data-state="todo"] strong,
+.pa-stop[data-state="skip"] strong {
+  color: var(--muted);
+}
+.pa-stop[aria-pressed="true"] strong {
+  color: #ffffff;
+}
+.pa-road-link {
+  min-width: 8px;
+  height: 4px;
+  flex: 1 1 8px;
+  margin: 0 2px;
+  background: repeating-linear-gradient(90deg, #8b8b8b 0 4px, transparent 4px 8px);
+}
+.pa-road-link[data-state="done"],
+.pa-road-link[data-state="now"] {
+  background: #3c8527;
+}
+
+/* ---------- looking at one stage ---------- */
+.pa-lens {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  padding: 0 2px 8px;
+  border-bottom: 2px solid var(--line);
+}
+.pa-lens > div:first-child {
+  min-width: 200px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.pa-lens strong {
+  font-size: 16px;
+  font-weight: 400;
+}
+.pa-lens span {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* ---------- first sentence, loading, drafting ---------- */
+.pa-center {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  place-items: center;
+  overflow: auto;
+}
+.pa-box {
+  width: min(560px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 22px 24px;
+}
+.pa-box > strong {
+  font-size: 18px;
+  font-weight: 400;
+}
+.pa-box > .studio-button {
+  align-self: flex-start;
+}
+.pa-first {
+  width: min(720px, 100%);
+  gap: 14px;
+  padding: 28px 30px 24px;
+}
+:root:root .pa-first h2 {
+  font-size: 24px;
+}
+.pa-say {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+}
+.pa-say.big {
+  flex-direction: column;
+}
+:root:root .pa-say.big .pa-input {
+  min-height: 108px;
+  padding: 12px 14px;
+  font-size: 18px;
+}
+:root:root .pa-say.big .studio-button {
+  align-self: flex-end;
+  min-height: 46px;
+  padding: 0 26px;
+  font-size: 18px;
+}
+.pa-say .studio-button {
+  flex: none;
+}
+.pa-examples {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding-top: 10px;
+  border-top: 2px solid var(--line);
+  color: var(--muted);
+  font-size: 13px;
+}
+.pa-examples button {
+  max-width: 100%;
+  overflow: hidden;
+  padding: 3px 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font-size: 13px;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pa-examples button::before {
+  content: "▸ ";
+  color: var(--muted);
+}
+.pa-examples button:hover {
+  color: var(--accent-text);
+  text-decoration: underline;
+}
+.pa-quote {
+  max-height: 110px;
+  overflow: auto;
+  margin: 0;
+  padding: 8px 10px;
+  font-size: 14px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ---------- layouts ---------- */
+.pa-main,
+.pa-review {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  gap: 10px;
+}
+.pa-main {
+  flex-direction: column;
+}
+.pa-review .pa-chest {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ---------- problems ---------- */
+.pa-problems {
+  flex: none;
+  border: 2px solid var(--line);
+  background: var(--panel-soft);
+  font-size: 13px;
+}
+.pa-problems > button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 10px;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font-size: 13px;
+  text-align: left;
+}
+.pa-problems > button em {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 13px;
+  font-style: normal;
+  text-decoration: underline;
+}
+.pa-problems ul {
+  max-height: 120px;
+  overflow: auto;
+  margin: 0;
+  padding: 0 10px 8px 38px;
+  list-style: square;
+}
+.pa-problems li button {
+  padding: 2px 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.6;
+  text-align: left;
+}
+.pa-problems li button:hover {
+  text-decoration: underline;
+}
+
+/* ---------- progress strip ---------- */
+.pa-strip {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  padding: 10px 14px;
+}
+.pa-strip-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.pa-strip-main > strong {
+  overflow: hidden;
+  font-size: 16px;
+  font-weight: 400;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pa-strip-main > strong span {
+  color: var(--muted);
+  font-size: 14px;
+}
+.pa-strip-main > strong em {
+  color: #12305c;
+  font-style: normal;
+}
+.pa-strip-actions .pa-mark svg {
+  width: 18px;
+  height: 18px;
+  padding: 2px;
+}
+.pa-strip-main > small {
+  min-height: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 16px;
+  color: var(--muted);
+  font-size: 13px;
+}
+.pa-strip-main > small:empty {
+  display: none;
+}
+.pa-now {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.pa-order {
+  flex-basis: 100%;
+}
+/* Inside the strip the notice takes a row of its own under the progress and the buttons. */
+.pa-strip > .rw {
+  flex: 1 1 100%;
+}
+.pa-progress {
+  height: 14px;
+  display: flex;
+  border: 2px solid var(--outline);
+  background: #2f2f2f;
+  box-shadow: inset 2px 2px 0 #151515;
+}
+.pa-progress i {
+  height: 100%;
+  display: block;
+}
+.pa-progress .done {
+  background: repeating-linear-gradient(90deg, #5fb347 0 10px, #3c8527 10px 20px);
+}
+/* Saved but kept without passing its review: hatched, so it reads as "there, not yet right" beside the plain green of what is done. */
+.pa-progress .held {
+  background: repeating-linear-gradient(135deg, #d9893a 0 4px, #8c5320 4px 8px);
+}
+.pa-progress .now {
+  background: repeating-linear-gradient(90deg, #f0dc8c 0 5px, #b89b2e 5px 10px);
+}
+.pa-progress .bad {
+  margin-left: auto;
+  background: repeating-linear-gradient(135deg, #a3221a 0 4px, #5a120d 4px 8px);
+}
+.pa-strip-actions {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pa-note {
+  margin: 0;
+  padding: 4px 8px;
+  border: 2px solid var(--warning);
+  background: var(--warning-bg);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.pa-handover {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 10px;
+  border: 2px solid var(--accent-lip);
+  background: var(--accent-dim);
+  color: var(--accent-text);
+  font-size: 13px;
+}
+.pa-fresh .pa-strip-main > strong {
+  font-size: 14px;
+}
+
+/* ---------- chest ---------- */
+.pa-chest {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 12px 8px;
+}
+.pa-top {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 18px;
+}
+.pa-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.pa-tabs button {
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px 0 10px;
+  border: 2px solid var(--outline);
+  background: var(--panel-soft);
+  color: var(--text);
+  box-shadow:
+    inset 2px 2px 0 var(--edge-light),
+    inset -2px -2px 0 var(--edge-dark);
+  font-size: 14px;
+}
+/* The guide's tab carries what the machine's reconciliation came to: green, amber or red, the same as inside. */
+.pa-tabs button > i {
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--outline);
+  background: #55aa33;
+}
+.pa-tabs button > i[data-state="warn"] {
+  background: #e0a800;
+}
+.pa-tabs button > i[data-state="stop"] {
+  background: #d0342c;
+}
+.pa-tabs button svg {
+  width: 18px;
+  height: 18px;
+}
+.pa-tabs button small {
+  color: var(--muted);
+  font-size: 13px;
+}
+.pa-tabs button:hover {
+  border-color: #ffffff;
+}
+.pa-tabs button[aria-selected="true"] {
+  background: var(--slot);
+  color: #ffffff;
+  box-shadow:
+    inset 2px 2px 0 var(--slot-dark),
+    inset -2px -2px 0 var(--slot-light);
+  text-shadow: 1px 1px 0 #2a2a2a;
+}
+.pa-tabs button[aria-selected="true"] small {
+  color: #e0e0e0;
+}
+.pa-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 6px 6px 10px 2px;
+}
+.pa-bundles {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 8px;
+}
+.pa-bundle {
+  max-width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 8px 6px 4px;
+  border: 2px solid var(--line);
+  background: var(--panel-soft);
+}
+.pa-bundle.alone {
+  border-color: transparent;
+  background: transparent;
+}
+.pa-parts {
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 0;
+  padding: 0 2px 0 6px;
+  border-left: 2px solid var(--line);
+}
+.pa-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 108px);
+  gap: 10px 8px;
+  padding: 0 8px;
+}
+:root:root .pa-heading {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 14px 0 8px;
+  padding-bottom: 4px;
+  border-bottom: 2px solid var(--line);
+  font-size: 14px;
+}
+:root:root .pa-scroll > .pa-heading:first-child {
+  margin-top: 2px;
+}
+.pa-heading small {
+  color: var(--muted);
+  font-size: 13px;
+}
+.pa-more {
+  width: 100%;
+  margin-top: 12px;
+  padding: 8px;
+  border: 2px dashed var(--line);
+  background: transparent;
+  color: var(--muted);
+  font-size: 13px;
+}
+.pa-more:hover {
+  border-color: var(--outline);
+  color: var(--text);
+}
+.pa-empty {
+  margin: 0;
+  padding: 40px 12px;
+  color: var(--muted);
+  font-size: 13px;
+  text-align: center;
+}
+.pa-skipped {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 16px;
+  padding: 2px 10px 10px;
+  border: 2px dashed var(--outline-soft);
+}
+:root:root .pa-skipped .pa-heading {
+  margin: 8px 0 0;
+  border-bottom: 0;
+}
+.pa-skip {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+}
+.pa-skip .pa-cell {
+  width: 48px;
+  height: 48px;
+}
+.pa-skip .pa-cell > svg {
+  width: 24px;
+  height: 24px;
+}
+.pa-skip .pa-mark svg {
+  width: 16px;
+  height: 16px;
+  padding: 2px;
+}
+.pa-skip > span:last-child {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.pa-skip strong {
+  overflow: hidden;
+  font-size: 14px;
+  font-weight: 400;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pa-skip small {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.pa-foot {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  color: var(--muted);
+  font-size: 13px;
+}
+.pa-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+}
+.pa-legend .pa-mark svg {
+  width: 16px;
+  height: 16px;
+  padding: 2px;
+  animation: none;
+}
+.pa-legend .pa-mark em {
+  color: var(--muted);
+}
+
+/* ---------- the plan, like a quest book ---------- */
+.pa-book {
+  width: 340px;
+  flex: none;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 12px 14px;
+}
+/* The two decisions stay in view; only what is above them scrolls. */
+.pa-book-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0 4px 10px 0;
+}
+.pa-book section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+:root:root .pa-book h3 {
+  font-size: 14px;
+}
+.pa-questions {
+  padding: 8px 10px;
+  border: 2px solid var(--warning);
+  background: var(--warning-bg);
+}
+.pa-questions ol {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.pa-questions p {
+  margin: 0;
+  color: var(--warning);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.pa-palette {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+.pa-palette i {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--outline);
+  box-shadow:
+    inset 2px 2px 0 rgba(255, 255, 255, 0.35),
+    inset -2px -2px 0 rgba(0, 0, 0, 0.3);
+}
+.pa-style dl {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 4px 10px;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.pa-style dt {
+  color: var(--muted);
+}
+.pa-style dd {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  margin: 0;
+  word-break: break-word;
+}
+.pa-style.wide dd {
+  display: block;
+}
+.pa-style .pa-link {
+  align-self: flex-start;
+}
+.pa-book .pa-say {
+  flex-direction: column;
+}
+.pa-book .pa-say .studio-button {
+  align-self: flex-end;
+}
+.pa-book-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 2px solid var(--line);
+}
+.pa-count {
+  margin: 0;
+  font-size: 13px;
+}
+.pa-count strong {
+  font-size: 16px;
+  font-weight: 400;
+}
+.pa-count code {
+  margin-left: 8px;
+  color: var(--muted);
+  font-size: 13px;
+}
+:root:root .pa-book-actions .studio-button.primary {
+  min-height: 44px;
+  font-size: 16px;
+}
+
+/* ---------- cards ---------- */
+.pa-veil {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  /* A definite row, so a tall card is held to the page and scrolls inside instead of running off it. */
+  grid-template-rows: minmax(0, 1fr);
+  place-items: center;
+  padding: 20px;
+  background: var(--overlay);
+}
+.pa-veil.top {
+  z-index: 30;
+}
+.pa-card {
+  width: min(760px, 100%);
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 12px 12px;
+}
+.pa-card-head {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 8px;
+}
+.pa-card-head strong {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  font-size: 18px;
+  font-weight: 400;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pa-card.wide {
+  width: min(1120px, 100%);
+}
+.pa-card:focus {
+  outline: 0;
+}
+.pa-card-head .pa-mark {
+  flex: none;
+  font-size: 14px;
+}
+.pa-card-body {
+  min-height: 0;
+  flex: 0 1 auto;
+  display: grid;
+  grid-template-columns: minmax(340px, 43%) minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  gap: 14px;
+}
+.pa-card-look {
+  min-height: 0;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+}
+.pa-live {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+/* The big look: a window into the model, or the picture itself. */
+.pa-view {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 0.8;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+.pa-view-host {
+  position: absolute;
+  inset: 2px;
+}
+.pa-view-host canvas {
+  display: block;
+}
+.pa-flat {
+  position: absolute;
+  inset: 12px;
+  width: calc(100% - 24px);
+  height: calc(100% - 24px);
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+.pa-view.sheet,
+.pa-view:has(> .pa-flat) {
+  background: repeating-conic-gradient(#3a3a3a 0 25%, #2c2c2c 0 50%) 0 0 / 16px 16px;
+}
+.pa-view-note {
+  position: relative;
+  padding: 0 20px;
+  color: #d0d0d0;
+  font-size: 13px;
+  text-align: center;
+}
+.pa-view-tip {
+  position: absolute;
+  left: 8px;
+  bottom: 5px;
+  color: #ffffff;
+  font-size: 13px;
+  text-shadow: 1px 1px 0 #1e1e1e;
+  pointer-events: none;
+  opacity: 0.85;
+}
+.pa-view.still {
+  position: relative;
+  width: min(320px, 100%);
+  aspect-ratio: 1;
+  margin: 6px auto 0;
+  color: #ffffff;
+}
+.pa-view.still .pa-picture {
+  padding: 22px;
+}
+.pa-view.still .pa-picture svg {
+  width: 96px;
+  height: 96px;
+  stroke-width: 1.2;
+}
+.pa-view.still:not(.ghost) .pa-picture.sign svg {
+  width: 132px;
+  height: 132px;
+  padding: 24px;
+}
+.pa-view.still.ghost {
+  background: transparent;
+  box-shadow: none;
+  outline: 2px dashed #7d7d7d;
+  outline-offset: -3px;
+}
+.pa-view.still.ghost .pa-picture svg {
+  color: #6f6f6f;
+  filter: none;
+}
+.pa-moves {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+}
+.pa-moves-gap {
+  flex: 1;
+}
+.pa-move {
+  min-height: 32px;
+  padding: 2px 10px;
+  border: 2px solid var(--outline);
+  background: var(--raised);
+  color: var(--text);
+  box-shadow:
+    inset 2px 2px 0 var(--edge-light),
+    inset -2px -2px 0 var(--edge-dark);
+  font-size: 14px;
+  cursor: pointer;
+}
+.pa-move:hover,
+.pa-move:focus-visible {
+  border-color: #ffffff;
+  outline: 0;
+}
+.pa-move[aria-pressed="true"] {
+  background: var(--accent);
+  color: #ffffff;
+  box-shadow:
+    inset 2px 2px 0 rgba(255, 255, 255, 0.3),
+    inset -2px -2px 0 rgba(0, 0, 0, 0.3);
+  text-shadow: 1px 1px 0 #143a0c;
+}
+.pa-move.play {
+  width: 36px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+}
+.pa-move.play svg {
+  width: 16px;
+  height: 16px;
+}
+/* A recipe drawn the way the game's own crafting table shows it. */
+.pa-recipe {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding-top: 6px;
+}
+.pa-craft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 2px solid var(--outline);
+  background: var(--panel);
+  box-shadow:
+    inset 2px 2px 0 var(--edge-light),
+    inset -2px -2px 0 var(--edge-dark);
+}
+.pa-craft-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 60px);
+}
+.pa-part {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  display: grid;
+  place-items: center;
+  padding: 7px;
+  border: 0;
+  color: #ffffff;
+  cursor: pointer;
+}
+.pa-part.big {
+  width: 84px;
+  height: 84px;
+  padding: 10px;
+}
+.pa-part.still,
+.pa-part.blank {
+  cursor: default;
+}
+.pa-part:not(.still):hover::after,
+.pa-part:not(.still):focus-visible::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  background: rgba(255, 255, 255, 0.5);
+  pointer-events: none;
+}
+.pa-part img {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  object-fit: contain;
+}
+.pa-part img.pixel {
+  image-rendering: pixelated;
+}
+.pa-letter {
+  overflow: hidden;
+  font-size: 15px;
+  line-height: 1;
+  white-space: nowrap;
+  text-shadow: 1px 1px 0 #3f3f3f;
+}
+.pa-count-mark {
+  position: absolute;
+  right: 5px;
+  bottom: 2px;
+  font-size: 18px;
+  font-style: normal;
+  line-height: 1.1;
+  text-shadow: 2px 2px 0 #3f3f3f;
+}
+.pa-craft-arrow {
+  width: 44px;
+  height: 36px;
+  flex: none;
+  color: #8b8b8b;
+}
+.pa-craft-title {
+  align-self: flex-start;
+  writing-mode: vertical-rl;
+  color: #404040;
+  font-size: 14px;
+  letter-spacing: 2px;
+}
+.pa-parts-list {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 4px 12px;
+  margin: 0;
+  padding: 8px 10px;
+  border: 2px solid var(--line);
+  background: var(--panel-soft);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.pa-parts-list dt {
+  color: var(--muted);
+  white-space: nowrap;
+}
+.pa-parts-list dd {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 16px;
+  margin: 0;
+}
+.pa-parts-list small {
+  margin-left: 4px;
+  color: var(--muted);
+  font-size: 13px;
+}
+.pa-card-info {
+  min-height: 0;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-right: 6px;
+}
+:root:root .pa-part-block h4 {
+  margin: 0 0 4px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 400;
+}
+.pa-sentence {
+  margin: 0;
+  padding: 8px 10px;
+  border: 2px solid var(--outline);
+  background: var(--raised);
+  font-size: 15px;
+  line-height: 1.7;
+}
+.pa-words {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 4px 12px;
+  margin: 0;
+  padding: 8px 10px;
+  border: 2px solid var(--line);
+  background: var(--panel-soft);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.pa-words dt {
+  color: var(--muted);
+  white-space: nowrap;
+}
+.pa-words dd {
+  margin: 0;
+  white-space: pre-line;
+  word-break: break-word;
+}
+.pa-words dd .pa-row-detail {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  white-space: pre-line;
+}
+.pa-part-block .pa-hint {
+  margin-top: 4px;
+}
+/* The acceptance review: one line when folded; unfolded, every criterion in the standard's order with what it found. */
+.pa-check .fold-summary {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.pa-check .fold-summary::before {
+  content: "▸";
+  flex: none;
+  color: var(--muted);
+}
+.pa-check[data-open] .fold-summary::before {
+  content: "▾";
+}
+.pa-check-title {
+  flex: none;
+  color: var(--muted);
+}
+.pa-check-line {
+  flex: 1;
+  min-width: 0;
+}
+.pa-check-mark {
+  flex: none;
+  padding: 0 6px;
+  border: 2px solid var(--outline);
+  background: var(--accent-dim);
+  color: var(--accent-text);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.pa-check:not([data-state="passed"]) .pa-check-mark {
+  border-color: var(--warning);
+  background: var(--warning-bg);
+  color: var(--text);
+}
+.pa-check-row {
+  margin-top: 4px;
+  padding: 3px 8px;
+  border-left: 3px solid var(--outline);
+  background: var(--raised);
+}
+.pa-check-row[data-state="failed"] {
+  padding: 6px 8px;
+  border-left-color: var(--warning);
+}
+.pa-check-name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 8px;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.pa-check-name em {
+  font-style: normal;
+  color: var(--accent-text);
+}
+.pa-check-row[data-state="failed"] .pa-check-name b,
+.pa-check-row[data-state="failed"] .pa-check-name em {
+  color: var(--warning);
+}
+.pa-check-row[data-state="unmeasured"] .pa-check-name b,
+.pa-check-row[data-state="unmeasured"] .pa-check-name em {
+  color: var(--muted);
+}
+.pa-check-name span {
+  color: var(--muted);
+  font-size: 12px;
+}
+/* What a passed check stands on: one line per rule that ran, with the numbers it was measured at. */
+.pa-check-looked {
+  margin: 2px 0 0;
+  padding: 0 0 0 16px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.pa-check-looked code {
+  margin-left: 6px;
+  font-size: 11px;
+}
+.pa-check-finding {
+  margin: 4px 0 0;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.pa-check-fix {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+/* Where the person says yes or no: the judgement on top, the walk from thing to thing under it. */
+.pa-verdict {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 8px 10px;
+  border: 2px solid var(--outline);
+  background: var(--raised);
+  box-shadow:
+    inset 2px 2px 0 var(--edge-light),
+    inset -2px -2px 0 var(--edge-dark);
+}
+.pa-verdict[data-status="review"] {
+  background: #c5d8f0;
+}
+.pa-verdict[data-status="redo"],
+.pa-verdict[data-status="failed"] {
+  background: #f0d9bd;
+}
+.pa-verdict-main {
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+}
+.pa-verdict-ask {
+  min-width: 200px;
+  flex: 1 1 200px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+.pa-verdict-ask.done {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--accent-text);
+}
+.pa-verdict-ask.done svg {
+  width: 18px;
+  height: 18px;
+}
+:root:root .pa-big {
+  min-height: 46px;
+  padding: 0 22px;
+  font-size: 18px;
+}
+.pa-verdict .pa-link:disabled {
+  opacity: 0.5;
+}
+.pa-walk {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+  padding-top: 8px;
+  border-top: 2px solid rgba(0, 0, 0, 0.18);
+}
+.pa-left {
+  color: var(--text);
+  font-size: 14px;
+  white-space: nowrap;
+}
+.pa-left.done {
+  color: var(--accent-text);
+}
+.pa-keys {
+  margin-left: 6px;
+  color: var(--muted);
+  font-size: 13px;
+  white-space: nowrap;
+}
+.pa-counter {
+  flex: none;
+  padding: 2px 10px;
+  border: 2px solid var(--outline);
+  background: #8fb7e8;
+  color: #12305c;
+  font-size: 14px;
+  white-space: nowrap;
+}
+.pa-redo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 6px 10px;
+}
+.pa-redo label,
+.pa-redo .pa-ideas,
+.pa-redo textarea {
+  grid-column: 1 / -1;
+}
+.pa-redo label {
+  font-size: 16px;
+}
+:root:root .pa-redo textarea {
+  font-size: 15px;
+}
+/* Ready-made remarks: tap one and it is written into the box. */
+.pa-ideas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.pa-ideas button {
+  min-height: 30px;
+  padding: 2px 10px;
+  border: 2px solid var(--outline);
+  background: var(--panel-soft);
+  color: var(--text);
+  box-shadow:
+    inset 2px 2px 0 var(--edge-light),
+    inset -2px -2px 0 var(--edge-dark);
+  font-size: 14px;
+  cursor: pointer;
+}
+.pa-ideas button:hover:not(:disabled),
+.pa-ideas button:focus-visible {
+  border-color: #ffffff;
+  outline: 0;
+}
+.pa-ideas button:disabled {
+  background: var(--slot);
+  color: #ffffff;
+  box-shadow:
+    inset 2px 2px 0 var(--slot-dark),
+    inset -2px -2px 0 var(--slot-light);
+  cursor: default;
+}
+.pa-redo-plan {
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.pa-redo-plan span {
+  flex: 1;
+  min-width: 0;
+}
+.pa-redo-plan small {
+  color: var(--muted);
+  font-size: 13px;
+  white-space: nowrap;
+}
+.pa-redo-plan small.full {
+  color: var(--danger);
+}
+.pa-redo-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pa-card > .pa-error {
+  margin-top: 8px;
+}
+.pa-kind {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  font-size: 13px;
+}
+.pa-kind span,
+.pa-kind button {
+  padding: 2px 8px;
+  border: 2px solid var(--outline);
+  background: var(--raised);
+  color: var(--text);
+  font-size: 13px;
+}
+.pa-kind em {
+  min-width: 0;
+  flex: 1 1 200px;
+  align-self: center;
+  font-size: 14px;
+  font-style: normal;
+  line-height: 1.5;
+}
+.pa-kind span {
+  background: var(--accent);
+  color: #ffffff;
+  text-shadow: 1px 1px 0 #143a0c;
+}
+.pa-kind button:hover {
+  border-color: #ffffff;
+  background: var(--surface-hover);
+}
+.pa-reason {
+  margin: 0;
+  padding: 8px 10px;
+  border: 2px solid var(--outline);
+  background: var(--warning-bg);
+  font-size: 14px;
+  line-height: 1.7;
+  white-space: pre-line;
+  word-break: break-word;
+}
+.pa-reason strong {
+  display: block;
+  font-weight: 400;
+  color: var(--warning);
+}
+.pa-reason[data-status="failed"] {
+  background: var(--error-bg);
+  color: var(--error-text);
+}
+.pa-reason[data-status="failed"] strong {
+  color: var(--error-text);
+}
+.pa-reason[data-status="out_of_scope"] {
+  background: var(--raised);
+}
+.pa-reason[data-status="out_of_scope"] strong {
+  color: var(--muted);
+}
+.pa-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+}
+.pa-field > span {
+  color: var(--muted);
+}
+/* creature tier (10-12): the buttons (one for each tier of the table) that say how well a creature is to be made, with the reason under them. */
+.pa-tier-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.pa-tier-button {
+  padding: 2px 12px;
+  font-size: 13px;
+}
+.pa-tier-reason {
+  color: var(--muted);
+  font-size: 12px;
+}
+.pa-tiers ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.pa-tiers li {
+  display: grid;
+  gap: 4px;
+}
+.pa-edit-actions,
+.pa-ask-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+/* One row of five steps, in the order things happen: the mark, what it is, and how it stands. */
+.pa-facts {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  border: 2px solid var(--line);
+  background: var(--panel-soft);
+  list-style: none;
+  font-size: 13px;
+}
+.pa-facts li {
+  display: grid;
+  grid-template-columns: 12px minmax(0, 1fr);
+  align-items: center;
+  gap: 2px 5px;
+  padding: 7px 6px;
+}
+.pa-facts li + li {
+  border-left: 2px solid var(--line);
+}
+.pa-facts li span {
+  min-width: 0;
+  font-size: 13px;
+  line-height: 1.25;
+}
+.pa-facts li strong {
+  grid-column: 2;
+  font-weight: 400;
+  color: var(--muted);
+}
+/* Yes is a filled square, not yet is a hollow one, failed is crossed: readable without colour. */
+.pa-facts i {
+  width: 12px;
+  height: 12px;
+  flex: none;
+  box-sizing: border-box;
+  border: 2px solid var(--outline);
+}
+.pa-facts li[data-state="yes"] i {
+  background: var(--accent);
+}
+.pa-facts li[data-state="yes"] strong {
+  color: var(--accent-text);
+}
+.pa-facts li[data-state="no"] i {
+  background: linear-gradient(45deg, transparent 40%, var(--danger) 40% 60%, transparent 60%), #ffffff;
+}
+.pa-facts li[data-state="no"] strong {
+  color: var(--danger);
+}
+.pa-relations {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+}
+:root:root .pa-related h4 {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin: 0 0 6px;
+  font-size: 14px;
+  font-weight: 400;
+}
+.pa-related h4 small {
+  color: var(--muted);
+  font-size: 13px;
+}
+.pa-related-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 0;
+}
+.pa-tech {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 2px 12px;
+  margin: 0;
+  padding: 8px 10px;
+  border: 2px dashed var(--line);
+  color: var(--muted);
+  font-size: 13px;
+}
+.pa-tech dd {
+  margin: 0;
+  font-family: var(--font-mono);
+  word-break: break-all;
+}
+.pa-ask {
+  width: min(480px, 100%);
+  gap: 8px;
+}
+.pa-ask p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.pa-names {
+  max-height: 160px;
+  overflow: auto;
+  margin: 0;
+  padding: 6px 10px 6px 28px;
+  list-style: square;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.pa-ask-actions {
+  margin-top: 6px;
+}
+.pa-tip {
+  position: fixed;
+  z-index: 200;
+  max-width: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 5px 8px;
+  pointer-events: none;
+  font-size: 13px;
+}
+.pa-tip strong {
+  font-weight: 400;
+}
+.pa-tip span {
+  color: #a8a8a8;
+  font-size: 13px;
+  word-break: break-all;
+}
+.pa-tip span:first-of-type {
+  color: #7f7fff;
+}
+
+@media (max-width: 1340px) {
+  .pa-book {
+    width: 300px;
+  }
+}
+@media (max-width: 760px) {
+  .pa-review {
+    flex-direction: column;
+    overflow: auto;
+  }
+  .pa-book {
+    width: auto;
+    overflow: visible;
+  }
+  .pa-card-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------- by section ---------- */
+/* Groups stand side by side while the line has room and take a line of their own when they are wide: see the end of this file. */
+.pa-sections {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 12px;
+}
+.pa-section {
+  flex: 1 1 auto;
+  min-width: min(100%, 240px);
+  max-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  align-items: flex-start;
+  gap: 8px;
+}
+:root:root .pa-section > .pa-group {
+  flex: 1 0 100%;
+  margin: 0;
+}
+:root:root .pa-group {
+  margin: 2px 0 8px;
+  padding: 4px 10px;
+  background: var(--slot);
+  color: #ffffff;
+  font-size: 14px;
+  text-shadow: 1px 1px 0 #2a2a2a;
+  box-shadow:
+    inset 2px 2px 0 var(--slot-dark),
+    inset -2px -2px 0 var(--slot-light);
+}
+/* One kind of thing: a framed box as wide as its things, so a kind with one or two of them does not span a line by itself. */
+.pa-row {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px 6px 6px;
+  border: 2px solid var(--line);
+  background: var(--panel-soft);
+}
+:root:root .pa-row h4 {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0;
+  padding: 0 2px;
+  font-size: 14px;
+  font-weight: 400;
+}
+.pa-row h4 small {
+  color: var(--muted);
+  font-size: 13px;
+}
+/* Laid out as a wrapping line, not as a grid of fixed columns: the box around it takes its width from what is in it. */
+.pa-row .pa-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 4px;
+  padding: 0;
+}
+.pa-row .pa-more {
+  margin-top: 4px;
+}
+
+/* ---------- acceptance sheet: the look, the state, the verdict ---------- */
+.pa-picture {
+  position: relative;
+}
+/* A couple of words under the mark, for a rule that has no picture of its own. */
+.pa-picture-words {
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  bottom: 3px;
+  overflow: hidden;
+  color: #ffffff;
+  font-size: 13px;
+  font-style: normal;
+  line-height: 15px;
+  text-align: center;
+  text-shadow: 1px 1px 0 #2a2a2a;
+  white-space: nowrap;
+}
+.pa-slot:not(.ghost) .pa-picture.sign:has(.pa-picture-words) svg {
+  width: 44px;
+  height: 44px;
+  margin-bottom: 14px;
+  padding: 7px;
+}
+/* Something it uses was remade: a flag on the corner, the same one the list of things to look at carries. */
+.pa-stale-mark {
+  width: 18px;
+  height: 18px;
+  flex: none;
+  box-sizing: border-box;
+  display: inline-block;
+  border: 2px solid var(--outline);
+  background:
+    linear-gradient(#4a2300, #4a2300) 50% 3px / 2px 6px no-repeat,
+    linear-gradient(#4a2300, #4a2300) 50% 11px / 2px 2px no-repeat,
+    #ffb347;
+}
+.pa-cell .pa-stale-mark {
+  position: absolute;
+  left: -3px;
+  top: -3px;
+}
+.pa-stage {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.pa-ribbon {
+  position: relative;
+  margin: 0;
+  padding: 6px 10px 12px;
+  border: 2px solid var(--outline);
+  background: #f0dc8c;
+  color: #4a3500;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.pa-ribbon .pa-working {
+  left: 4px;
+  right: 4px;
+  bottom: 3px;
+  height: 6px;
+  border-width: 1px;
+}
+.pa-pending {
+  margin: 0 auto;
+  max-width: 300px;
+  font-size: 15px;
+  line-height: 1.6;
+  text-align: center;
+}
+.pa-pending[data-status="making"] {
+  color: #5a4100;
+}
+.pa-view.still.ghost .pa-working {
+  left: 16px;
+  right: 16px;
+  bottom: 14px;
+  height: 10px;
+}
+/* With its texture, or the bare shape: two keys on the corner of the view. */
+.pa-skin {
+  position: absolute;
+  right: 6px;
+  top: 6px;
+  display: flex;
+}
+.pa-skin button {
+  min-height: 28px;
+  padding: 1px 8px;
+  border: 2px solid var(--outline);
+  background: var(--raised);
+  color: var(--text);
+  box-shadow:
+    inset 2px 2px 0 var(--edge-light),
+    inset -2px -2px 0 var(--edge-dark);
+  font-size: 13px;
+  cursor: pointer;
+}
+.pa-skin button + button {
+  margin-left: -2px;
+}
+.pa-skin button:hover,
+.pa-skin button:focus-visible {
+  border-color: #ffffff;
+  outline: 0;
+  z-index: 1;
+}
+.pa-skin button[aria-pressed="true"] {
+  background: var(--slot);
+  color: #ffffff;
+  box-shadow:
+    inset 2px 2px 0 var(--slot-dark),
+    inset -2px -2px 0 var(--slot-light);
+  text-shadow: 1px 1px 0 #2a2a2a;
+}
+.pa-view-note .pa-move {
+  margin-left: 8px;
+}
+.pa-moves-label {
+  margin-right: 4px;
+  font-size: 14px;
+}
+.pa-move {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.pa-move svg {
+  width: 12px;
+  height: 12px;
+  fill: currentColor;
+}
+.pa-move:disabled {
+  color: var(--muted);
+  cursor: default;
+}
+.pa-move:disabled:hover {
+  border-color: var(--outline);
+}
+.pa-stop-mark {
+  width: 10px;
+  height: 10px;
+  background: currentColor;
+}
+/* The texture it wears, flat, beside the model. */
+.pa-worn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+  border: 2px solid var(--line);
+  background: var(--panel-soft);
+}
+.pa-worn-sheet {
+  width: 64px;
+  height: 64px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  background: repeating-conic-gradient(#3a3a3a 0 25%, #2c2c2c 0 50%) 0 0 / 8px 8px;
+}
+.pa-worn-sheet img {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+.pa-worn-words {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.pa-worn-words strong {
+  font-size: 14px;
+  font-weight: 400;
+}
+.pa-worn-words small {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+/* Zoomed in: the sheet is bigger than its window and scrolls, every pixel still a sharp square. */
+.pa-view.sheet.zoomed {
+  display: block;
+  overflow: auto;
+}
+.pa-view.sheet.zoomed .pa-flat {
+  position: static;
+  display: block;
+  max-width: none;
+}
+.pa-said,
+.pa-heed {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+  margin: 0;
+  padding: 8px 10px;
+  border: 2px solid var(--outline);
+  background: var(--raised);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.pa-said strong,
+.pa-heed strong {
+  font-weight: 400;
+}
+.pa-said[data-verdict="accepted"] strong {
+  color: var(--accent-text);
+}
+.pa-said[data-verdict="rejected"] strong {
+  color: var(--warning);
+}
+.pa-said q {
+  min-width: 0;
+  flex: 1 1 200px;
+  quotes: "「" "」";
+  word-break: break-word;
+}
+.pa-said small {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 13px;
+}
+.pa-heed {
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  background: #f6e2bf;
+  color: #4a2300;
+}
+.pa-heed .pa-stale-mark {
+  margin-top: 3px;
+}
+.pa-heed span {
+  min-width: 0;
+}
+.pa-heed strong {
+  display: block;
+}
+.pa-heed small {
+  display: block;
+  font-size: 13px;
+}
+.pa-problems > button > span {
+  color: #4a2300;
+}
+.pa-problems li button em {
+  margin-right: 8px;
+  padding: 0 6px;
+  border: 2px solid var(--outline);
+  background: var(--raised);
+  font-style: normal;
+}
+.pa-problems li button[data-kind="stale"] em {
+  background: #ffb347;
+  color: #4a2300;
+}
+:root:root .pa-call {
+  min-height: 44px;
+  font-size: 16px;
+}
+.pa-call-words {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.25;
+}
+.pa-call-words small {
+  font-size: 12px;
+  font-weight: normal;
+}
+.pa-call .pa-mark svg {
+  width: 20px;
+  height: 20px;
+}
+.pa-end {
+  width: min(520px, 100%);
+}
+.pa-tally {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.pa-tally li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 4px;
+  border: 2px solid var(--line);
+  background: var(--panel-soft);
+  font-size: 14px;
+}
+.pa-tally i {
+  width: 14px;
+  height: 14px;
+  box-sizing: border-box;
+  border: 2px solid var(--outline);
+}
+.pa-tally li[data-state="yes"] i {
+  background: var(--accent);
+}
+.pa-tally li[data-state="no"] i {
+  background: #e89b4a;
+}
+.pa-tally strong {
+  font-size: 20px;
+  font-weight: 400;
+}
+:root:root .pa-part-block h4 {
+  font-size: 14px;
+}
+.pa-facts {
+  font-size: 14px;
+}
+@media (max-height: 760px) {
+  .pa-view {
+    aspect-ratio: 1 / 0.66;
+  }
+  .pa-view.still {
+    width: 200px;
+  }
+  .pa-card {
+    padding-top: 8px;
+  }
+  .pa-veil {
+    padding: 10px 20px;
+  }
+}
+[data-kind="logic"] .pa-sentence,
+[data-kind="recipe"] .pa-sentence {
+  font-size: 17px;
+}
+@media (max-width: 1340px) {
+  .pa-moves-label {
+    display: none;
+  }
+}
+
+/* ---------- cast actions ---------- */
+.pa-cast .pa-tabs button {
+  flex: 1;
+  justify-content: center;
+}
+/* The game's own frame: what the first-person camera shows is only true at 16:9, and both sides share it so nothing jumps. */
+.pa-cast .pa-view {
+  aspect-ratio: 16 / 9;
+}
+/* Eyes do not orbit: the view is where the game puts it. */
+.pa-cast .pa-view[data-side="first_person"] .pa-view-host {
+  pointer-events: none;
+}
+.pa-crosshair {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  background:
+    linear-gradient(#ffffff, #ffffff) center / 2px 100% no-repeat,
+    linear-gradient(#ffffff, #ffffff) center / 100% 2px no-repeat;
+  mix-blend-mode: difference;
+  pointer-events: none;
+}
+/* The stretches of one cast, each as wide as it is long; the one being played is lit like a pressed slot. */
+.pa-phases {
+  --at: 0%;
+  position: relative;
+  display: flex;
+  gap: 2px;
+  padding-bottom: 5px;
+}
+.pa-phase {
+  flex: 1 1 0;
+  min-width: 58px;
+  min-height: 42px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1px 2px;
+  border: 2px solid var(--outline);
+  background: var(--panel-soft);
+  color: var(--text);
+  box-shadow:
+    inset 2px 2px 0 var(--edge-light),
+    inset -2px -2px 0 var(--edge-dark);
+  font-size: 14px;
+  line-height: 1.2;
+}
+.pa-phase small {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.3;
+}
+.pa-phase:hover {
+  border-color: #ffffff;
+}
+.pa-phase[aria-current="step"] {
+  background: var(--slot);
+  color: #ffffff;
+  box-shadow:
+    inset 2px 2px 0 var(--slot-dark),
+    inset -2px -2px 0 var(--slot-light);
+  text-shadow: 1px 1px 0 #2a2a2a;
+}
+.pa-phase[aria-current="step"] small {
+  color: #e0e0e0;
+}
+.pa-phase-at {
+  position: absolute;
+  left: var(--at);
+  bottom: 0;
+  width: 6px;
+  height: 6px;
+  margin-left: -3px;
+  background: #ffffff;
+  box-shadow: 0 0 0 1px var(--outline);
+  pointer-events: none;
+}
+.gesture-preview {
+  padding: 12px;
+}
+.gesture-preview .pa-cast {
+  max-width: 520px;
+  margin: 0 auto;
+}
+/* A short window with the remark box open: the look shrinks so its buttons stay in reach without scrolling. */
+@media (max-height: 760px) {
+  .pa-card:has(.pa-redo) .pa-view:not(.still) {
+    aspect-ratio: 1 / 0.45;
+  }
+  .pa-card:has(.pa-redo) .pa-view.still {
+    width: 150px;
+  }
+  /* The player's own view is only true at 16:9, so it gets narrower instead of flatter. */
+  .pa-card:has(.pa-redo) .pa-cast .pa-view {
+    aspect-ratio: 16 / 9;
+    width: 80%;
+    margin: 0 auto;
+  }
+  .pa-card:has(.pa-redo) .pa-card-look .pa-hint {
+    display: none;
+  }
+}
+
+/* The two ways on from a sentence: cards first, or straight to a plan. */
+.pa-say-actions {
+  flex: none;
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-end;
+  gap: 8px;
+}
+:root:root .pa-say.big .pa-say-actions .studio-button {
+  align-self: auto;
+}
+:root:root .pa-say.big .pa-say-actions .studio-button:not(.primary) {
+  padding: 0 16px;
+  font-size: 16px;
+}
+
+/*
+ * ---------- slots that grow with the room there is ----------
+ * Round 18, a 2000×1323 window: eight things stood in 76-pixel slots in the top-left corner of a panel that was
+ * otherwise empty. The slot is now sized from the panel and from how many things it has to hold, here in the
+ * stylesheet, so no window size is named anywhere:
+ *   across: the things in about two lines of the panel's width, a slot with its name taking 1.6 slots of width
+ *           (108 of name width to 76 of slot, plus the gap) → width × 2 / (count × 1.6);
+ *   down:   two lines of things in the panel's height, a line taking 2.4 slots (the slot, two lines of name, the
+ *           frame of its group and the heading between the lines) → height / 4.8. The panel's height is the
+ *           window's less the rows that never grow (title bar, heading, the road, the notice, the progress strip,
+ *           the tabs and the legend: 390px, measured on the round-17 screenshots at both window sizes).
+ * Never under 76px, the size it always had, so a full mod or a small window looks as before; never over 152px,
+ * twice that, where pixel art is still drawn on whole pixels. Sizes move in steps of 4px so slot frames stay crisp.
+ * `--pa-count` is set on the panel by the page (absent: the base size).
+ */
+.pa-scroll {
+  container-type: inline-size;
+  --pa-cell: round(down, clamp(76px, min(200cqw / (var(--pa-count, 999) * 1.6), (100vh - 390px) / 4.8), 152px), 4px);
+}
+.pa-scroll .pa-slot {
+  --pa-own: var(--pa-cell);
+  width: calc(var(--pa-own) * 1.42);
+}
+/* A part beside the thing it belongs to keeps the proportion it had to it: 56 to 76. */
+.pa-scroll .pa-slot.small {
+  --pa-own: round(down, calc(var(--pa-cell) * 0.74), 2px);
+  width: calc(var(--pa-own) * 1.58);
+}
+.pa-scroll .pa-slot .pa-cell {
+  width: var(--pa-own);
+  height: var(--pa-own);
+}
+.pa-scroll .pa-slot .pa-picture svg {
+  width: calc(var(--pa-own) * 0.47);
+  height: calc(var(--pa-own) * 0.47);
+}
+.pa-scroll .pa-slot:not(.ghost) .pa-picture.sign svg {
+  width: calc(var(--pa-own) * 0.69);
+  height: calc(var(--pa-own) * 0.69);
+  padding: calc(var(--pa-own) * 0.12);
+}
+.pa-scroll .pa-slot:not(.ghost) .pa-picture.sign:has(.pa-picture-words) svg {
+  width: calc(var(--pa-own) * 0.58);
+  height: calc(var(--pa-own) * 0.58);
+  padding: calc(var(--pa-own) * 0.09);
+}
+/* The name grows with its slot, from the 14px it has under a 76px slot to 20px, and always has room for two lines. */
+.pa-scroll .pa-slot .pa-name {
+  height: auto;
+  min-height: 2.6em;
+  font-size: round(nearest, clamp(13px, calc(var(--pa-own) * 0.184), 20px), 1px);
+  line-height: 1.3;
+}
+.pa-scroll .pa-grid {
+  grid-template-columns: repeat(auto-fill, calc(var(--pa-cell) * 1.42));
+}
+.pa-scroll .pa-row .pa-grid {
+  grid-template-columns: none;
+}
+/* Groups of a thing and its parts flow along the line and wrap; with slots that grew, a group never outgrows the panel. */
+.pa-scroll .pa-bundle {
+  flex: 0 1 auto;
+  min-width: 0;
+}
+.pa-scroll .pa-bundle > .pa-slot {
+  flex: none;
+}
+
+/* The door from the overview to 「模组信息」: the icon, the one line the build will carry, and a word that it can be changed. */
+.pa-info {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 46%;
+  min-width: 0;
+  padding: 4px 10px 4px 4px;
+  color: inherit;
+  text-align: left;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+.pa-info:hover {
+  border-color: #d69b70;
+}
+.pa-info-face {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+}
+.pa-info-face img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+.pa-info-face svg {
+  width: 20px;
+  height: 20px;
+}
+.pa-info-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.pa-info-text small {
+  overflow: hidden;
+  color: var(--muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pa-info em {
+  flex: none;
+  font-style: normal;
+  color: #e0b18a;
+}
+
+.pa-ideas-ready {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-inline-start: 4px solid var(--accent);
+}
+
+.build-history-list { display: grid; gap: 8px; list-style: none; margin: 0; padding: 0; }
+.build-history-list li { display: grid; gap: 6px; padding: 10px; border: 1px solid currentColor; overflow-wrap: anywhere; }
+.build-history-list .studio-button { justify-self: start; }
+
+.particle-life { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 8px; }
+.particle-life figure { min-width: 0; margin: 0; }
+.particle-life canvas { display: block; width: 100%; height: auto; image-rendering: pixelated; }
+.particle-life figcaption { margin-top: 4px; font-size: .85em; }

@@ -1,0 +1,26 @@
+/* The link to this page that the making story and the 动态 panel carry. */
+.mk-floor {
+  flex: none;
+  margin-left: auto;
+  white-space: nowrap;
+}
+.ac-floor {
+  flex: none;
+  display: block;
+  margin: 6px 0 0;
+  padding: 4px 8px;
+  border: 2px solid var(--outline);
+  background: var(--raised);
+  color: var(--text);
+  box-shadow:
+    inset 2px 2px 0 var(--edge-light),
+    inset -2px -2px 0 var(--edge-dark);
+  font-size: 13px;
+  text-align: center;
+  cursor: pointer;
+}
+.ac-floor:hover,
+.ac-floor:focus-visible {
+  border-color: #ffffff;
+  outline: 0;
+}

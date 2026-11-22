@@ -1,0 +1,404 @@
+/* 制作现场 for one thing (Making.dc.html): the stage gets the room, nothing here makes the page scroll sideways, at 1366x768 as at 1920x1080. */
+.ml-floor {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  gap: 10px;
+}
+.ml-centre {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.ml-head {
+  flex: none;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  min-width: 0;
+}
+.ml-head h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+.ml-head small {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ml-story-link {
+  flex: none;
+  margin-left: auto;
+  font-size: 12px;
+}
+.ml-road {
+  flex: none;
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+.ml-road .pa-stop {
+  flex: 0 1 auto;
+  min-width: 0;
+  cursor: default;
+}
+.ml-road .pa-stop-words strong {
+  white-space: nowrap;
+}
+.ml-stop-frame {
+  color: #ffffff;
+  font-size: 12px;
+  line-height: 1;
+}
+.ml-stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  overflow: hidden;
+  border: 2px solid var(--outline);
+  background: var(--viewport-bg);
+}
+.ml-stage .model-canvas {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+}
+.ml-skin,
+.ml-refs,
+.ml-tips,
+.ml-thinking {
+  position: absolute;
+  z-index: 2;
+}
+.ml-skin {
+  left: 8px;
+  top: 8px;
+  display: flex;
+  gap: 4px;
+}
+/* The thinking line holds the bottom of the stage: the view's own buttons stand above it. */
+.ml-stage .model-canvas-toolbar {
+  inset: 8px 8px 52px;
+}
+.ml-stage .model-canvas-actions {
+  margin-top: auto;
+}
+.ml-stage .model-canvas-actions button {
+  min-height: 28px;
+  padding: 2px 8px;
+  font-size: 12px;
+}
+/* On a window with no width to spare the list gives way before the stage does. */
+.mf-body:has(.ml-floor) {
+  grid-template-columns: clamp(190px, 16%, 300px) minmax(0, 1fr);
+}
+.ml-skin button,
+.ml-button {
+  height: 28px;
+  padding: 0 10px;
+  border: 2px solid var(--outline);
+  background: #8b8b8b;
+  box-shadow:
+    inset 2px 2px 0 #c6c6c6,
+    inset -2px -2px 0 #555555;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 12px;
+  text-shadow: 2px 2px 0 #3f3f3f;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.ml-skin button[aria-pressed="true"],
+.ml-button[aria-pressed="true"] {
+  background: #c6c6c6;
+  box-shadow:
+    inset 2px 2px 0 #ffffff,
+    inset -2px -2px 0 #8b8b8b;
+  color: #262626;
+  text-shadow: none;
+}
+.ml-button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+.ml-refs {
+  right: 8px;
+  top: 8px;
+  display: flex;
+  gap: 3px;
+}
+.ml-refs .mc-slot {
+  width: 36px;
+  height: 36px;
+  overflow: hidden;
+}
+.ml-refs img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+.ml-tips {
+  left: 8px;
+  top: 44px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  max-width: 60%;
+  pointer-events: none;
+}
+.ml-tip {
+  margin: 0;
+  padding: 4px 8px;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.ml-tip-next {
+  opacity: 0.85;
+}
+.ml-thinking {
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 6px 10px;
+  font-size: 13px;
+}
+.ml-thinking b {
+  flex: none;
+  color: #ffff55;
+  font-weight: 400;
+}
+.ml-thinking span {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ml-thinking time {
+  flex: none;
+  color: #a8a8a8;
+  font-size: 12px;
+}
+.ml-track {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.ml-ticks {
+  flex: 1;
+  min-width: 80px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4px;
+  overflow: hidden;
+  border: 2px solid #a0a0a0;
+  background: #000000;
+  cursor: pointer;
+  touch-action: none;
+}
+.ml-ticks i {
+  flex: 0 1 4px;
+  min-width: 1px;
+  height: 9px;
+  background: #c6c6c6;
+}
+.ml-ticks i[data-kind="look"] {
+  height: 14px;
+  background: var(--viewport-bg);
+}
+.ml-ticks i[data-kind="review"] {
+  height: 14px;
+  background: #f0dc8c;
+}
+.ml-ticks i[data-now="true"] {
+  height: 18px;
+  background: #ffff55;
+}
+/* Its width does not follow its words: the timeline must not move under the pointer between two presses. */
+.ml-count {
+  flex: none;
+  width: 150px;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 12px;
+  text-align: right;
+  white-space: nowrap;
+}
+.ml-passage {
+  flex: none;
+  width: 300px;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+}
+.ml-passage-head {
+  flex: none;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.ml-passage-head small {
+  color: var(--muted);
+  font-size: 12px;
+}
+.ml-said {
+  flex: none;
+  margin: 0;
+  padding: 6px 8px;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.ml-rows {
+  flex: 1;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  list-style: none;
+}
+.ml-rows li {
+  display: flex;
+  gap: 8px;
+  padding: 6px 2px;
+  border-bottom: 2px solid #8b8b8b;
+  box-shadow: 0 2px 0 #ffffff;
+  margin-bottom: 2px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.ml-rows time {
+  flex: none;
+  width: 54px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.ml-rows em {
+  display: inline-block;
+  margin-right: 4px;
+  padding: 0 5px;
+  background: #555555;
+  color: #ffffff;
+  font-size: 11px;
+  font-style: normal;
+}
+.ml-rows em[data-colour="look"] {
+  background: #1f5fbf;
+}
+.ml-rows em[data-colour="review"] {
+  background: #6e4f00;
+}
+.ml-none {
+  border: none !important;
+  box-shadow: none !important;
+  color: var(--muted);
+}
+/* The window narrow: the stage keeps its room, the passage gives way. */
+@container mf-main (max-width: 900px) {
+  .ml-passage {
+    width: 240px;
+  }
+  .ml-head small {
+    display: none;
+  }
+}
+@container mf-main (max-width: 700px) {
+  .ml-passage {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ml-ticks i {
+    transition: none;
+  }
+}
+
+/* Looking back at an earlier step: plain to see, so it is not taken for where the making has got to. */
+.ml-stage[data-replaying="true"] {
+  border-color: #f0dc8c;
+}
+.ml-past {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: calc(100% - 16px);
+  padding: 2px 2px 2px 10px;
+  border: 2px solid #000000;
+  background: #f0dc8c;
+  color: #6e4f00;
+  font-size: 12px;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+.ml-past span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* A hand on the stage wants to see the model: the words give way. */
+.ml-thinking,
+.ml-tips {
+  pointer-events: none;
+}
+.ml-stage:hover .ml-tips,
+.ml-stage:hover .ml-thinking:not([data-state="warn"], [data-state="fail"]) {
+  opacity: 0.25;
+}
+.ml-thinking[data-state="warn"] b {
+  color: #f0dc8c;
+}
+.ml-thinking[data-state="fail"] b {
+  color: #e9b8b2;
+}
+.ml-head h2 {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ml-said {
+  max-height: 96px;
+  overflow: auto;
+}
+.ml-said::after {
+  display: none;
+}
+.ml-row-words {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.ml-count {
+  text-overflow: ellipsis;
+}
+.ml-tip-next {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.model-canvas canvas:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: -2px;
+}

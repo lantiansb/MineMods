@@ -1,0 +1,4051 @@
+{
+  "schema_version": 1,
+  "id": "c1b69f15-9a02-48a9-8589-6385871d78eb",
+  "entity_id": "11111111-1111-4111-8111-111111111111",
+  "revision": 1,
+  "origin": "gpt-6-astra",
+  "created_at": "2026-10-05T06:21:21.135Z",
+  "data": {
+    "design": {
+      "name": "苔原蘑菇牛",
+      "texture_size": 256,
+      "bones": [
+        {
+          "name": "body",
+          "parent": null,
+          "pivot": [
+            0,
+            11,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "name": "torso",
+              "origin": [
+                -5,
+                8,
+                -7
+              ],
+              "size": [
+                10,
+                7,
+                14
+              ],
+              "faces": {
+                "north": "#a89876",
+                "east": "#a89876",
+                "south": "#a89876",
+                "west": "#a89876",
+                "up": "#8c9765",
+                "down": "#a89876"
+              },
+              "surface_details": []
+            },
+            {
+              "name": "shoulders",
+              "origin": [
+                -5,
+                10,
+                -6
+              ],
+              "size": [
+                10,
+                6,
+                5
+              ],
+              "faces": {
+                "north": "#bdad88",
+                "east": "#bdad88",
+                "south": "#bdad88",
+                "west": "#bdad88",
+                "up": "#acb97c",
+                "down": "#bdad88"
+              },
+              "surface_details": []
+            },
+            {
+              "name": "patch_left",
+              "origin": [
+                5,
+                10,
+                -3
+              ],
+              "size": [
+                1,
+                3,
+                4
+              ],
+              "faces": {
+                "north": "#66794a",
+                "east": "#66794a",
+                "south": "#66794a",
+                "west": "#66794a",
+                "up": "#66794a",
+                "down": "#66794a"
+              },
+              "surface_details": []
+            },
+            {
+              "name": "patch_right",
+              "origin": [
+                -6,
+                11,
+                1
+              ],
+              "size": [
+                1,
+                3,
+                4
+              ],
+              "faces": {
+                "north": "#66794a",
+                "east": "#66794a",
+                "south": "#66794a",
+                "west": "#66794a",
+                "up": "#66794a",
+                "down": "#66794a"
+              },
+              "surface_details": []
+            },
+            {
+              "name": "mushroom_stem_a",
+              "origin": [
+                -3,
+                15,
+                -2
+              ],
+              "size": [
+                2,
+                4,
+                2
+              ],
+              "faces": {
+                "north": "#e8d8b2",
+                "east": "#e8d8b2",
+                "south": "#e8d8b2",
+                "west": "#e8d8b2",
+                "up": "#e8d8b2",
+                "down": "#e8d8b2"
+              },
+              "surface_details": []
+            },
+            {
+              "name": "mushroom_cap_a",
+              "origin": [
+                -5,
+                19,
+                -4
+              ],
+              "size": [
+                6,
+                2,
+                6
+              ],
+              "faces": {
+                "north": "#b86646",
+                "east": "#b86646",
+                "south": "#b86646",
+                "west": "#b86646",
+                "up": "#d48154",
+                "down": "#b86646"
+              },
+              "surface_details": []
+            },
+            {
+              "name": "mushroom_spot_a",
+              "origin": [
+                -4,
+                21,
+                -3
+              ],
+              "size": [
+                2,
+                1,
+                2
+              ],
+              "faces": {
+                "north": "#eddbaf",
+                "east": "#eddbaf",
+                "south": "#eddbaf",
+                "west": "#eddbaf",
+                "up": "#eddbaf",
+                "down": "#eddbaf"
+              },
+              "surface_details": []
+            },
+            {
+              "name": "mushroom_spot_b",
+              "origin": [
+                -1,
+                21,
+                0
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "faces": {
+                "north": "#eddbaf",
+                "east": "#eddbaf",
+                "south": "#eddbaf",
+                "west": "#eddbaf",
+                "up": "#eddbaf",
+                "down": "#eddbaf"
+              },
+              "surface_details": []
+            },
+            {
+              "name": "mushroom_stem_b",
+              "origin": [
+                2,
+                15,
+                3
+              ],
+              "size": [
+                2,
+                3,
+                2
+              ],
+              "faces": {
+                "north": "#e8d8b2",
+                "east": "#e8d8b2",
+                "south": "#e8d8b2",
+                "west": "#e8d8b2",
+                "up": "#e8d8b2",
+                "down": "#e8d8b2"
+              },
+              "surface_details": []
+            },
+            {
+              "name": "mushroom_cap_b",
+              "origin": [
+                0,
+                18,
+                1
+              ],
+              "size": [
+                6,
+                2,
+                6
+              ],
+              "faces": {
+                "north": "#b86646",
+                "east": "#b86646",
+                "south": "#b86646",
+                "west": "#b86646",
+                "up": "#d48154",
+                "down": "#b86646"
+              },
+              "surface_details": []
+            },
+            {
+              "name": "mushroom_spot_c",
+              "origin": [
+                2,
+                20,
+                2
+              ],
+              "size": [
+                2,
+                1,
+                2
+              ],
+              "faces": {
+                "north": "#eddbaf",
+                "east": "#eddbaf",
+                "south": "#eddbaf",
+                "west": "#eddbaf",
+                "up": "#eddbaf",
+                "down": "#eddbaf"
+              },
+              "surface_details": []
+            }
+          ]
+        },
+        {
+          "name": "head",
+          "parent": "body",
+          "pivot": [
+            0,
+            13,
+            -6
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "name": "skull",
+              "origin": [
+                -4,
+                10,
+                -13
+              ],
+              "size": [
+                8,
+                7,
+                6
+              ],
+              "faces": {
+                "north": "#c9b994",
+                "east": "#c9b994",
+                "south": "#c9b994",
+                "west": "#c9b994",
+                "up": "#d4c6a5",
+                "down": "#c9b994"
+              },
+              "surface_details": []
+            },
+            {
+              "name": "muzzle",
+              "origin": [
+                -3,
+                9,
+                -15
+              ],
+              "size": [
+                6,
+                3,
+                3
+              ],
+              "faces": {
+                "north": "#8b715b",
+                "east": "#8b715b",
+                "south": "#8b715b",
+                "west": "#8b715b",
+                "up": "#a18a6d",
+                "down": "#8b715b"
+              },
+              "surface_details": []
+            },
+            {
+              "name": "eye_left",
+              "origin": [
+                3,
+                14,
+                -14
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "faces": {
+                "north": "#292d27",
+                "east": "#292d27",
+                "south": "#292d27",
+                "west": "#292d27",
+                "up": "#292d27",
+                "down": "#292d27"
+              },
+              "surface_details": []
+            },
+            {
+              "name": "eye_right",
+              "origin": [
+                -4,
+                14,
+                -14
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "faces": {
+                "north": "#292d27",
+                "east": "#292d27",
+                "south": "#292d27",
+                "west": "#292d27",
+                "up": "#292d27",
+                "down": "#292d27"
+              },
+              "surface_details": []
+            },
+            {
+              "name": "ear_left",
+              "origin": [
+                4,
+                14,
+                -11
+              ],
+              "size": [
+                3,
+                2,
+                3
+              ],
+              "faces": {
+                "north": "#a89272",
+                "east": "#a89272",
+                "south": "#a89272",
+                "west": "#a89272",
+                "up": "#c4b490",
+                "down": "#a89272"
+              },
+              "surface_details": []
+            },
+            {
+              "name": "ear_right",
+              "origin": [
+                -7,
+                14,
+                -11
+              ],
+              "size": [
+                3,
+                2,
+                3
+              ],
+              "faces": {
+                "north": "#a89272",
+                "east": "#a89272",
+                "south": "#a89272",
+                "west": "#a89272",
+                "up": "#c4b490",
+                "down": "#a89272"
+              },
+              "surface_details": []
+            },
+            {
+              "name": "horn_left",
+              "origin": [
+                2,
+                17,
+                -10
+              ],
+              "size": [
+                2,
+                3,
+                2
+              ],
+              "faces": {
+                "north": "#ede0be",
+                "east": "#ede0be",
+                "south": "#ede0be",
+                "west": "#ede0be",
+                "up": "#ede0be",
+                "down": "#ede0be"
+              },
+              "surface_details": []
+            },
+            {
+              "name": "horn_right",
+              "origin": [
+                -4,
+                17,
+                -10
+              ],
+              "size": [
+                2,
+                3,
+                2
+              ],
+              "faces": {
+                "north": "#ede0be",
+                "east": "#ede0be",
+                "south": "#ede0be",
+                "west": "#ede0be",
+                "up": "#ede0be",
+                "down": "#ede0be"
+              },
+              "surface_details": []
+            }
+          ]
+        },
+        {
+          "name": "leg_0",
+          "parent": "body",
+          "pivot": [
+            3,
+            9,
+            -5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "name": "leg",
+              "origin": [
+                2,
+                1,
+                -6
+              ],
+              "size": [
+                2,
+                8,
+                2
+              ],
+              "faces": {
+                "north": "#ac9b78",
+                "east": "#ac9b78",
+                "south": "#ac9b78",
+                "west": "#ac9b78",
+                "up": "#ac9b78",
+                "down": "#ac9b78"
+              },
+              "surface_details": []
+            },
+            {
+              "name": "hoof",
+              "origin": [
+                1,
+                0,
+                -7
+              ],
+              "size": [
+                4,
+                2,
+                4
+              ],
+              "faces": {
+                "north": "#4b5041",
+                "east": "#4b5041",
+                "south": "#4b5041",
+                "west": "#4b5041",
+                "up": "#4b5041",
+                "down": "#4b5041"
+              },
+              "surface_details": []
+            }
+          ]
+        },
+        {
+          "name": "leg_1",
+          "parent": "body",
+          "pivot": [
+            -3,
+            9,
+            -5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "name": "leg",
+              "origin": [
+                -4,
+                1,
+                -6
+              ],
+              "size": [
+                2,
+                8,
+                2
+              ],
+              "faces": {
+                "north": "#ac9b78",
+                "east": "#ac9b78",
+                "south": "#ac9b78",
+                "west": "#ac9b78",
+                "up": "#ac9b78",
+                "down": "#ac9b78"
+              },
+              "surface_details": []
+            },
+            {
+              "name": "hoof",
+              "origin": [
+                -5,
+                0,
+                -7
+              ],
+              "size": [
+                4,
+                2,
+                4
+              ],
+              "faces": {
+                "north": "#4b5041",
+                "east": "#4b5041",
+                "south": "#4b5041",
+                "west": "#4b5041",
+                "up": "#4b5041",
+                "down": "#4b5041"
+              },
+              "surface_details": []
+            }
+          ]
+        },
+        {
+          "name": "leg_2",
+          "parent": "body",
+          "pivot": [
+            3,
+            9,
+            5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "name": "leg",
+              "origin": [
+                2,
+                1,
+                4
+              ],
+              "size": [
+                2,
+                8,
+                2
+              ],
+              "faces": {
+                "north": "#ac9b78",
+                "east": "#ac9b78",
+                "south": "#ac9b78",
+                "west": "#ac9b78",
+                "up": "#ac9b78",
+                "down": "#ac9b78"
+              },
+              "surface_details": []
+            },
+            {
+              "name": "hoof",
+              "origin": [
+                1,
+                0,
+                3
+              ],
+              "size": [
+                4,
+                2,
+                4
+              ],
+              "faces": {
+                "north": "#4b5041",
+                "east": "#4b5041",
+                "south": "#4b5041",
+                "west": "#4b5041",
+                "up": "#4b5041",
+                "down": "#4b5041"
+              },
+              "surface_details": []
+            }
+          ]
+        },
+        {
+          "name": "leg_3",
+          "parent": "body",
+          "pivot": [
+            -3,
+            9,
+            5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "name": "leg",
+              "origin": [
+                -4,
+                1,
+                4
+              ],
+              "size": [
+                2,
+                8,
+                2
+              ],
+              "faces": {
+                "north": "#ac9b78",
+                "east": "#ac9b78",
+                "south": "#ac9b78",
+                "west": "#ac9b78",
+                "up": "#ac9b78",
+                "down": "#ac9b78"
+              },
+              "surface_details": []
+            },
+            {
+              "name": "hoof",
+              "origin": [
+                -5,
+                0,
+                3
+              ],
+              "size": [
+                4,
+                2,
+                4
+              ],
+              "faces": {
+                "north": "#4b5041",
+                "east": "#4b5041",
+                "south": "#4b5041",
+                "west": "#4b5041",
+                "up": "#4b5041",
+                "down": "#4b5041"
+              },
+              "surface_details": []
+            }
+          ]
+        },
+        {
+          "name": "tail",
+          "parent": "body",
+          "pivot": [
+            0,
+            12,
+            7
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "name": "tail",
+              "origin": [
+                -1,
+                5,
+                7
+              ],
+              "size": [
+                2,
+                8,
+                2
+              ],
+              "faces": {
+                "north": "#998764",
+                "east": "#998764",
+                "south": "#998764",
+                "west": "#998764",
+                "up": "#998764",
+                "down": "#998764"
+              },
+              "surface_details": []
+            },
+            {
+              "name": "tail_tip",
+              "origin": [
+                -2,
+                4,
+                7
+              ],
+              "size": [
+                4,
+                3,
+                3
+              ],
+              "faces": {
+                "north": "#586043",
+                "east": "#586043",
+                "south": "#586043",
+                "west": "#586043",
+                "up": "#586043",
+                "down": "#586043"
+              },
+              "surface_details": []
+            }
+          ]
+        }
+      ],
+      "animations": [
+        {
+          "name": "idle",
+          "length": 3,
+          "loop": true,
+          "channels": [
+            {
+              "bone": "head",
+              "keyframes": [
+                {
+                  "time": 0,
+                  "rotation": [
+                    0,
+                    -3,
+                    0
+                  ]
+                },
+                {
+                  "time": 1.5,
+                  "rotation": [
+                    2,
+                    3,
+                    0
+                  ]
+                },
+                {
+                  "time": 3,
+                  "rotation": [
+                    0,
+                    -3,
+                    0
+                  ]
+                }
+              ]
+            },
+            {
+              "bone": "tail",
+              "keyframes": [
+                {
+                  "time": 0,
+                  "rotation": [
+                    0,
+                    0,
+                    -8
+                  ]
+                },
+                {
+                  "time": 1.5,
+                  "rotation": [
+                    0,
+                    0,
+                    8
+                  ]
+                },
+                {
+                  "time": 3,
+                  "rotation": [
+                    0,
+                    0,
+                    -8
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "walk",
+          "length": 1,
+          "loop": true,
+          "channels": [
+            {
+              "bone": "leg_0",
+              "keyframes": [
+                {
+                  "time": 0,
+                  "rotation": [
+                    22,
+                    0,
+                    0
+                  ]
+                },
+                {
+                  "time": 0.5,
+                  "rotation": [
+                    -22,
+                    0,
+                    0
+                  ]
+                },
+                {
+                  "time": 1,
+                  "rotation": [
+                    22,
+                    0,
+                    0
+                  ]
+                }
+              ]
+            },
+            {
+              "bone": "leg_1",
+              "keyframes": [
+                {
+                  "time": 0,
+                  "rotation": [
+                    -22,
+                    0,
+                    0
+                  ]
+                },
+                {
+                  "time": 0.5,
+                  "rotation": [
+                    22,
+                    0,
+                    0
+                  ]
+                },
+                {
+                  "time": 1,
+                  "rotation": [
+                    -22,
+                    0,
+                    0
+                  ]
+                }
+              ]
+            },
+            {
+              "bone": "leg_2",
+              "keyframes": [
+                {
+                  "time": 0,
+                  "rotation": [
+                    -22,
+                    0,
+                    0
+                  ]
+                },
+                {
+                  "time": 0.5,
+                  "rotation": [
+                    22,
+                    0,
+                    0
+                  ]
+                },
+                {
+                  "time": 1,
+                  "rotation": [
+                    -22,
+                    0,
+                    0
+                  ]
+                }
+              ]
+            },
+            {
+              "bone": "leg_3",
+              "keyframes": [
+                {
+                  "time": 0,
+                  "rotation": [
+                    22,
+                    0,
+                    0
+                  ]
+                },
+                {
+                  "time": 0.5,
+                  "rotation": [
+                    -22,
+                    0,
+                    0
+                  ]
+                },
+                {
+                  "time": 1,
+                  "rotation": [
+                    22,
+                    0,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "hurt",
+          "length": 0.5,
+          "loop": false,
+          "channels": [
+            {
+              "bone": "body",
+              "keyframes": [
+                {
+                  "time": 0,
+                  "rotation": [
+                    0,
+                    0,
+                    0
+                  ]
+                },
+                {
+                  "time": 0.15,
+                  "rotation": [
+                    -8,
+                    0,
+                    5
+                  ]
+                },
+                {
+                  "time": 0.5,
+                  "rotation": [
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "blockbench": {
+      "meta": {
+        "format_version": "5.0",
+        "model_format": "free",
+        "box_uv": false
+      },
+      "name": "苔原蘑菇牛",
+      "resolution": {
+        "width": 256,
+        "height": 256
+      },
+      "elements": [
+        {
+          "uuid": "minemods-cube-1-1",
+          "name": "torso",
+          "type": "cube",
+          "from": [
+            -5,
+            8,
+            -7
+          ],
+          "to": [
+            5,
+            15,
+            7
+          ],
+          "origin": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "autouv": 0,
+          "color": 11049078,
+          "faces": {
+            "north": {
+              "uv": [
+                1,
+                1,
+                11,
+                8
+              ],
+              "texture": 0,
+              "color": 11049078
+            },
+            "east": {
+              "uv": [
+                13,
+                1,
+                27,
+                8
+              ],
+              "texture": 0,
+              "color": 11049078
+            },
+            "south": {
+              "uv": [
+                29,
+                1,
+                39,
+                8
+              ],
+              "texture": 0,
+              "color": 11049078
+            },
+            "west": {
+              "uv": [
+                41,
+                1,
+                55,
+                8
+              ],
+              "texture": 0,
+              "color": 11049078
+            },
+            "up": {
+              "uv": [
+                57,
+                1,
+                67,
+                15
+              ],
+              "texture": 0,
+              "color": 9213797
+            },
+            "down": {
+              "uv": [
+                69,
+                1,
+                79,
+                15
+              ],
+              "texture": 0,
+              "color": 11049078
+            }
+          }
+        },
+        {
+          "uuid": "minemods-cube-1-2",
+          "name": "shoulders",
+          "type": "cube",
+          "from": [
+            -5,
+            10,
+            -6
+          ],
+          "to": [
+            5,
+            16,
+            -1
+          ],
+          "origin": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "autouv": 0,
+          "color": 12430728,
+          "faces": {
+            "north": {
+              "uv": [
+                81,
+                1,
+                91,
+                7
+              ],
+              "texture": 0,
+              "color": 12430728
+            },
+            "east": {
+              "uv": [
+                93,
+                1,
+                98,
+                7
+              ],
+              "texture": 0,
+              "color": 12430728
+            },
+            "south": {
+              "uv": [
+                100,
+                1,
+                110,
+                7
+              ],
+              "texture": 0,
+              "color": 12430728
+            },
+            "west": {
+              "uv": [
+                112,
+                1,
+                117,
+                7
+              ],
+              "texture": 0,
+              "color": 12430728
+            },
+            "up": {
+              "uv": [
+                119,
+                1,
+                129,
+                6
+              ],
+              "texture": 0,
+              "color": 11319676
+            },
+            "down": {
+              "uv": [
+                131,
+                1,
+                141,
+                6
+              ],
+              "texture": 0,
+              "color": 12430728
+            }
+          }
+        },
+        {
+          "uuid": "minemods-cube-1-3",
+          "name": "patch_left",
+          "type": "cube",
+          "from": [
+            5,
+            10,
+            -3
+          ],
+          "to": [
+            6,
+            13,
+            1
+          ],
+          "origin": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "autouv": 0,
+          "color": 6715722,
+          "faces": {
+            "north": {
+              "uv": [
+                143,
+                1,
+                144,
+                4
+              ],
+              "texture": 0,
+              "color": 6715722
+            },
+            "east": {
+              "uv": [
+                146,
+                1,
+                150,
+                4
+              ],
+              "texture": 0,
+              "color": 6715722
+            },
+            "south": {
+              "uv": [
+                152,
+                1,
+                153,
+                4
+              ],
+              "texture": 0,
+              "color": 6715722
+            },
+            "west": {
+              "uv": [
+                155,
+                1,
+                159,
+                4
+              ],
+              "texture": 0,
+              "color": 6715722
+            },
+            "up": {
+              "uv": [
+                161,
+                1,
+                162,
+                5
+              ],
+              "texture": 0,
+              "color": 6715722
+            },
+            "down": {
+              "uv": [
+                164,
+                1,
+                165,
+                5
+              ],
+              "texture": 0,
+              "color": 6715722
+            }
+          }
+        },
+        {
+          "uuid": "minemods-cube-1-4",
+          "name": "patch_right",
+          "type": "cube",
+          "from": [
+            -6,
+            11,
+            1
+          ],
+          "to": [
+            -5,
+            14,
+            5
+          ],
+          "origin": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "autouv": 0,
+          "color": 6715722,
+          "faces": {
+            "north": {
+              "uv": [
+                167,
+                1,
+                168,
+                4
+              ],
+              "texture": 0,
+              "color": 6715722
+            },
+            "east": {
+              "uv": [
+                170,
+                1,
+                174,
+                4
+              ],
+              "texture": 0,
+              "color": 6715722
+            },
+            "south": {
+              "uv": [
+                176,
+                1,
+                177,
+                4
+              ],
+              "texture": 0,
+              "color": 6715722
+            },
+            "west": {
+              "uv": [
+                179,
+                1,
+                183,
+                4
+              ],
+              "texture": 0,
+              "color": 6715722
+            },
+            "up": {
+              "uv": [
+                185,
+                1,
+                186,
+                5
+              ],
+              "texture": 0,
+              "color": 6715722
+            },
+            "down": {
+              "uv": [
+                188,
+                1,
+                189,
+                5
+              ],
+              "texture": 0,
+              "color": 6715722
+            }
+          }
+        },
+        {
+          "uuid": "minemods-cube-1-5",
+          "name": "mushroom_stem_a",
+          "type": "cube",
+          "from": [
+            -3,
+            15,
+            -2
+          ],
+          "to": [
+            -1,
+            19,
+            0
+          ],
+          "origin": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "autouv": 0,
+          "color": 15259826,
+          "faces": {
+            "north": {
+              "uv": [
+                191,
+                1,
+                193,
+                5
+              ],
+              "texture": 0,
+              "color": 15259826
+            },
+            "east": {
+              "uv": [
+                195,
+                1,
+                197,
+                5
+              ],
+              "texture": 0,
+              "color": 15259826
+            },
+            "south": {
+              "uv": [
+                199,
+                1,
+                201,
+                5
+              ],
+              "texture": 0,
+              "color": 15259826
+            },
+            "west": {
+              "uv": [
+                203,
+                1,
+                205,
+                5
+              ],
+              "texture": 0,
+              "color": 15259826
+            },
+            "up": {
+              "uv": [
+                207,
+                1,
+                209,
+                3
+              ],
+              "texture": 0,
+              "color": 15259826
+            },
+            "down": {
+              "uv": [
+                211,
+                1,
+                213,
+                3
+              ],
+              "texture": 0,
+              "color": 15259826
+            }
+          }
+        },
+        {
+          "uuid": "minemods-cube-1-6",
+          "name": "mushroom_cap_a",
+          "type": "cube",
+          "from": [
+            -5,
+            19,
+            -4
+          ],
+          "to": [
+            1,
+            21,
+            2
+          ],
+          "origin": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "autouv": 0,
+          "color": 12084806,
+          "faces": {
+            "north": {
+              "uv": [
+                215,
+                1,
+                221,
+                3
+              ],
+              "texture": 0,
+              "color": 12084806
+            },
+            "east": {
+              "uv": [
+                223,
+                1,
+                229,
+                3
+              ],
+              "texture": 0,
+              "color": 12084806
+            },
+            "south": {
+              "uv": [
+                231,
+                1,
+                237,
+                3
+              ],
+              "texture": 0,
+              "color": 12084806
+            },
+            "west": {
+              "uv": [
+                239,
+                1,
+                245,
+                3
+              ],
+              "texture": 0,
+              "color": 12084806
+            },
+            "up": {
+              "uv": [
+                247,
+                1,
+                253,
+                7
+              ],
+              "texture": 0,
+              "color": 13926740
+            },
+            "down": {
+              "uv": [
+                1,
+                17,
+                7,
+                23
+              ],
+              "texture": 0,
+              "color": 12084806
+            }
+          }
+        },
+        {
+          "uuid": "minemods-cube-1-7",
+          "name": "mushroom_spot_a",
+          "type": "cube",
+          "from": [
+            -4,
+            21,
+            -3
+          ],
+          "to": [
+            -2,
+            22,
+            -1
+          ],
+          "origin": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "autouv": 0,
+          "color": 15588271,
+          "faces": {
+            "north": {
+              "uv": [
+                9,
+                17,
+                11,
+                18
+              ],
+              "texture": 0,
+              "color": 15588271
+            },
+            "east": {
+              "uv": [
+                13,
+                17,
+                15,
+                18
+              ],
+              "texture": 0,
+              "color": 15588271
+            },
+            "south": {
+              "uv": [
+                17,
+                17,
+                19,
+                18
+              ],
+              "texture": 0,
+              "color": 15588271
+            },
+            "west": {
+              "uv": [
+                21,
+                17,
+                23,
+                18
+              ],
+              "texture": 0,
+              "color": 15588271
+            },
+            "up": {
+              "uv": [
+                25,
+                17,
+                27,
+                19
+              ],
+              "texture": 0,
+              "color": 15588271
+            },
+            "down": {
+              "uv": [
+                29,
+                17,
+                31,
+                19
+              ],
+              "texture": 0,
+              "color": 15588271
+            }
+          }
+        },
+        {
+          "uuid": "minemods-cube-1-8",
+          "name": "mushroom_spot_b",
+          "type": "cube",
+          "from": [
+            -1,
+            21,
+            0
+          ],
+          "to": [
+            0,
+            22,
+            1
+          ],
+          "origin": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "autouv": 0,
+          "color": 15588271,
+          "faces": {
+            "north": {
+              "uv": [
+                33,
+                17,
+                34,
+                18
+              ],
+              "texture": 0,
+              "color": 15588271
+            },
+            "east": {
+              "uv": [
+                36,
+                17,
+                37,
+                18
+              ],
+              "texture": 0,
+              "color": 15588271
+            },
+            "south": {
+              "uv": [
+                39,
+                17,
+                40,
+                18
+              ],
+              "texture": 0,
+              "color": 15588271
+            },
+            "west": {
+              "uv": [
+                42,
+                17,
+                43,
+                18
+              ],
+              "texture": 0,
+              "color": 15588271
+            },
+            "up": {
+              "uv": [
+                45,
+                17,
+                46,
+                18
+              ],
+              "texture": 0,
+              "color": 15588271
+            },
+            "down": {
+              "uv": [
+                48,
+                17,
+                49,
+                18
+              ],
+              "texture": 0,
+              "color": 15588271
+            }
+          }
+        },
+        {
+          "uuid": "minemods-cube-1-9",
+          "name": "mushroom_stem_b",
+          "type": "cube",
+          "from": [
+            2,
+            15,
+            3
+          ],
+          "to": [
+            4,
+            18,
+            5
+          ],
+          "origin": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "autouv": 0,
+          "color": 15259826,
+          "faces": {
+            "north": {
+              "uv": [
+                51,
+                17,
+                53,
+                20
+              ],
+              "texture": 0,
+              "color": 15259826
+            },
+            "east": {
+              "uv": [
+                55,
+                17,
+                57,
+                20
+              ],
+              "texture": 0,
+              "color": 15259826
+            },
+            "south": {
+              "uv": [
+                59,
+                17,
+                61,
+                20
+              ],
+              "texture": 0,
+              "color": 15259826
+            },
+            "west": {
+              "uv": [
+                63,
+                17,
+                65,
+                20
+              ],
+              "texture": 0,
+              "color": 15259826
+            },
+            "up": {
+              "uv": [
+                67,
+                17,
+                69,
+                19
+              ],
+              "texture": 0,
+              "color": 15259826
+            },
+            "down": {
+              "uv": [
+                71,
+                17,
+                73,
+                19
+              ],
+              "texture": 0,
+              "color": 15259826
+            }
+          }
+        },
+        {
+          "uuid": "minemods-cube-1-10",
+          "name": "mushroom_cap_b",
+          "type": "cube",
+          "from": [
+            0,
+            18,
+            1
+          ],
+          "to": [
+            6,
+            20,
+            7
+          ],
+          "origin": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "autouv": 0,
+          "color": 12084806,
+          "faces": {
+            "north": {
+              "uv": [
+                75,
+                17,
+                81,
+                19
+              ],
+              "texture": 0,
+              "color": 12084806
+            },
+            "east": {
+              "uv": [
+                83,
+                17,
+                89,
+                19
+              ],
+              "texture": 0,
+              "color": 12084806
+            },
+            "south": {
+              "uv": [
+                91,
+                17,
+                97,
+                19
+              ],
+              "texture": 0,
+              "color": 12084806
+            },
+            "west": {
+              "uv": [
+                99,
+                17,
+                105,
+                19
+              ],
+              "texture": 0,
+              "color": 12084806
+            },
+            "up": {
+              "uv": [
+                107,
+                17,
+                113,
+                23
+              ],
+              "texture": 0,
+              "color": 13926740
+            },
+            "down": {
+              "uv": [
+                115,
+                17,
+                121,
+                23
+              ],
+              "texture": 0,
+              "color": 12084806
+            }
+          }
+        },
+        {
+          "uuid": "minemods-cube-1-11",
+          "name": "mushroom_spot_c",
+          "type": "cube",
+          "from": [
+            2,
+            20,
+            2
+          ],
+          "to": [
+            4,
+            21,
+            4
+          ],
+          "origin": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "autouv": 0,
+          "color": 15588271,
+          "faces": {
+            "north": {
+              "uv": [
+                123,
+                17,
+                125,
+                18
+              ],
+              "texture": 0,
+              "color": 15588271
+            },
+            "east": {
+              "uv": [
+                127,
+                17,
+                129,
+                18
+              ],
+              "texture": 0,
+              "color": 15588271
+            },
+            "south": {
+              "uv": [
+                131,
+                17,
+                133,
+                18
+              ],
+              "texture": 0,
+              "color": 15588271
+            },
+            "west": {
+              "uv": [
+                135,
+                17,
+                137,
+                18
+              ],
+              "texture": 0,
+              "color": 15588271
+            },
+            "up": {
+              "uv": [
+                139,
+                17,
+                141,
+                19
+              ],
+              "texture": 0,
+              "color": 15588271
+            },
+            "down": {
+              "uv": [
+                143,
+                17,
+                145,
+                19
+              ],
+              "texture": 0,
+              "color": 15588271
+            }
+          }
+        },
+        {
+          "uuid": "minemods-cube-2-1",
+          "name": "skull",
+          "type": "cube",
+          "from": [
+            -4,
+            10,
+            -13
+          ],
+          "to": [
+            4,
+            17,
+            -7
+          ],
+          "origin": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "autouv": 0,
+          "color": 13220244,
+          "faces": {
+            "north": {
+              "uv": [
+                147,
+                17,
+                155,
+                24
+              ],
+              "texture": 0,
+              "color": 13220244
+            },
+            "east": {
+              "uv": [
+                157,
+                17,
+                163,
+                24
+              ],
+              "texture": 0,
+              "color": 13220244
+            },
+            "south": {
+              "uv": [
+                165,
+                17,
+                173,
+                24
+              ],
+              "texture": 0,
+              "color": 13220244
+            },
+            "west": {
+              "uv": [
+                175,
+                17,
+                181,
+                24
+              ],
+              "texture": 0,
+              "color": 13220244
+            },
+            "up": {
+              "uv": [
+                183,
+                17,
+                191,
+                23
+              ],
+              "texture": 0,
+              "color": 13944485
+            },
+            "down": {
+              "uv": [
+                193,
+                17,
+                201,
+                23
+              ],
+              "texture": 0,
+              "color": 13220244
+            }
+          }
+        },
+        {
+          "uuid": "minemods-cube-2-2",
+          "name": "muzzle",
+          "type": "cube",
+          "from": [
+            -3,
+            9,
+            -15
+          ],
+          "to": [
+            3,
+            12,
+            -12
+          ],
+          "origin": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "autouv": 0,
+          "color": 9138523,
+          "faces": {
+            "north": {
+              "uv": [
+                203,
+                17,
+                209,
+                20
+              ],
+              "texture": 0,
+              "color": 9138523
+            },
+            "east": {
+              "uv": [
+                211,
+                17,
+                214,
+                20
+              ],
+              "texture": 0,
+              "color": 9138523
+            },
+            "south": {
+              "uv": [
+                216,
+                17,
+                222,
+                20
+              ],
+              "texture": 0,
+              "color": 9138523
+            },
+            "west": {
+              "uv": [
+                224,
+                17,
+                227,
+                20
+              ],
+              "texture": 0,
+              "color": 9138523
+            },
+            "up": {
+              "uv": [
+                229,
+                17,
+                235,
+                20
+              ],
+              "texture": 0,
+              "color": 10586733
+            },
+            "down": {
+              "uv": [
+                237,
+                17,
+                243,
+                20
+              ],
+              "texture": 0,
+              "color": 9138523
+            }
+          }
+        },
+        {
+          "uuid": "minemods-cube-2-3",
+          "name": "eye_left",
+          "type": "cube",
+          "from": [
+            3,
+            14,
+            -14
+          ],
+          "to": [
+            4,
+            15,
+            -13
+          ],
+          "origin": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "autouv": 0,
+          "color": 2698535,
+          "faces": {
+            "north": {
+              "uv": [
+                245,
+                17,
+                246,
+                18
+              ],
+              "texture": 0,
+              "color": 2698535
+            },
+            "east": {
+              "uv": [
+                248,
+                17,
+                249,
+                18
+              ],
+              "texture": 0,
+              "color": 2698535
+            },
+            "south": {
+              "uv": [
+                251,
+                17,
+                252,
+                18
+              ],
+              "texture": 0,
+              "color": 2698535
+            },
+            "west": {
+              "uv": [
+                254,
+                17,
+                255,
+                18
+              ],
+              "texture": 0,
+              "color": 2698535
+            },
+            "up": {
+              "uv": [
+                1,
+                26,
+                2,
+                27
+              ],
+              "texture": 0,
+              "color": 2698535
+            },
+            "down": {
+              "uv": [
+                4,
+                26,
+                5,
+                27
+              ],
+              "texture": 0,
+              "color": 2698535
+            }
+          }
+        },
+        {
+          "uuid": "minemods-cube-2-4",
+          "name": "eye_right",
+          "type": "cube",
+          "from": [
+            -4,
+            14,
+            -14
+          ],
+          "to": [
+            -3,
+            15,
+            -13
+          ],
+          "origin": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "autouv": 0,
+          "color": 2698535,
+          "faces": {
+            "north": {
+              "uv": [
+                7,
+                26,
+                8,
+                27
+              ],
+              "texture": 0,
+              "color": 2698535
+            },
+            "east": {
+              "uv": [
+                10,
+                26,
+                11,
+                27
+              ],
+              "texture": 0,
+              "color": 2698535
+            },
+            "south": {
+              "uv": [
+                13,
+                26,
+                14,
+                27
+              ],
+              "texture": 0,
+              "color": 2698535
+            },
+            "west": {
+              "uv": [
+                16,
+                26,
+                17,
+                27
+              ],
+              "texture": 0,
+              "color": 2698535
+            },
+            "up": {
+              "uv": [
+                19,
+                26,
+                20,
+                27
+              ],
+              "texture": 0,
+              "color": 2698535
+            },
+            "down": {
+              "uv": [
+                22,
+                26,
+                23,
+                27
+              ],
+              "texture": 0,
+              "color": 2698535
+            }
+          }
+        },
+        {
+          "uuid": "minemods-cube-2-5",
+          "name": "ear_left",
+          "type": "cube",
+          "from": [
+            4,
+            14,
+            -11
+          ],
+          "to": [
+            7,
+            16,
+            -8
+          ],
+          "origin": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "autouv": 0,
+          "color": 11047538,
+          "faces": {
+            "north": {
+              "uv": [
+                25,
+                26,
+                28,
+                28
+              ],
+              "texture": 0,
+              "color": 11047538
+            },
+            "east": {
+              "uv": [
+                30,
+                26,
+                33,
+                28
+              ],
+              "texture": 0,
+              "color": 11047538
+            },
+            "south": {
+              "uv": [
+                35,
+                26,
+                38,
+                28
+              ],
+              "texture": 0,
+              "color": 11047538
+            },
+            "west": {
+              "uv": [
+                40,
+                26,
+                43,
+                28
+              ],
+              "texture": 0,
+              "color": 11047538
+            },
+            "up": {
+              "uv": [
+                45,
+                26,
+                48,
+                29
+              ],
+              "texture": 0,
+              "color": 12891280
+            },
+            "down": {
+              "uv": [
+                50,
+                26,
+                53,
+                29
+              ],
+              "texture": 0,
+              "color": 11047538
+            }
+          }
+        },
+        {
+          "uuid": "minemods-cube-2-6",
+          "name": "ear_right",
+          "type": "cube",
+          "from": [
+            -7,
+            14,
+            -11
+          ],
+          "to": [
+            -4,
+            16,
+            -8
+          ],
+          "origin": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "autouv": 0,
+          "color": 11047538,
+          "faces": {
+            "north": {
+              "uv": [
+                55,
+                26,
+                58,
+                28
+              ],
+              "texture": 0,
+              "color": 11047538
+            },
+            "east": {
+              "uv": [
+                60,
+                26,
+                63,
+                28
+              ],
+              "texture": 0,
+              "color": 11047538
+            },
+            "south": {
+              "uv": [
+                65,
+                26,
+                68,
+                28
+              ],
+              "texture": 0,
+              "color": 11047538
+            },
+            "west": {
+              "uv": [
+                70,
+                26,
+                73,
+                28
+              ],
+              "texture": 0,
+              "color": 11047538
+            },
+            "up": {
+              "uv": [
+                75,
+                26,
+                78,
+                29
+              ],
+              "texture": 0,
+              "color": 12891280
+            },
+            "down": {
+              "uv": [
+                80,
+                26,
+                83,
+                29
+              ],
+              "texture": 0,
+              "color": 11047538
+            }
+          }
+        },
+        {
+          "uuid": "minemods-cube-2-7",
+          "name": "horn_left",
+          "type": "cube",
+          "from": [
+            2,
+            17,
+            -10
+          ],
+          "to": [
+            4,
+            20,
+            -8
+          ],
+          "origin": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "autouv": 0,
+          "color": 15589566,
+          "faces": {
+            "north": {
+              "uv": [
+                85,
+                26,
+                87,
+                29
+              ],
+              "texture": 0,
+              "color": 15589566
+            },
+            "east": {
+              "uv": [
+                89,
+                26,
+                91,
+                29
+              ],
+              "texture": 0,
+              "color": 15589566
+            },
+            "south": {
+              "uv": [
+                93,
+                26,
+                95,
+                29
+              ],
+              "texture": 0,
+              "color": 15589566
+            },
+            "west": {
+              "uv": [
+                97,
+                26,
+                99,
+                29
+              ],
+              "texture": 0,
+              "color": 15589566
+            },
+            "up": {
+              "uv": [
+                101,
+                26,
+                103,
+                28
+              ],
+              "texture": 0,
+              "color": 15589566
+            },
+            "down": {
+              "uv": [
+                105,
+                26,
+                107,
+                28
+              ],
+              "texture": 0,
+              "color": 15589566
+            }
+          }
+        },
+        {
+          "uuid": "minemods-cube-2-8",
+          "name": "horn_right",
+          "type": "cube",
+          "from": [
+            -4,
+            17,
+            -10
+          ],
+          "to": [
+            -2,
+            20,
+            -8
+          ],
+          "origin": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "autouv": 0,
+          "color": 15589566,
+          "faces": {
+            "north": {
+              "uv": [
+                109,
+                26,
+                111,
+                29
+              ],
+              "texture": 0,
+              "color": 15589566
+            },
+            "east": {
+              "uv": [
+                113,
+                26,
+                115,
+                29
+              ],
+              "texture": 0,
+              "color": 15589566
+            },
+            "south": {
+              "uv": [
+                117,
+                26,
+                119,
+                29
+              ],
+              "texture": 0,
+              "color": 15589566
+            },
+            "west": {
+              "uv": [
+                121,
+                26,
+                123,
+                29
+              ],
+              "texture": 0,
+              "color": 15589566
+            },
+            "up": {
+              "uv": [
+                125,
+                26,
+                127,
+                28
+              ],
+              "texture": 0,
+              "color": 15589566
+            },
+            "down": {
+              "uv": [
+                129,
+                26,
+                131,
+                28
+              ],
+              "texture": 0,
+              "color": 15589566
+            }
+          }
+        },
+        {
+          "uuid": "minemods-cube-3-1",
+          "name": "leg",
+          "type": "cube",
+          "from": [
+            2,
+            1,
+            -6
+          ],
+          "to": [
+            4,
+            9,
+            -4
+          ],
+          "origin": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "autouv": 0,
+          "color": 11311992,
+          "faces": {
+            "north": {
+              "uv": [
+                133,
+                26,
+                135,
+                34
+              ],
+              "texture": 0,
+              "color": 11311992
+            },
+            "east": {
+              "uv": [
+                137,
+                26,
+                139,
+                34
+              ],
+              "texture": 0,
+              "color": 11311992
+            },
+            "south": {
+              "uv": [
+                141,
+                26,
+                143,
+                34
+              ],
+              "texture": 0,
+              "color": 11311992
+            },
+            "west": {
+              "uv": [
+                145,
+                26,
+                147,
+                34
+              ],
+              "texture": 0,
+              "color": 11311992
+            },
+            "up": {
+              "uv": [
+                149,
+                26,
+                151,
+                28
+              ],
+              "texture": 0,
+              "color": 11311992
+            },
+            "down": {
+              "uv": [
+                153,
+                26,
+                155,
+                28
+              ],
+              "texture": 0,
+              "color": 11311992
+            }
+          }
+        },
+        {
+          "uuid": "minemods-cube-3-2",
+          "name": "hoof",
+          "type": "cube",
+          "from": [
+            1,
+            0,
+            -7
+          ],
+          "to": [
+            5,
+            2,
+            -3
+          ],
+          "origin": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "autouv": 0,
+          "color": 4935745,
+          "faces": {
+            "north": {
+              "uv": [
+                157,
+                26,
+                161,
+                28
+              ],
+              "texture": 0,
+              "color": 4935745
+            },
+            "east": {
+              "uv": [
+                163,
+                26,
+                167,
+                28
+              ],
+              "texture": 0,
+              "color": 4935745
+            },
+            "south": {
+              "uv": [
+                169,
+                26,
+                173,
+                28
+              ],
+              "texture": 0,
+              "color": 4935745
+            },
+            "west": {
+              "uv": [
+                175,
+                26,
+                179,
+                28
+              ],
+              "texture": 0,
+              "color": 4935745
+            },
+            "up": {
+              "uv": [
+                181,
+                26,
+                185,
+                30
+              ],
+              "texture": 0,
+              "color": 4935745
+            },
+            "down": {
+              "uv": [
+                187,
+                26,
+                191,
+                30
+              ],
+              "texture": 0,
+              "color": 4935745
+            }
+          }
+        },
+        {
+          "uuid": "minemods-cube-4-1",
+          "name": "leg",
+          "type": "cube",
+          "from": [
+            -4,
+            1,
+            -6
+          ],
+          "to": [
+            -2,
+            9,
+            -4
+          ],
+          "origin": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "autouv": 0,
+          "color": 11311992,
+          "faces": {
+            "north": {
+              "uv": [
+                193,
+                26,
+                195,
+                34
+              ],
+              "texture": 0,
+              "color": 11311992
+            },
+            "east": {
+              "uv": [
+                197,
+                26,
+                199,
+                34
+              ],
+              "texture": 0,
+              "color": 11311992
+            },
+            "south": {
+              "uv": [
+                201,
+                26,
+                203,
+                34
+              ],
+              "texture": 0,
+              "color": 11311992
+            },
+            "west": {
+              "uv": [
+                205,
+                26,
+                207,
+                34
+              ],
+              "texture": 0,
+              "color": 11311992
+            },
+            "up": {
+              "uv": [
+                209,
+                26,
+                211,
+                28
+              ],
+              "texture": 0,
+              "color": 11311992
+            },
+            "down": {
+              "uv": [
+                213,
+                26,
+                215,
+                28
+              ],
+              "texture": 0,
+              "color": 11311992
+            }
+          }
+        },
+        {
+          "uuid": "minemods-cube-4-2",
+          "name": "hoof",
+          "type": "cube",
+          "from": [
+            -5,
+            0,
+            -7
+          ],
+          "to": [
+            -1,
+            2,
+            -3
+          ],
+          "origin": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "autouv": 0,
+          "color": 4935745,
+          "faces": {
+            "north": {
+              "uv": [
+                217,
+                26,
+                221,
+                28
+              ],
+              "texture": 0,
+              "color": 4935745
+            },
+            "east": {
+              "uv": [
+                223,
+                26,
+                227,
+                28
+              ],
+              "texture": 0,
+              "color": 4935745
+            },
+            "south": {
+              "uv": [
+                229,
+                26,
+                233,
+                28
+              ],
+              "texture": 0,
+              "color": 4935745
+            },
+            "west": {
+              "uv": [
+                235,
+                26,
+                239,
+                28
+              ],
+              "texture": 0,
+              "color": 4935745
+            },
+            "up": {
+              "uv": [
+                241,
+                26,
+                245,
+                30
+              ],
+              "texture": 0,
+              "color": 4935745
+            },
+            "down": {
+              "uv": [
+                247,
+                26,
+                251,
+                30
+              ],
+              "texture": 0,
+              "color": 4935745
+            }
+          }
+        },
+        {
+          "uuid": "minemods-cube-5-1",
+          "name": "leg",
+          "type": "cube",
+          "from": [
+            2,
+            1,
+            4
+          ],
+          "to": [
+            4,
+            9,
+            6
+          ],
+          "origin": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "autouv": 0,
+          "color": 11311992,
+          "faces": {
+            "north": {
+              "uv": [
+                253,
+                26,
+                255,
+                34
+              ],
+              "texture": 0,
+              "color": 11311992
+            },
+            "east": {
+              "uv": [
+                1,
+                36,
+                3,
+                44
+              ],
+              "texture": 0,
+              "color": 11311992
+            },
+            "south": {
+              "uv": [
+                5,
+                36,
+                7,
+                44
+              ],
+              "texture": 0,
+              "color": 11311992
+            },
+            "west": {
+              "uv": [
+                9,
+                36,
+                11,
+                44
+              ],
+              "texture": 0,
+              "color": 11311992
+            },
+            "up": {
+              "uv": [
+                13,
+                36,
+                15,
+                38
+              ],
+              "texture": 0,
+              "color": 11311992
+            },
+            "down": {
+              "uv": [
+                17,
+                36,
+                19,
+                38
+              ],
+              "texture": 0,
+              "color": 11311992
+            }
+          }
+        },
+        {
+          "uuid": "minemods-cube-5-2",
+          "name": "hoof",
+          "type": "cube",
+          "from": [
+            1,
+            0,
+            3
+          ],
+          "to": [
+            5,
+            2,
+            7
+          ],
+          "origin": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "autouv": 0,
+          "color": 4935745,
+          "faces": {
+            "north": {
+              "uv": [
+                21,
+                36,
+                25,
+                38
+              ],
+              "texture": 0,
+              "color": 4935745
+            },
+            "east": {
+              "uv": [
+                27,
+                36,
+                31,
+                38
+              ],
+              "texture": 0,
+              "color": 4935745
+            },
+            "south": {
+              "uv": [
+                33,
+                36,
+                37,
+                38
+              ],
+              "texture": 0,
+              "color": 4935745
+            },
+            "west": {
+              "uv": [
+                39,
+                36,
+                43,
+                38
+              ],
+              "texture": 0,
+              "color": 4935745
+            },
+            "up": {
+              "uv": [
+                45,
+                36,
+                49,
+                40
+              ],
+              "texture": 0,
+              "color": 4935745
+            },
+            "down": {
+              "uv": [
+                51,
+                36,
+                55,
+                40
+              ],
+              "texture": 0,
+              "color": 4935745
+            }
+          }
+        },
+        {
+          "uuid": "minemods-cube-6-1",
+          "name": "leg",
+          "type": "cube",
+          "from": [
+            -4,
+            1,
+            4
+          ],
+          "to": [
+            -2,
+            9,
+            6
+          ],
+          "origin": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "autouv": 0,
+          "color": 11311992,
+          "faces": {
+            "north": {
+              "uv": [
+                57,
+                36,
+                59,
+                44
+              ],
+              "texture": 0,
+              "color": 11311992
+            },
+            "east": {
+              "uv": [
+                61,
+                36,
+                63,
+                44
+              ],
+              "texture": 0,
+              "color": 11311992
+            },
+            "south": {
+              "uv": [
+                65,
+                36,
+                67,
+                44
+              ],
+              "texture": 0,
+              "color": 11311992
+            },
+            "west": {
+              "uv": [
+                69,
+                36,
+                71,
+                44
+              ],
+              "texture": 0,
+              "color": 11311992
+            },
+            "up": {
+              "uv": [
+                73,
+                36,
+                75,
+                38
+              ],
+              "texture": 0,
+              "color": 11311992
+            },
+            "down": {
+              "uv": [
+                77,
+                36,
+                79,
+                38
+              ],
+              "texture": 0,
+              "color": 11311992
+            }
+          }
+        },
+        {
+          "uuid": "minemods-cube-6-2",
+          "name": "hoof",
+          "type": "cube",
+          "from": [
+            -5,
+            0,
+            3
+          ],
+          "to": [
+            -1,
+            2,
+            7
+          ],
+          "origin": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "autouv": 0,
+          "color": 4935745,
+          "faces": {
+            "north": {
+              "uv": [
+                81,
+                36,
+                85,
+                38
+              ],
+              "texture": 0,
+              "color": 4935745
+            },
+            "east": {
+              "uv": [
+                87,
+                36,
+                91,
+                38
+              ],
+              "texture": 0,
+              "color": 4935745
+            },
+            "south": {
+              "uv": [
+                93,
+                36,
+                97,
+                38
+              ],
+              "texture": 0,
+              "color": 4935745
+            },
+            "west": {
+              "uv": [
+                99,
+                36,
+                103,
+                38
+              ],
+              "texture": 0,
+              "color": 4935745
+            },
+            "up": {
+              "uv": [
+                105,
+                36,
+                109,
+                40
+              ],
+              "texture": 0,
+              "color": 4935745
+            },
+            "down": {
+              "uv": [
+                111,
+                36,
+                115,
+                40
+              ],
+              "texture": 0,
+              "color": 4935745
+            }
+          }
+        },
+        {
+          "uuid": "minemods-cube-7-1",
+          "name": "tail",
+          "type": "cube",
+          "from": [
+            -1,
+            5,
+            7
+          ],
+          "to": [
+            1,
+            13,
+            9
+          ],
+          "origin": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "autouv": 0,
+          "color": 10061668,
+          "faces": {
+            "north": {
+              "uv": [
+                117,
+                36,
+                119,
+                44
+              ],
+              "texture": 0,
+              "color": 10061668
+            },
+            "east": {
+              "uv": [
+                121,
+                36,
+                123,
+                44
+              ],
+              "texture": 0,
+              "color": 10061668
+            },
+            "south": {
+              "uv": [
+                125,
+                36,
+                127,
+                44
+              ],
+              "texture": 0,
+              "color": 10061668
+            },
+            "west": {
+              "uv": [
+                129,
+                36,
+                131,
+                44
+              ],
+              "texture": 0,
+              "color": 10061668
+            },
+            "up": {
+              "uv": [
+                133,
+                36,
+                135,
+                38
+              ],
+              "texture": 0,
+              "color": 10061668
+            },
+            "down": {
+              "uv": [
+                137,
+                36,
+                139,
+                38
+              ],
+              "texture": 0,
+              "color": 10061668
+            }
+          }
+        },
+        {
+          "uuid": "minemods-cube-7-2",
+          "name": "tail_tip",
+          "type": "cube",
+          "from": [
+            -2,
+            4,
+            7
+          ],
+          "to": [
+            2,
+            7,
+            10
+          ],
+          "origin": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "autouv": 0,
+          "color": 5791811,
+          "faces": {
+            "north": {
+              "uv": [
+                141,
+                36,
+                145,
+                39
+              ],
+              "texture": 0,
+              "color": 5791811
+            },
+            "east": {
+              "uv": [
+                147,
+                36,
+                150,
+                39
+              ],
+              "texture": 0,
+              "color": 5791811
+            },
+            "south": {
+              "uv": [
+                152,
+                36,
+                156,
+                39
+              ],
+              "texture": 0,
+              "color": 5791811
+            },
+            "west": {
+              "uv": [
+                158,
+                36,
+                161,
+                39
+              ],
+              "texture": 0,
+              "color": 5791811
+            },
+            "up": {
+              "uv": [
+                163,
+                36,
+                167,
+                39
+              ],
+              "texture": 0,
+              "color": 5791811
+            },
+            "down": {
+              "uv": [
+                169,
+                36,
+                173,
+                39
+              ],
+              "texture": 0,
+              "color": 5791811
+            }
+          }
+        }
+      ],
+      "outliner": [
+        {
+          "uuid": "minemods-bone-1",
+          "name": "body",
+          "origin": [
+            0,
+            11,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "children": [
+            "minemods-cube-1-1",
+            "minemods-cube-1-2",
+            "minemods-cube-1-3",
+            "minemods-cube-1-4",
+            "minemods-cube-1-5",
+            "minemods-cube-1-6",
+            "minemods-cube-1-7",
+            "minemods-cube-1-8",
+            "minemods-cube-1-9",
+            "minemods-cube-1-10",
+            "minemods-cube-1-11",
+            {
+              "uuid": "minemods-bone-2",
+              "name": "head",
+              "origin": [
+                0,
+                13,
+                -6
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "children": [
+                "minemods-cube-2-1",
+                "minemods-cube-2-2",
+                "minemods-cube-2-3",
+                "minemods-cube-2-4",
+                "minemods-cube-2-5",
+                "minemods-cube-2-6",
+                "minemods-cube-2-7",
+                "minemods-cube-2-8"
+              ]
+            },
+            {
+              "uuid": "minemods-bone-3",
+              "name": "leg_0",
+              "origin": [
+                3,
+                9,
+                -5
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "children": [
+                "minemods-cube-3-1",
+                "minemods-cube-3-2"
+              ]
+            },
+            {
+              "uuid": "minemods-bone-4",
+              "name": "leg_1",
+              "origin": [
+                -3,
+                9,
+                -5
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "children": [
+                "minemods-cube-4-1",
+                "minemods-cube-4-2"
+              ]
+            },
+            {
+              "uuid": "minemods-bone-5",
+              "name": "leg_2",
+              "origin": [
+                3,
+                9,
+                5
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "children": [
+                "minemods-cube-5-1",
+                "minemods-cube-5-2"
+              ]
+            },
+            {
+              "uuid": "minemods-bone-6",
+              "name": "leg_3",
+              "origin": [
+                -3,
+                9,
+                5
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "children": [
+                "minemods-cube-6-1",
+                "minemods-cube-6-2"
+              ]
+            },
+            {
+              "uuid": "minemods-bone-7",
+              "name": "tail",
+              "origin": [
+                0,
+                12,
+                7
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "children": [
+                "minemods-cube-7-1",
+                "minemods-cube-7-2"
+              ]
+            }
+          ]
+        }
+      ],
+      "animations": [
+        {
+          "name": "idle",
+          "length": 3,
+          "loop": true,
+          "animators": {
+            "minemods-bone-2": {
+              "name": "head",
+              "type": "bone",
+              "keyframes": [
+                {
+                  "time": 0,
+                  "channel": "rotation",
+                  "data_points": [
+                    {
+                      "x": 0,
+                      "y": -3,
+                      "z": 0
+                    }
+                  ]
+                },
+                {
+                  "time": 1.5,
+                  "channel": "rotation",
+                  "data_points": [
+                    {
+                      "x": 2,
+                      "y": 3,
+                      "z": 0
+                    }
+                  ]
+                },
+                {
+                  "time": 3,
+                  "channel": "rotation",
+                  "data_points": [
+                    {
+                      "x": 0,
+                      "y": -3,
+                      "z": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            "minemods-bone-7": {
+              "name": "tail",
+              "type": "bone",
+              "keyframes": [
+                {
+                  "time": 0,
+                  "channel": "rotation",
+                  "data_points": [
+                    {
+                      "x": 0,
+                      "y": 0,
+                      "z": -8
+                    }
+                  ]
+                },
+                {
+                  "time": 1.5,
+                  "channel": "rotation",
+                  "data_points": [
+                    {
+                      "x": 0,
+                      "y": 0,
+                      "z": 8
+                    }
+                  ]
+                },
+                {
+                  "time": 3,
+                  "channel": "rotation",
+                  "data_points": [
+                    {
+                      "x": 0,
+                      "y": 0,
+                      "z": -8
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "walk",
+          "length": 1,
+          "loop": true,
+          "animators": {
+            "minemods-bone-3": {
+              "name": "leg_0",
+              "type": "bone",
+              "keyframes": [
+                {
+                  "time": 0,
+                  "channel": "rotation",
+                  "data_points": [
+                    {
+                      "x": 22,
+                      "y": 0,
+                      "z": 0
+                    }
+                  ]
+                },
+                {
+                  "time": 0.5,
+                  "channel": "rotation",
+                  "data_points": [
+                    {
+                      "x": -22,
+                      "y": 0,
+                      "z": 0
+                    }
+                  ]
+                },
+                {
+                  "time": 1,
+                  "channel": "rotation",
+                  "data_points": [
+                    {
+                      "x": 22,
+                      "y": 0,
+                      "z": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            "minemods-bone-4": {
+              "name": "leg_1",
+              "type": "bone",
+              "keyframes": [
+                {
+                  "time": 0,
+                  "channel": "rotation",
+                  "data_points": [
+                    {
+                      "x": -22,
+                      "y": 0,
+                      "z": 0
+                    }
+                  ]
+                },
+                {
+                  "time": 0.5,
+                  "channel": "rotation",
+                  "data_points": [
+                    {
+                      "x": 22,
+                      "y": 0,
+                      "z": 0
+                    }
+                  ]
+                },
+                {
+                  "time": 1,
+                  "channel": "rotation",
+                  "data_points": [
+                    {
+                      "x": -22,
+                      "y": 0,
+                      "z": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            "minemods-bone-5": {
+              "name": "leg_2",
+              "type": "bone",
+              "keyframes": [
+                {
+                  "time": 0,
+                  "channel": "rotation",
+                  "data_points": [
+                    {
+                      "x": -22,
+                      "y": 0,
+                      "z": 0
+                    }
+                  ]
+                },
+                {
+                  "time": 0.5,
+                  "channel": "rotation",
+                  "data_points": [
+                    {
+                      "x": 22,
+                      "y": 0,
+                      "z": 0
+                    }
+                  ]
+                },
+                {
+                  "time": 1,
+                  "channel": "rotation",
+                  "data_points": [
+                    {
+                      "x": -22,
+                      "y": 0,
+                      "z": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            "minemods-bone-6": {
+              "name": "leg_3",
+              "type": "bone",
+              "keyframes": [
+                {
+                  "time": 0,
+                  "channel": "rotation",
+                  "data_points": [
+                    {
+                      "x": 22,
+                      "y": 0,
+                      "z": 0
+                    }
+                  ]
+                },
+                {
+                  "time": 0.5,
+                  "channel": "rotation",
+                  "data_points": [
+                    {
+                      "x": -22,
+                      "y": 0,
+                      "z": 0
+                    }
+                  ]
+                },
+                {
+                  "time": 1,
+                  "channel": "rotation",
+                  "data_points": [
+                    {
+                      "x": 22,
+                      "y": 0,
+                      "z": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "hurt",
+          "length": 0.5,
+          "loop": false,
+          "animators": {
+            "minemods-bone-1": {
+              "name": "body",
+              "type": "bone",
+              "keyframes": [
+                {
+                  "time": 0,
+                  "channel": "rotation",
+                  "data_points": [
+                    {
+                      "x": 0,
+                      "y": 0,
+                      "z": 0
+                    }
+                  ]
+                },
+                {
+                  "time": 0.15,
+                  "channel": "rotation",
+                  "data_points": [
+                    {
+                      "x": -8,
+                      "y": 0,
+                      "z": 5
+                    }
+                  ]
+                },
+                {
+                  "time": 0.5,
+                  "channel": "rotation",
+                  "data_points": [
+                    {
+                      "x": 0,
+                      "y": 0,
+                      "z": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "textures": [
+        {
+          "name": "minemods.png",
+          "id": "minemods-texture-1",
+          "path": "",
+          "source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccqhmAAADRklEQVR4nO3br4tVQRQH8PvfiME/QgSDFoNBsBh0m0GDKFhMihpkEVRMBmHDiiAGN2gSwb5BsBgt+zdo0eKP995wZ96ZuefzgRP3vjv3vfnuObP7pr2nN34suR4+uVJUpdd//+pel7V/cLuoSq+/c+vM0PX9y5um9W7ndGgd3jm/sqbfojeoABAAAkAA6AB0ADoAHYARwAhgBDACOANwBtD5GcDUOWcADgGbHgLW+qD+b4O2vr4A+CX6kM4h4JiHgLU2KG3oAJJ3ADZWbgJgSwEQ/UYDKwgASEwAQGICABITAJCYAIDEBAAkJgBghXVfPDj6+nqIyv797uj38fPB467q8NPLjWrT6z24dnEr9eL+1ZW17uePnzhWVAJAAAgAAaAD0AHoAHQA/wiCufPTutax1nxmBFg9Asx9vkaAMUaA4je29QdnW7J/vTP6fYye+Z0BJA+ApRMAsQEwLZUAGIMAEABNCIAxCAABAN2KnvnTtOy1lf7jQGnt7V6vWh/fPvqrar/GnNc9+vZh6Np/frNpnT13sqvKvl4BIAAEgADQAegAdAApO4DWjADxbb0RwAgQFgC1bTqLR73u3A247j5aX3/ub7wp2LbPAEZfb/T905nsGyLbeqPvn86MviFKZV9v9P3QmewbItt6o++HzmTfENnWG30/dCb7hsi23tkP4M+K/jtn7UOe0db77O7lpnXh0qkuKnojLcbSN4QAEAAIAB2ADgAdgBHACMCsESD68W17BBhtvXM3+Lr7iZ79nQFUtvQNIQDqBgALM1oAlBo9AEq17gBYmKVvCAEgAKi4QUZ7mAJAAFBxg4z2MAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKbWfgLIxHMHakzhJQAAAABJRU5ErkJggg==",
+          "mode": "bitmap",
+          "visible": true,
+          "internal": true,
+          "uv_width": 256,
+          "uv_height": 256,
+          "width": 256,
+          "height": 256
+        }
+      ],
+      "minemods": {
+        "schema_version": 1,
+        "texture_policy": "compiled-face-color-atlas",
+        "source": "ModelDesign",
+        "png_override": true
+      }
+    },
+    "provenance": {
+      "model": "gpt-6-astra",
+      "request_id": null
+    }
+  }
+}

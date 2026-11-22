@@ -1,0 +1,30 @@
+.imported-audio-player audio {
+  display: block;
+  width: 100%;
+}
+
+.imported-audio-player__options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 8px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.imported-audio-player__options label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.imported-audio-player__options p {
+  margin: 0;
+  text-align: right;
+}
+
+.imported-audio-player__options .is-error {
+  color: var(--danger, #e06c75);
+}

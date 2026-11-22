@@ -1,0 +1,45 @@
+/* Shelf controls reuse the existing inventory skin, type and status colors. */
+.project-layout.shelf-compact { grid-template-columns: 64px minmax(0, 1fr); }
+.sidebar.compact { padding: 4px 3px; }
+.sidebar.compact .tree-search, .sidebar.compact .tree-heading, .sidebar.compact .inv-name,
+.sidebar.compact .inv-design, .sidebar.compact .nav-legacy { display: none; }
+.sidebar.compact .inv-section { border: 0; box-shadow: none; margin: 0; padding: 0; }
+.sidebar.compact .inv-grid { grid-template-columns: minmax(0, 1fr); margin: 0; padding: 0; }
+.sidebar.compact .inv-cell { width: 46px; height: 46px; }
+.sidebar.compact .inv-chip { max-width: 38px; overflow: hidden; font-size: 9px; }
+.sidebar.compact nav > .nav-link { font-size: 0; justify-content: center; padding: 6px; }
+.sidebar.compact .nav-link svg { flex: none; width: 20px; height: 20px; }
+.sidebar.compact .shelf-expand, .sidebar.compact .shelf-actions .nav-link { justify-content: center; padding: 6px; }
+.shelf-actions { flex: none; margin-top: auto; border-top: 2px solid var(--edge-dark); padding-top: 4px; }
+.shelf-actions .nav-link { width: 100%; }
+.shelf-add-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; padding: 18px; }
+.shelf-add-grid .nav-link { min-height: 80px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 8px; text-align: center; white-space: normal; }
+.shelf-add-grid .nav-link svg { width: 26px; height: 26px; flex: none; }
+.shelf-add-grid button:disabled { opacity: .5; cursor: default; }
+.shelf-add-note { margin: 0; padding: 0 18px 14px; color: var(--text); }
+.shelf-tell { display: flex; flex-direction: column; gap: 10px; padding: 16px; min-width: 360px; }
+.shelf-tell-line { margin: 0; }
+.shelf-tell-actions { display: flex; align-items: center; gap: 10px; }
+.connection-presence { padding: 16px; }
+.connection-presence dl { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 12px; }
+.connection-presence dd { margin: 0; overflow-wrap: anywhere; }
+.connection-presence-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+.title-chip[data-presence="connected"] .status-light { background: var(--success); animation: presence-blink 3s steps(2, end) infinite; }
+.title-chip[data-presence="working"] { color: #ffff55; }
+.title-chip[data-presence="working"] .status-light { background: #ffd83d; animation: presence-blink .8s steps(2, end) infinite; }
+.title-chip[data-presence="idle"] .status-light { background: #ffb43e; }
+.title-chip[data-presence="disconnected"] { color: #e9b8b2; }
+.title-chip[data-presence="disconnected"] .status-light { background: #ff5555; animation: presence-blink 1s steps(2, end) infinite; }
+@keyframes presence-blink { 50% { opacity: .35; } }
+.reduce-motion .status-light { animation: none !important; }
+.presence-banner { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 10px 16px; flex: none; background: #e9b8b2; color: #6d130d; border-bottom: 2px solid currentColor; }
+.presence-banner span { flex: 1; min-width: 220px; }
+.presence-banner[data-state="idle"] { background: #f0dc8c; color: #6e4f00; }
+.presence-banner[data-state="restored"] { background: #b7dba9; color: #1d4d13; }
+.ac-rail .ac-mark.live { background: #ffd83d; }
+@media (prefers-reduced-motion: reduce) { .status-light { animation: none !important; } }
+
+.shelf-add-grid small { font-size: 12px; line-height: 1.35; color: var(--text); }
+@media (max-width: 640px) { .shelf-add-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.shelf-other { display: flex; align-items: center; gap: 10px; padding: 0 18px 16px; }
+.shelf-other small { font-size: 12px; color: var(--muted); }

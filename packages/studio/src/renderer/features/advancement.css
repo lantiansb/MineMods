@@ -1,0 +1,127 @@
+/*
+ * Advancement toasts: the game's own shape for "something happened" — a dark frame at the top right, the first line in
+ * the colour of what kind of news it is, the second in white. Drawn here, not taken from the game.
+ */
+.adv-stack {
+  position: fixed;
+  top: 58px;
+  right: 16px;
+  z-index: 140;
+  pointer-events: none;
+}
+.adv-toast {
+  position: relative;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  width: 340px;
+  min-height: 64px;
+  padding: 10px 14px 10px 10px;
+  border: 2px solid #000;
+  border-radius: 0;
+  background: #212121;
+  box-shadow:
+    inset 2px 2px 0 #555555,
+    inset -2px -2px 0 #0d0d0d,
+    6px 6px 0 0 rgba(0, 0, 0, 0.45);
+  color: #ffffff;
+  font: inherit;
+  text-align: left;
+  pointer-events: auto;
+  cursor: pointer;
+  animation: adv-in 300ms cubic-bezier(0.2, 0.9, 0.3, 1.1);
+}
+@keyframes adv-in {
+  from {
+    transform: translateX(calc(100% + 24px));
+  }
+  to {
+    transform: none;
+  }
+}
+.adv-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  background: #8b8b8b;
+  box-shadow: inset 2px 2px 0 #373737, inset -2px -2px 0 #ffffff;
+  overflow: hidden;
+}
+.adv-icon img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  image-rendering: pixelated;
+}
+.adv-icon svg {
+  width: 24px;
+  height: 24px;
+}
+.adv-words {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.adv-words strong {
+  font-weight: 400;
+  font-size: 15px;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.75);
+}
+.adv-words span {
+  overflow: hidden;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #ffffff;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-shadow: 2px 2px 0 #3f3f3f;
+}
+.adv-more {
+  position: absolute;
+  right: 8px;
+  top: 6px;
+  color: #b9b8c4;
+  font-size: 11px;
+  text-shadow: 1px 1px 0 #000;
+}
+.adv-toast[data-tone="goal"] .adv-words strong,
+.adv-toast[data-tone="goal"] .adv-icon svg {
+  color: #ffff55;
+}
+.adv-toast[data-tone="task"] .adv-words strong,
+.adv-toast[data-tone="task"] .adv-icon svg {
+  color: #55ff55;
+}
+.adv-toast[data-tone="challenge"] .adv-words strong,
+.adv-toast[data-tone="challenge"] .adv-icon svg {
+  color: #ff55ff;
+}
+/* A challenge glows a little, the way the game marks its rarest advancements. */
+.adv-toast[data-tone="challenge"] {
+  box-shadow:
+    inset 2px 2px 0 #7a3f8a,
+    inset -2px -2px 0 #0d0d0d,
+    0 0 0 2px #2a0a33,
+    6px 6px 0 0 rgba(0, 0, 0, 0.45);
+}
+.adv-toast[data-tone="caught"] .adv-words strong,
+.adv-toast[data-tone="caught"] .adv-icon svg {
+  color: #ff5555;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .adv-toast {
+    animation: none;
+  }
+}
+.reduce-motion .adv-toast {
+  animation: none;
+}
+
+/* A card is open: the news stands up over the title bar, so it does not lie on the card's close button. */
+.studio-root:has(.pa-veil) .adv-stack {
+  top: 4px;
+}

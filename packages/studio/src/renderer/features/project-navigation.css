@@ -1,0 +1,291 @@
+/*
+ * The left column as a backpack: every category is a titled row of inventory slots, every thing sits in a
+ * slot with its own picture. Slots, frames and the tooltip are drawn here in CSS, in the style of
+ * skin.css (`mc-slot`, `mc-tooltip`); the picture and the status mark are the overview's own.
+ */
+.sidebar .inv-section {
+  margin-top: 4px;
+  padding-top: 2px;
+  border-top: 2px solid var(--edge-dark, #555555);
+  box-shadow: inset 0 2px 0 var(--edge-light, #ffffff);
+}
+.sidebar .inv-section .tree-heading {
+  padding-top: 2px;
+}
+/* Which way the section is folded, drawn as a pixel arrow after the count. */
+.sidebar .inv-section .tree-toggle::after {
+  content: "";
+  width: 0;
+  height: 0;
+  flex: none;
+  margin-left: 2px;
+  border: 4px solid transparent;
+  border-top-color: currentColor;
+  border-bottom-width: 0;
+  opacity: 0.7;
+}
+.sidebar .inv-section .tree-toggle[aria-expanded="false"]::after {
+  border: 4px solid transparent;
+  border-left-color: currentColor;
+  border-right-width: 0;
+}
+.sidebar .inv-section .tree-toggle small {
+  min-width: 14px;
+  text-align: right;
+}
+
+.inv-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2px;
+  margin: 2px 0 4px;
+  padding: 0 2px;
+  justify-items: center;
+  align-items: start;
+}
+.inv-slot {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 0 2px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+.inv-cell {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  color: #ffffff;
+}
+.inv-cell .pa-picture {
+  padding: 5px;
+}
+.inv-cell .pa-picture svg {
+  width: 26px;
+  height: 26px;
+}
+/* A thing with no look of its own keeps the mark of its kind, quieter than a picture. */
+.inv-cell .pa-picture.sign svg {
+  opacity: 0.85;
+}
+.inv-cell .pa-mark {
+  position: absolute;
+  right: -3px;
+  bottom: -3px;
+  pointer-events: none;
+}
+.inv-cell .pa-mark svg {
+  width: 16px;
+  height: 16px;
+  padding: 2px;
+}
+.inv-name {
+  width: 100%;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  padding: 0 1px;
+  color: var(--text);
+  font-size: 12px;
+  line-height: 15px;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+/* The game lights the slot under the pointer. */
+.inv-slot:hover .inv-cell::after,
+.inv-slot:focus-visible .inv-cell::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  background: rgba(255, 255, 255, 0.32);
+  pointer-events: none;
+}
+.inv-slot:focus-visible {
+  outline: 0;
+}
+.inv-slot:focus-visible .inv-cell {
+  outline: 2px solid #ffffff;
+  outline-offset: 1px;
+}
+/* The open thing: the white frame the hotbar puts round the slot in hand. */
+.inv-slot.active .inv-cell {
+  outline: 3px solid #ffffff;
+  outline-offset: 0;
+  box-shadow:
+    inset 2px 2px 0 var(--slot-dark),
+    inset -2px -2px 0 var(--slot-light),
+    0 0 0 5px #1e1e1e;
+}
+.inv-slot.active .inv-name {
+  background: #2b2b2b;
+  color: #ffffff;
+}
+/* Not made yet: a dashed outline of its kind instead of a filled slot. */
+.inv-slot.ghost .inv-cell {
+  background: transparent;
+  box-shadow: none;
+  outline: 2px dashed var(--edge-dark, #555555);
+  outline-offset: -2px;
+  color: var(--muted);
+}
+.inv-slot.ghost.active .inv-cell {
+  outline: 3px solid #ffffff;
+  outline-offset: 0;
+  box-shadow: 0 0 0 5px #1e1e1e;
+}
+.inv-slot.ghost .pa-picture svg {
+  filter: none;
+}
+.inv-slot[data-status="failed"] .inv-cell {
+  background: #9a6a66;
+}
+/* 「设计稿」/「待建模」: a small plaque on the slot's top edge. */
+.inv-chip {
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  padding: 0 3px;
+  border: 2px solid #6e4f00;
+  background: #ffe9a8;
+  color: #4a3500;
+  text-shadow: none;
+  font-size: 10px;
+  font-style: normal;
+  line-height: 13px;
+  white-space: nowrap;
+  pointer-events: none;
+}
+/* Being made: a strip that keeps moving along the bottom of the slot. */
+.inv-working {
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  bottom: 2px;
+  height: 4px;
+  background: repeating-linear-gradient(90deg, #ffd83d 0 6px, #3f3f3f 6px 12px);
+  background-size: 24px 4px;
+  animation: inv-working 0.9s steps(4) infinite;
+  pointer-events: none;
+}
+@keyframes inv-working {
+  to {
+    background-position: 24px 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .inv-working {
+    animation: none;
+  }
+}
+/* The one empty slot after a category's last thing: the place the next one goes, pressed to add it. */
+.inv-spare {
+  margin-top: 3px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  opacity: 0.55;
+  color: var(--muted);
+  font: inherit;
+  cursor: pointer;
+}
+.inv-spare svg {
+  width: 18px;
+  height: 18px;
+  opacity: 0;
+}
+.inv-spare:hover,
+.inv-spare:focus-visible {
+  opacity: 1;
+  outline: 2px solid #ffffff;
+  outline-offset: 1px;
+}
+.inv-spare:hover svg,
+.inv-spare:focus-visible svg {
+  opacity: 1;
+  color: #ffffff;
+}
+/* Read out, not shown: an empty category is its header row alone. */
+.sidebar .inv-section {
+  position: relative;
+}
+.inv-none {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+/* 「这一类现在只是设计稿，不会做进游戏」: under the header of a category no build compiles. */
+.inv-design {
+  margin: 0 2px 3px;
+  padding: 0 4px;
+  border-left: 3px solid #6e4f00;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 15px;
+  overflow-wrap: anywhere;
+}
+
+.inv-tip {
+  position: fixed;
+  z-index: 400;
+  max-width: 256px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 5px 8px;
+  pointer-events: none;
+  font-size: 13px;
+  line-height: 1.35;
+}
+.inv-tip strong {
+  color: #ffffff;
+  font-weight: 400;
+}
+.inv-tip span {
+  color: #a8a8a8;
+}
+.inv-tip .inv-tip-kind {
+  color: #7f7fff;
+}
+.inv-tip .inv-tip-status {
+  color: #55ff55;
+}
+.inv-tip .inv-tip-status:is([data-status="planned"], [data-status="out_of_scope"]) {
+  color: #a8a8a8;
+}
+.inv-tip .inv-tip-status:is([data-status="making"], [data-status="review"], [data-status="redo"]) {
+  color: #ffff55;
+}
+.inv-tip .inv-tip-status:is([data-status="failed"], [data-status="blocked"]) {
+  color: #ff5555;
+}
+
+/* A long section name (模型 · 贴图 · 动画素材) takes a second line instead of being cut off. */
+.sidebar .inv-section .tree-toggle span {
+  white-space: normal;
+  line-height: 17px;
+}
+
+/* The way into the older 「模组构想」 route: shown only under 高级 to a project that has something there, and kept quiet because nothing in it is built. */
+.sidebar .nav-link.nav-legacy {
+  margin-top: 10px;
+  font-size: 12px;
+  opacity: 0.65;
+}
+.sidebar .nav-link.nav-legacy:is(:hover, :focus-visible, .active) {
+  opacity: 1;
+}

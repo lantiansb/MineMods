@@ -1,0 +1,14 @@
+{
+  "assetIndexUrl": "https://piston-meta.mojang.com/v1/packages/cdc3b02414acf6de9e3c1cc21ad494b022a2dabc/17.json",
+  "zhCnSha1": "00aa4fe6e373eda81c2c7f7e29e0344e7b663147",
+  "clientJarPath": ".artifacts/toolchains/gradle-home/caches/fabric-loom/1.21.1/minecraft-client.jar",
+  "zhCnUrl": "https://resources.download.minecraft.net/00/00aa4fe6e373eda81c2c7f7e29e0344e7b663147",
+  "modelSourcePath": ".artifacts/mc-assets-1.21.1/client/assets/minecraft/models/item",
+  "zhSourcePath": ".artifacts/mc-assets-1.21.1/zh_cn.json",
+  "version": "1.21.1",
+  "clientJarSha1": "30c73b1c5da787909b2f73340419fdf13b9def88",
+  "enSourcePath": ".artifacts/mc-assets-1.21.1/en_us.json",
+  "locale": "zh_cn with en_us fallback",
+  "itemCount": 1333,
+  "assetIndexSha1": "cdc3b02414acf6de9e3c1cc21ad494b022a2dabc"
+}

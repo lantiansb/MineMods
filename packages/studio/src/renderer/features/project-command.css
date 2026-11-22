@@ -1,0 +1,649 @@
+.project-command {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 100%;
+  padding: 24px clamp(18px, 2.4vw, 34px) 36px;
+  color: var(--text);
+}
+
+.main-area:has(.project-command) {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.main-area:has(.project-command) .project-command {
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.project-command-header,
+.project-run-heading,
+.project-command-composer-heading,
+.project-run-focus-header,
+.project-run-events-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.project-command-header {
+  align-items: flex-end;
+  padding-bottom: 20px;
+}
+
+.project-command-kicker {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+}
+
+.project-command h1 {
+  font-size: clamp(23px, 2.2vw, 30px);
+  letter-spacing: -0.04em;
+}
+
+.project-command-header p,
+.project-command-note,
+.project-run-heading span,
+.project-run-empty,
+.project-command-capability,
+.project-command-composer-heading > span,
+.project-run-focus-meta small,
+.project-run-tasks-heading > span,
+.project-run-events-heading > span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.project-command-header p {
+  max-width: 700px;
+  margin-top: 8px;
+  line-height: 1.6;
+}
+
+.project-command-target {
+  flex-shrink: 0;
+  padding: 6px 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: var(--panel-soft);
+  color: var(--muted);
+  font:
+    12px ui-monospace,
+    SFMono-Regular,
+    Consolas,
+    monospace;
+}
+
+.project-command-layout {
+  display: grid;
+  grid-template-columns: minmax(190px, 220px) minmax(0, 1fr);
+  gap: 16px;
+  min-width: 0;
+  min-height: 0;
+  flex: 1;
+  overflow: hidden;
+}
+
+.project-command-history,
+.project-run-focus,
+.project-command-form,
+.project-command-committed {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-panel);
+  background: var(--panel);
+  box-shadow: var(--glass-shadow, 0 8px 28px color-mix(in srgb, var(--shadow) 7%, transparent));
+  -webkit-backdrop-filter: var(--glass-blur, blur(24px) saturate(1.35));
+  backdrop-filter: var(--glass-blur, blur(24px) saturate(1.35));
+}
+
+.project-command-history {
+  align-self: stretch;
+  height: 100%;
+  min-height: 0;
+  overflow: auto;
+  padding: 12px 9px;
+}
+
+.project-run-heading {
+  padding: 3px 8px 10px;
+}
+
+.project-run-heading h2 {
+  font-size: 15px;
+}
+
+.project-run-empty {
+  padding: 18px 8px;
+  line-height: 1.7;
+}
+
+.project-run-list {
+  display: grid;
+  gap: 4px;
+}
+
+.project-run {
+  min-width: 0;
+}
+
+.project-run-summary {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 8px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-panel);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+}
+
+.project-run-summary:hover {
+  background: var(--panel-soft);
+}
+
+.project-run.selected .project-run-summary {
+  border-color: color-mix(in srgb, var(--accent) 25%, transparent);
+  background: var(--accent-dim);
+}
+
+.project-run-state {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 3px 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.project-run-state[data-state="running"],
+.project-run-state[data-state="planning"],
+.project-run-state[data-state="validating"],
+.project-run-state[data-state="saving"] {
+  border-color: color-mix(in srgb, var(--accent) 38%, var(--line));
+  background: var(--accent-dim);
+  color: var(--accent);
+}
+
+.project-run-state[data-state="completed"] {
+  border-color: color-mix(in srgb, var(--success) 38%, var(--line));
+  background: color-mix(in srgb, var(--success) 10%, transparent);
+  color: var(--success);
+}
+
+.project-run-state[data-state="failed"],
+.project-run-state[data-state="blocked"] {
+  border-color: color-mix(in srgb, var(--danger) 38%, var(--line));
+  background: color-mix(in srgb, var(--danger) 9%, transparent);
+  color: var(--danger);
+}
+
+.project-run-copy {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+
+.project-run-copy strong {
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 650;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.project-run-copy small {
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.project-command-main {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.project-run-focus {
+  min-height: 0;
+  flex: 1 1 auto;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+.project-run-focus-header {
+  align-items: flex-start;
+  padding: 17px 18px 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.project-run-focus-header h2 {
+  margin-top: 9px;
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+.project-run-focus-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.project-run-focus-header .project-run-cancel {
+  flex-shrink: 0;
+}
+
+.project-run-detail {
+  display: grid;
+  gap: 14px;
+  padding: 0 18px 18px;
+}
+
+.project-run-source {
+  display: grid;
+  gap: 4px;
+  padding-top: 15px;
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.65;
+  white-space: pre-wrap;
+}
+
+.project-run-source span,
+.project-run-questions strong,
+.project-run-events h3,
+.project-run-tasks-heading h3 {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.project-run-questions {
+  display: grid;
+  gap: 5px;
+  padding: 11px 12px;
+  border-radius: var(--radius-panel);
+  background: var(--accent-dim);
+}
+
+.project-run-questions p {
+  color: var(--text);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.project-run-tasks {
+  display: grid;
+  gap: 4px;
+}
+
+.project-run-tasks-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 2px 0 7px;
+}
+
+.project-run-task {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+}
+
+.project-run-task > div:first-child {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+
+.project-run-module {
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.project-run-task strong {
+  font-size: 13px;
+}
+
+.project-run-task small,
+.project-run-task em {
+  overflow-wrap: anywhere;
+  color: var(--muted);
+  font-size: 12px;
+  font-style: normal;
+  line-height: 1.5;
+}
+
+.project-run-task em {
+  color: var(--accent);
+}
+
+.project-run-task-actions {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  gap: 7px;
+  flex-shrink: 0;
+}
+
+.project-run-task-actions button,
+.project-run-cancel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 31px;
+  padding: 5px 9px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--accent);
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+}
+
+.project-run-task-actions button:hover,
+.project-run-cancel:hover {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+  background: var(--accent-dim);
+}
+
+.project-run-cancel {
+  color: var(--danger);
+}
+
+.project-run-cancel:hover {
+  border-color: color-mix(in srgb, var(--danger) 45%, var(--line));
+  background: color-mix(in srgb, var(--danger) 8%, transparent);
+}
+
+.command-glyph {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+}
+
+.project-run-events {
+  display: grid;
+  gap: 6px;
+  padding-top: 3px;
+}
+
+.project-run-events-heading {
+  padding-bottom: 6px;
+}
+
+.project-run-events p {
+  display: grid;
+  grid-template-columns: 7px auto minmax(0, 1fr);
+  align-items: baseline;
+  gap: 8px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.project-run-event-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.project-run-events time {
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.project-run-error,
+.project-command-error {
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--danger) 9%, var(--panel));
+  color: var(--danger);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.project-command-empty {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  min-height: 250px;
+  place-content: center;
+  padding: 28px;
+  border: 1px dashed color-mix(in srgb, var(--accent) 26%, var(--line));
+  border-radius: var(--radius-panel);
+  background: var(--panel-soft);
+  color: var(--muted);
+  text-align: center;
+}
+
+.project-command-empty .command-glyph {
+  width: 28px;
+  height: 28px;
+  margin-bottom: 4px;
+  color: var(--accent);
+}
+
+.project-command-empty strong {
+  color: var(--text);
+  font-size: 15px;
+}
+
+.project-command-empty span {
+  max-width: 320px;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.project-command-form {
+  display: grid;
+  gap: 10px;
+  flex: 0 0 auto;
+  margin-top: 0;
+  padding: 14px 16px 15px;
+}
+
+.project-command-composer-heading > label {
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.project-command-form textarea {
+  width: 100%;
+  min-height: 64px;
+  max-height: 120px;
+  padding: 12px 13px;
+  resize: vertical;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-panel);
+  background: var(--panel-soft);
+  color: var(--text);
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.project-command-form textarea:focus-visible {
+  border-color: var(--accent);
+}
+
+.project-command-form-footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.project-command-input-tools {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+}
+
+.project-command-input-tools .voice-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.project-command-input-tools .voice-input .studio-button {
+  min-height: 32px;
+  padding: 5px 9px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+}
+
+.project-command-input-tools .voice-input span,
+.project-command-input-tools .voice-input p {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.project-command-note {
+  line-height: 1.6;
+}
+
+.project-command-run {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 40px;
+  padding: 8px 15px;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: var(--on-accent);
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.project-command-run:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+.project-command-run:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
+.project-command-committed {
+  padding: 12px 14px;
+}
+
+.project-command-committed > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--success);
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.project-command-committed p {
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.project-command-capability {
+  margin-top: 14px;
+  padding: 12px 2px 0;
+  border-top: 1px solid var(--line);
+  line-height: 1.6;
+}
+
+@media (max-width: 1180px) {
+  .project-command {
+    padding-inline: 20px;
+  }
+
+  .project-command-layout {
+    grid-template-columns: 198px minmax(0, 1fr);
+    gap: 12px;
+  }
+}
+
+@media (max-width: 900px) {
+  .project-command-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .project-command-history {
+    padding: 10px;
+  }
+
+  .project-command-history .project-run-list {
+    display: flex;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .project-command-history .project-run {
+    flex: 0 0 220px;
+  }
+}
+
+@media (max-width: 680px) {
+  .project-command {
+    padding: 18px 14px 28px;
+  }
+
+  .project-command-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .project-command-form-footer,
+  .project-run-task {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .project-command-run {
+    width: 100%;
+  }
+
+  .project-run-task-actions {
+    align-items: flex-start;
+    flex-direction: row;
+  }
+}

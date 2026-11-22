@@ -1,0 +1,750 @@
+{
+ "name": "poison-frog",
+ "why": "Real output of the 10-19 veteran's project (沼泽巫祝): a small frog whose yellow eyes sit on two stalks above the head, which the maker declared in its part sheet; the card refused it for 'no eyes'.",
+ "model": {
+  "name": "小毒蛙",
+  "texture_size": 64,
+  "bones": [
+   {
+    "name": "root",
+    "parent": null,
+    "pivot": [
+     0,
+     2,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "paint": {
+     "material": "skin",
+     "base": "#54704A",
+     "secondary": "#233B2B"
+    },
+    "cubes": [
+     {
+      "name": "body",
+      "origin": [
+       -3,
+       1,
+       -1
+      ],
+      "size": [
+       6,
+       3,
+       6
+      ],
+      "faces": {
+       "north": "#54704a",
+       "east": "#54704a",
+       "south": "#54704a",
+       "west": "#54704a",
+       "up": "#54704a",
+       "down": "#54704a"
+      },
+      "surface_details": [],
+      "features": [
+       {
+        "type": "spots",
+        "face": "up",
+        "color": "#9BA45A",
+        "size": 2,
+        "count": 3
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "head",
+    "parent": "root",
+    "pivot": [
+     0,
+     3,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "cubes": [
+     {
+      "name": "head_main",
+      "origin": [
+       -3,
+       2,
+       -4
+      ],
+      "size": [
+       6,
+       2,
+       4
+      ],
+      "faces": {
+       "north": "#54704a",
+       "east": "#54704a",
+       "south": "#54704a",
+       "west": "#54704a",
+       "up": "#54704a",
+       "down": "#54704a"
+      },
+      "surface_details": [
+       {
+        "face": "north",
+        "x": 1,
+        "y": 1,
+        "width": 4,
+        "height": 1,
+        "color": "#211E1A"
+       }
+      ]
+     },
+     {
+      "name": "eye_right",
+      "origin": [
+       -3,
+       4,
+       -3
+      ],
+      "size": [
+       2,
+       2,
+       2
+      ],
+      "faces": {
+       "north": "#c6c96b",
+       "east": "#c6c96b",
+       "south": "#c6c96b",
+       "west": "#c6c96b",
+       "up": "#c6c96b",
+       "down": "#c6c96b"
+      },
+      "surface_details": [
+       {
+        "face": "north",
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 2,
+        "color": "#211E1A"
+       }
+      ],
+      "paint": {
+       "material": "bone",
+       "base": "#C6C96B",
+       "secondary": null
+      }
+     },
+     {
+      "name": "eye_left",
+      "origin": [
+       1,
+       4,
+       -3
+      ],
+      "size": [
+       2,
+       2,
+       2
+      ],
+      "faces": {
+       "north": "#c6c96b",
+       "east": "#c6c96b",
+       "south": "#c6c96b",
+       "west": "#c6c96b",
+       "up": "#c6c96b",
+       "down": "#c6c96b"
+      },
+      "surface_details": [
+       {
+        "face": "north",
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 2,
+        "color": "#211E1A"
+       }
+      ],
+      "paint": {
+       "material": "bone",
+       "base": "#C6C96B",
+       "secondary": null
+      }
+     }
+    ]
+   },
+   {
+    "name": "leg_front_right",
+    "parent": "root",
+    "pivot": [
+     -2.5,
+     2,
+     -1
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "cubes": [
+     {
+      "name": "foreleg_right",
+      "origin": [
+       -3,
+       0,
+       -3
+      ],
+      "size": [
+       1,
+       2,
+       3
+      ],
+      "faces": {
+       "north": "#54704a",
+       "east": "#54704a",
+       "south": "#54704a",
+       "west": "#54704a",
+       "up": "#54704a",
+       "down": "#54704a"
+      },
+      "surface_details": [],
+      "paint": {
+       "material": "skin",
+       "base": "#54704A",
+       "secondary": "#233B2B"
+      }
+     }
+    ]
+   },
+   {
+    "name": "leg_back_right",
+    "parent": "root",
+    "pivot": [
+     -2.5,
+     2,
+     3
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "cubes": [
+     {
+      "name": "thigh_right",
+      "origin": [
+       -5,
+       1,
+       2
+      ],
+      "size": [
+       2,
+       2,
+       3
+      ],
+      "faces": {
+       "north": "#54704a",
+       "east": "#54704a",
+       "south": "#54704a",
+       "west": "#54704a",
+       "up": "#54704a",
+       "down": "#54704a"
+      },
+      "surface_details": [],
+      "paint": {
+       "material": "skin",
+       "base": "#54704A",
+       "secondary": "#233B2B"
+      }
+     },
+     {
+      "name": "foot_right",
+      "origin": [
+       -5,
+       0,
+       1
+      ],
+      "size": [
+       2,
+       1,
+       4
+      ],
+      "faces": {
+       "north": "#54704a",
+       "east": "#54704a",
+       "south": "#54704a",
+       "west": "#54704a",
+       "up": "#54704a",
+       "down": "#54704a"
+      },
+      "surface_details": [],
+      "paint": {
+       "material": "skin",
+       "base": "#374C2E",
+       "secondary": "#54704A"
+      }
+     }
+    ]
+   },
+   {
+    "name": "leg_front_left",
+    "parent": "root",
+    "pivot": [
+     2.5,
+     2,
+     -1
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "cubes": [
+     {
+      "name": "foreleg_left",
+      "origin": [
+       2,
+       0,
+       -3
+      ],
+      "size": [
+       1,
+       2,
+       3
+      ],
+      "faces": {
+       "north": "#54704a",
+       "east": "#54704a",
+       "south": "#54704a",
+       "west": "#54704a",
+       "up": "#54704a",
+       "down": "#54704a"
+      },
+      "surface_details": [],
+      "paint": {
+       "material": "skin",
+       "base": "#54704A",
+       "secondary": "#233B2B"
+      }
+     }
+    ]
+   },
+   {
+    "name": "leg_back_left",
+    "parent": "root",
+    "pivot": [
+     2.5,
+     2,
+     3
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "cubes": [
+     {
+      "name": "thigh_left",
+      "origin": [
+       3,
+       1,
+       2
+      ],
+      "size": [
+       2,
+       2,
+       3
+      ],
+      "faces": {
+       "north": "#54704a",
+       "east": "#54704a",
+       "south": "#54704a",
+       "west": "#54704a",
+       "up": "#54704a",
+       "down": "#54704a"
+      },
+      "surface_details": [],
+      "paint": {
+       "material": "skin",
+       "base": "#54704A",
+       "secondary": "#233B2B"
+      }
+     },
+     {
+      "name": "foot_left",
+      "origin": [
+       3,
+       0,
+       1
+      ],
+      "size": [
+       2,
+       1,
+       4
+      ],
+      "faces": {
+       "north": "#54704a",
+       "east": "#54704a",
+       "south": "#54704a",
+       "west": "#54704a",
+       "up": "#54704a",
+       "down": "#54704a"
+      },
+      "surface_details": [],
+      "paint": {
+       "material": "skin",
+       "base": "#374C2E",
+       "secondary": "#54704A"
+      }
+     }
+    ]
+   }
+  ],
+  "animations": [
+   {
+    "name": "idle",
+    "length": 2,
+    "loop": true,
+    "channels": [
+     {
+      "bone": "head",
+      "keyframes": [
+       {
+        "time": 0,
+        "rotation": [
+         0,
+         0,
+         0
+        ],
+        "interpolation": "smooth"
+       },
+       {
+        "time": 1,
+        "rotation": [
+         -7,
+         0,
+         0
+        ],
+        "interpolation": "smooth"
+       },
+       {
+        "time": 2,
+        "rotation": [
+         0,
+         0,
+         0
+        ],
+        "interpolation": "smooth"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "walk",
+    "length": 0.8,
+    "loop": true,
+    "channels": [
+     {
+      "bone": "leg_front_left",
+      "keyframes": [
+       {
+        "time": 0,
+        "rotation": [
+         20,
+         0,
+         0
+        ],
+        "interpolation": "smooth"
+       },
+       {
+        "time": 0.4,
+        "rotation": [
+         -20,
+         0,
+         0
+        ],
+        "interpolation": "smooth"
+       },
+       {
+        "time": 0.8,
+        "rotation": [
+         20,
+         0,
+         0
+        ],
+        "interpolation": "smooth"
+       }
+      ]
+     },
+     {
+      "bone": "leg_back_left",
+      "keyframes": [
+       {
+        "time": 0,
+        "rotation": [
+         -20,
+         0,
+         0
+        ],
+        "interpolation": "smooth"
+       },
+       {
+        "time": 0.4,
+        "rotation": [
+         20,
+         0,
+         0
+        ],
+        "interpolation": "smooth"
+       },
+       {
+        "time": 0.8,
+        "rotation": [
+         -20,
+         0,
+         0
+        ],
+        "interpolation": "smooth"
+       }
+      ]
+     },
+     {
+      "bone": "leg_front_right",
+      "keyframes": [
+       {
+        "time": 0,
+        "rotation": [
+         -20,
+         0,
+         0
+        ],
+        "interpolation": "smooth"
+       },
+       {
+        "time": 0.4,
+        "rotation": [
+         20,
+         0,
+         0
+        ],
+        "interpolation": "smooth"
+       },
+       {
+        "time": 0.8,
+        "rotation": [
+         -20,
+         0,
+         0
+        ],
+        "interpolation": "smooth"
+       }
+      ]
+     },
+     {
+      "bone": "leg_back_right",
+      "keyframes": [
+       {
+        "time": 0,
+        "rotation": [
+         20,
+         0,
+         0
+        ],
+        "interpolation": "smooth"
+       },
+       {
+        "time": 0.4,
+        "rotation": [
+         -20,
+         0,
+         0
+        ],
+        "interpolation": "smooth"
+       },
+       {
+        "time": 0.8,
+        "rotation": [
+         20,
+         0,
+         0
+        ],
+        "interpolation": "smooth"
+       }
+      ]
+     },
+     {
+      "bone": "head",
+      "keyframes": [
+       {
+        "time": 0,
+        "rotation": [
+         2,
+         0,
+         0
+        ],
+        "interpolation": "smooth"
+       },
+       {
+        "time": 0.4,
+        "rotation": [
+         -2,
+         0,
+         0
+        ],
+        "interpolation": "smooth"
+       },
+       {
+        "time": 0.8,
+        "rotation": [
+         2,
+         0,
+         0
+        ],
+        "interpolation": "smooth"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "hurt",
+    "length": 0.35,
+    "loop": false,
+    "channels": [
+     {
+      "bone": "root",
+      "keyframes": [
+       {
+        "time": 0,
+        "rotation": [
+         0,
+         0,
+         0
+        ],
+        "interpolation": "smooth"
+       },
+       {
+        "time": 0.08,
+        "rotation": [
+         -8,
+         0,
+         0
+        ],
+        "interpolation": "smooth"
+       },
+       {
+        "time": 0.35,
+        "rotation": [
+         0,
+         0,
+         0
+        ],
+        "interpolation": "smooth"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "death",
+    "length": 0.7,
+    "loop": false,
+    "channels": [
+     {
+      "bone": "head",
+      "keyframes": [
+       {
+        "time": 0,
+        "rotation": [
+         0,
+         0,
+         0
+        ],
+        "interpolation": "smooth"
+       },
+       {
+        "time": 0.5,
+        "rotation": [
+         25,
+         0,
+         0
+        ],
+        "interpolation": "smooth"
+       },
+       {
+        "time": 0.7,
+        "rotation": [
+         25,
+         0,
+         0
+        ],
+        "interpolation": "smooth"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "bite",
+    "length": 0.6,
+    "loop": false,
+    "channels": [
+     {
+      "bone": "head",
+      "keyframes": [
+       {
+        "time": 0,
+        "rotation": [
+         0,
+         0,
+         0
+        ],
+        "interpolation": "smooth"
+       },
+       {
+        "time": 0.25,
+        "rotation": [
+         -12,
+         0,
+         0
+        ],
+        "interpolation": "smooth"
+       },
+       {
+        "time": 0.35,
+        "rotation": [
+         12,
+         0,
+         0
+        ],
+        "interpolation": "smooth"
+       },
+       {
+        "time": 0.42,
+        "rotation": [
+         12,
+         0,
+         0
+        ],
+        "interpolation": "smooth"
+       },
+       {
+        "time": 0.6,
+        "rotation": [
+         0,
+         0,
+         0
+        ],
+        "interpolation": "smooth"
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ }
+}

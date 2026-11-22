@@ -1,0 +1,1 @@
+{"name":"missing-roar","kind":"logic","why":"Asks its creature to play an animation the model does not have.","skeleton":"crystal-guardian","document":{"kind":"logic","entity_id":"00000000-0000-4000-8000-00000000a001","trigger":"player_near","action":"play_animation","item":null,"animation":"roar","enabled":true}}

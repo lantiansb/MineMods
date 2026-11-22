@@ -1,0 +1,2975 @@
+{
+ "name": "森林苔皮苦力怕",
+ "texture_size": 256,
+ "bones": [
+  {
+   "name": "root",
+   "parent": null,
+   "pivot": [
+    0,
+    0,
+    0
+   ],
+   "rotation": [
+    0,
+    0,
+    0
+   ],
+   "cubes": []
+  },
+  {
+   "name": "torso",
+   "parent": "root",
+   "pivot": [
+    0,
+    16,
+    0
+   ],
+   "rotation": [
+    0,
+    0,
+    0
+   ],
+   "cubes": [
+    {
+     "name": "trunk_core",
+     "origin": [
+      -6,
+      11,
+      -4
+     ],
+     "size": [
+      12,
+      15,
+      8
+     ],
+     "faces": {
+      "north": "#4b3327",
+      "east": "#4b3327",
+      "south": "#4b3327",
+      "west": "#4b3327",
+      "up": "#684633",
+      "down": "#4b3327"
+     },
+     "surface_details": [
+      {
+       "face": "north",
+       "x": 1,
+       "y": 2,
+       "width": 2,
+       "height": 9,
+       "color": "#684633"
+      },
+      {
+       "face": "north",
+       "x": 7,
+       "y": 0,
+       "width": 2,
+       "height": 7,
+       "color": "#30271f"
+      },
+      {
+       "face": "up",
+       "x": 2,
+       "y": 1,
+       "width": 5,
+       "height": 2,
+       "color": "#435b2f"
+      }
+     ],
+     "paint": {
+      "material": "wood",
+      "base": "#4b3327"
+     }
+    },
+    {
+     "name": "bark_left",
+     "origin": [
+      -8,
+      13,
+      -3
+     ],
+     "size": [
+      2,
+      10,
+      6
+     ],
+     "faces": {
+      "north": "#684633",
+      "east": "#684633",
+      "south": "#684633",
+      "west": "#684633",
+      "up": "#4b3327",
+      "down": "#684633"
+     },
+     "surface_details": [
+      {
+       "face": "west",
+       "x": 1,
+       "y": 2,
+       "width": 1,
+       "height": 5,
+       "color": "#30271f"
+      }
+     ],
+     "paint": {
+      "material": "wood",
+      "base": "#684633"
+     }
+    },
+    {
+     "name": "bark_right",
+     "origin": [
+      6,
+      12,
+      -4
+     ],
+     "size": [
+      2,
+      11,
+      7
+     ],
+     "faces": {
+      "north": "#684633",
+      "east": "#30271f",
+      "south": "#30271f",
+      "west": "#30271f",
+      "up": "#4b3327",
+      "down": "#30271f"
+     },
+     "surface_details": [
+      {
+       "face": "east",
+       "x": 0,
+       "y": 3,
+       "width": 1,
+       "height": 5,
+       "color": "#4b3327"
+      }
+     ],
+     "paint": {
+      "material": "wood",
+      "base": "#684633"
+     }
+    },
+    {
+     "name": "chest_plate",
+     "origin": [
+      -4,
+      15,
+      -5
+     ],
+     "size": [
+      8,
+      5,
+      2
+     ],
+     "faces": {
+      "north": "#684633",
+      "east": "#684633",
+      "south": "#684633",
+      "west": "#684633",
+      "up": "#4b3327",
+      "down": "#684633"
+     },
+     "surface_details": [
+      {
+       "face": "north",
+       "x": 1,
+       "y": 1,
+       "width": 2,
+       "height": 3,
+       "color": "#435b2f"
+      },
+      {
+       "face": "north",
+       "x": 5,
+       "y": 0,
+       "width": 2,
+       "height": 2,
+       "color": "#4b3327"
+      }
+     ],
+     "paint": {
+      "material": "wood",
+      "base": "#684633"
+     }
+    },
+    {
+     "name": "chest_plate_lower",
+     "origin": [
+      -3,
+      11,
+      -5
+     ],
+     "size": [
+      6,
+      3,
+      2
+     ],
+     "faces": {
+      "north": "#684633",
+      "east": "#30271f",
+      "south": "#30271f",
+      "west": "#30271f",
+      "up": "#684633",
+      "down": "#30271f"
+     },
+     "surface_details": [],
+     "paint": {
+      "material": "wood",
+      "base": "#684633"
+     }
+    },
+    {
+     "name": "moss_shoulder_left",
+     "origin": [
+      -7,
+      23,
+      -4
+     ],
+     "size": [
+      4,
+      2,
+      8
+     ],
+     "faces": {
+      "north": "#718b3d",
+      "east": "#718b3d",
+      "south": "#718b3d",
+      "west": "#718b3d",
+      "up": "#9cad54",
+      "down": "#718b3d"
+     },
+     "surface_details": [
+      {
+       "face": "north",
+       "x": 0,
+       "y": 0,
+       "width": 2,
+       "height": 1,
+       "color": "#9cad54"
+      }
+     ],
+     "paint": {
+      "material": "leaf",
+      "base": "#718b3d"
+     }
+    },
+    {
+     "name": "moss_shoulder_right",
+     "origin": [
+      3,
+      23,
+      -4
+     ],
+     "size": [
+      4,
+      2,
+      8
+     ],
+     "faces": {
+      "north": "#718b3d",
+      "east": "#435b2f",
+      "south": "#435b2f",
+      "west": "#435b2f",
+      "up": "#718b3d",
+      "down": "#435b2f"
+     },
+     "surface_details": [
+      {
+       "face": "north",
+       "x": 2,
+       "y": 0,
+       "width": 2,
+       "height": 1,
+       "color": "#9cad54"
+      }
+     ],
+     "paint": {
+      "material": "leaf",
+      "base": "#718b3d"
+     }
+    },
+    {
+     "name": "moss_belt",
+     "origin": [
+      -6,
+      20,
+      -5
+     ],
+     "size": [
+      12,
+      2,
+      2
+     ],
+     "faces": {
+      "north": "#718b3d",
+      "east": "#435b2f",
+      "south": "#435b2f",
+      "west": "#435b2f",
+      "up": "#9cad54",
+      "down": "#435b2f"
+     },
+     "surface_details": [
+      {
+       "face": "north",
+       "x": 3,
+       "y": 0,
+       "width": 3,
+       "height": 1,
+       "color": "#9cad54"
+      }
+     ],
+     "paint": {
+      "material": "leaf",
+      "base": "#718b3d"
+     }
+    },
+    {
+     "name": "bark_ridge_left",
+     "origin": [
+      -5,
+      18,
+      -6
+     ],
+     "size": [
+      2,
+      6,
+      2
+     ],
+     "faces": {
+      "north": "#684633",
+      "east": "#684633",
+      "south": "#684633",
+      "west": "#684633",
+      "up": "#4b3327",
+      "down": "#684633"
+     },
+     "surface_details": [
+      {
+       "face": "north",
+       "x": 0,
+       "y": 1,
+       "width": 1,
+       "height": 3,
+       "color": "#435b2f"
+      }
+     ],
+     "paint": {
+      "material": "wood",
+      "base": "#684633"
+     }
+    },
+    {
+     "name": "bark_ridge_right",
+     "origin": [
+      3,
+      18,
+      -6
+     ],
+     "size": [
+      2,
+      6,
+      2
+     ],
+     "faces": {
+      "north": "#684633",
+      "east": "#30271f",
+      "south": "#30271f",
+      "west": "#30271f",
+      "up": "#4b3327",
+      "down": "#30271f"
+     },
+     "surface_details": [],
+     "paint": {
+      "material": "wood",
+      "base": "#684633"
+     }
+    },
+    {
+     "name": "root_flare_left",
+     "origin": [
+      -9,
+      8,
+      -3
+     ],
+     "size": [
+      4,
+      4,
+      6
+     ],
+     "faces": {
+      "north": "#4b3327",
+      "east": "#30271f",
+      "south": "#30271f",
+      "west": "#30271f",
+      "up": "#4b3327",
+      "down": "#30271f"
+     },
+     "surface_details": [
+      {
+       "face": "north",
+       "x": 1,
+       "y": 1,
+       "width": 2,
+       "height": 2,
+       "color": "#241d18"
+      }
+     ],
+     "paint": {
+      "material": "wood",
+      "base": "#4b3327"
+     }
+    },
+    {
+     "name": "root_flare_right",
+     "origin": [
+      5,
+      8,
+      -3
+     ],
+     "size": [
+      4,
+      4,
+      6
+     ],
+     "faces": {
+      "north": "#4b3327",
+      "east": "#4b3327",
+      "south": "#4b3327",
+      "west": "#4b3327",
+      "up": "#684633",
+      "down": "#4b3327"
+     },
+     "surface_details": [
+      {
+       "face": "north",
+       "x": 2,
+       "y": 0,
+       "width": 1,
+       "height": 3,
+       "color": "#435b2f"
+      }
+     ],
+     "paint": {
+      "material": "wood",
+      "base": "#4b3327"
+     }
+    },
+    {
+     "name": "back_bark_strip",
+     "origin": [
+      -2,
+      16,
+      4
+     ],
+     "size": [
+      4,
+      8,
+      2
+     ],
+     "faces": {
+      "north": "#30271f",
+      "east": "#30271f",
+      "south": "#30271f",
+      "west": "#30271f",
+      "up": "#684633",
+      "down": "#30271f"
+     },
+     "surface_details": [
+      {
+       "face": "south",
+       "x": 1,
+       "y": 2,
+       "width": 2,
+       "height": 4,
+       "color": "#4b3327"
+      }
+     ],
+     "paint": {
+      "material": "wood",
+      "base": "#30271f"
+     }
+    }
+   ]
+  },
+  {
+   "name": "head",
+   "parent": "torso",
+   "pivot": [
+    0,
+    26,
+    -1
+   ],
+   "rotation": [
+    0,
+    0,
+    0
+   ],
+   "cubes": [
+    {
+     "name": "skull_core",
+     "origin": [
+      -7,
+      25,
+      -5
+     ],
+     "size": [
+      14,
+      10,
+      10
+     ],
+     "faces": {
+      "north": "#684633",
+      "east": "#684633",
+      "south": "#684633",
+      "west": "#684633",
+      "up": "#4b3327",
+      "down": "#684633"
+     },
+     "surface_details": [
+      {
+       "face": "north",
+       "x": 1,
+       "y": 1,
+       "width": 2,
+       "height": 5,
+       "color": "#4b3327"
+      },
+      {
+       "face": "north",
+       "x": 11,
+       "y": 2,
+       "width": 2,
+       "height": 6,
+       "color": "#30271f"
+      },
+      {
+       "face": "up",
+       "x": 4,
+       "y": 1,
+       "width": 5,
+       "height": 2,
+       "color": "#435b2f"
+      }
+     ],
+     "paint": {
+      "material": "wood",
+      "base": "#684633"
+     }
+    },
+    {
+     "name": "crown_cap",
+     "origin": [
+      -8,
+      34,
+      -6
+     ],
+     "size": [
+      16,
+      2,
+      12
+     ],
+     "faces": {
+      "north": "#718b3d",
+      "east": "#718b3d",
+      "south": "#718b3d",
+      "west": "#718b3d",
+      "up": "#9cad54",
+      "down": "#718b3d"
+     },
+     "surface_details": [
+      {
+       "face": "north",
+       "x": 1,
+       "y": 0,
+       "width": 4,
+       "height": 1,
+       "color": "#9cad54"
+      },
+      {
+       "face": "up",
+       "x": 7,
+       "y": 2,
+       "width": 3,
+       "height": 4,
+       "color": "#435b2f"
+      }
+     ],
+     "paint": {
+      "material": "leaf",
+      "base": "#718b3d"
+     }
+    },
+    {
+     "name": "crown_moss_left",
+     "origin": [
+      -8,
+      33,
+      -7
+     ],
+     "size": [
+      4,
+      2,
+      3
+     ],
+     "faces": {
+      "north": "#718b3d",
+      "east": "#435b2f",
+      "south": "#435b2f",
+      "west": "#435b2f",
+      "up": "#9cad54",
+      "down": "#435b2f"
+     },
+     "surface_details": [],
+     "paint": {
+      "material": "leaf",
+      "base": "#718b3d"
+     }
+    },
+    {
+     "name": "crown_moss_right",
+     "origin": [
+      4,
+      33,
+      -7
+     ],
+     "size": [
+      4,
+      2,
+      3
+     ],
+     "faces": {
+      "north": "#435b2f",
+      "east": "#718b3d",
+      "south": "#718b3d",
+      "west": "#718b3d",
+      "up": "#9cad54",
+      "down": "#718b3d"
+     },
+     "surface_details": [],
+     "paint": {
+      "material": "leaf",
+      "base": "#435b2f"
+     }
+    },
+    {
+     "name": "head_bark_left",
+     "origin": [
+      -9,
+      27,
+      -3
+     ],
+     "size": [
+      2,
+      7,
+      8
+     ],
+     "faces": {
+      "north": "#684633",
+      "east": "#30271f",
+      "south": "#30271f",
+      "west": "#30271f",
+      "up": "#4b3327",
+      "down": "#30271f"
+     },
+     "surface_details": [
+      {
+       "face": "west",
+       "x": 0,
+       "y": 1,
+       "width": 1,
+       "height": 3,
+       "color": "#435b2f"
+      }
+     ],
+     "paint": {
+      "material": "wood",
+      "base": "#684633"
+     }
+    },
+    {
+     "name": "head_bark_right",
+     "origin": [
+      7,
+      27,
+      -3
+     ],
+     "size": [
+      2,
+      7,
+      8
+     ],
+     "faces": {
+      "north": "#684633",
+      "east": "#4b3327",
+      "south": "#4b3327",
+      "west": "#4b3327",
+      "up": "#684633",
+      "down": "#4b3327"
+     },
+     "surface_details": [
+      {
+       "face": "east",
+       "x": 0,
+       "y": 2,
+       "width": 1,
+       "height": 3,
+       "color": "#30271f"
+      }
+     ],
+     "paint": {
+      "material": "wood",
+      "base": "#684633"
+     }
+    },
+    {
+     "name": "face_shadow",
+     "origin": [
+      -5,
+      27,
+      -6
+     ],
+     "size": [
+      10,
+      6,
+      2
+     ],
+     "faces": {
+      "north": "#152b22",
+      "east": "#152b22",
+      "south": "#152b22",
+      "west": "#152b22",
+      "up": "#0a1713",
+      "down": "#152b22"
+     },
+     "surface_details": [],
+     "paint": {
+      "material": "stone",
+      "base": "#1B3329"
+     },
+     "features": [
+      {
+       "type": "eyes",
+       "shape": "square",
+       "color": "#C8F26A",
+       "x": 0.5,
+       "y": 0.4,
+       "size": 2,
+       "glow": true
+      }
+     ]
+    },
+    {
+     "name": "brow_left",
+     "origin": [
+      -6,
+      32,
+      -8
+     ],
+     "size": [
+      5,
+      2,
+      2
+     ],
+     "faces": {
+      "north": "#684633",
+      "east": "#684633",
+      "south": "#684633",
+      "west": "#684633",
+      "up": "#4b3327",
+      "down": "#684633"
+     },
+     "surface_details": [
+      {
+       "face": "north",
+       "x": 1,
+       "y": 0,
+       "width": 2,
+       "height": 1,
+       "color": "#435b2f"
+      }
+     ],
+     "paint": {
+      "material": "wood",
+      "base": "#684633"
+     }
+    },
+    {
+     "name": "brow_right",
+     "origin": [
+      1,
+      32,
+      -8
+     ],
+     "size": [
+      5,
+      2,
+      2
+     ],
+     "faces": {
+      "north": "#684633",
+      "east": "#684633",
+      "south": "#684633",
+      "west": "#684633",
+      "up": "#4b3327",
+      "down": "#684633"
+     },
+     "surface_details": [
+      {
+       "face": "north",
+       "x": 2,
+       "y": 0,
+       "width": 2,
+       "height": 1,
+       "color": "#435b2f"
+      }
+     ],
+     "paint": {
+      "material": "wood",
+      "base": "#684633"
+     }
+    },
+    {
+     "name": "cheek_guard_left",
+     "origin": [
+      -7,
+      27,
+      -8
+     ],
+     "size": [
+      2,
+      4,
+      2
+     ],
+     "faces": {
+      "north": "#684633",
+      "east": "#684633",
+      "south": "#684633",
+      "west": "#684633",
+      "up": "#4b3327",
+      "down": "#684633"
+     },
+     "surface_details": [],
+     "paint": {
+      "material": "wood",
+      "base": "#684633"
+     }
+    },
+    {
+     "name": "cheek_guard_right",
+     "origin": [
+      5,
+      27,
+      -8
+     ],
+     "size": [
+      2,
+      4,
+      2
+     ],
+     "faces": {
+      "north": "#684633",
+      "east": "#30271f",
+      "south": "#30271f",
+      "west": "#30271f",
+      "up": "#4b3327",
+      "down": "#30271f"
+     },
+     "surface_details": [],
+     "paint": {
+      "material": "wood",
+      "base": "#684633"
+     }
+    },
+    {
+     "name": "mouth_guard",
+     "origin": [
+      -4,
+      25,
+      -8
+     ],
+     "size": [
+      8,
+      2,
+      2
+     ],
+     "faces": {
+      "north": "#684633",
+      "east": "#684633",
+      "south": "#684633",
+      "west": "#684633",
+      "up": "#4b3327",
+      "down": "#684633"
+     },
+     "surface_details": [
+      {
+       "face": "north",
+       "x": 2,
+       "y": 0,
+       "width": 4,
+       "height": 1,
+       "color": "#435b2f"
+      }
+     ],
+     "paint": {
+      "material": "wood",
+      "base": "#684633"
+     }
+    },
+    {
+     "name": "mouth_inner",
+     "origin": [
+      -3,
+      26,
+      -9
+     ],
+     "size": [
+      6,
+      2,
+      1
+     ],
+     "faces": {
+      "north": "#0a1713",
+      "east": "#0a1713",
+      "south": "#0a1713",
+      "west": "#0a1713",
+      "up": "#0a1713",
+      "down": "#0a1713"
+     },
+     "surface_details": [],
+     "paint": {
+      "material": "leaf",
+      "base": "#0a1713"
+     }
+    },
+    {
+     "name": "chin_moss",
+     "origin": [
+      -3,
+      24,
+      -7
+     ],
+     "size": [
+      6,
+      2,
+      2
+     ],
+     "faces": {
+      "north": "#718b3d",
+      "east": "#435b2f",
+      "south": "#435b2f",
+      "west": "#435b2f",
+      "up": "#718b3d",
+      "down": "#435b2f"
+     },
+     "surface_details": [
+      {
+       "face": "north",
+       "x": 1,
+       "y": 0,
+       "width": 3,
+       "height": 1,
+       "color": "#9cad54"
+      }
+     ],
+     "paint": {
+      "material": "leaf",
+      "base": "#718b3d"
+     }
+    }
+   ]
+  },
+  {
+   "name": "jaw",
+   "parent": "head",
+   "pivot": [
+    0,
+    26,
+    -8
+   ],
+   "rotation": [
+    0,
+    0,
+    0
+   ],
+   "cubes": [
+    {
+     "name": "jaw_plate",
+     "origin": [
+      -3,
+      24,
+      -9
+     ],
+     "size": [
+      6,
+      2,
+      2
+     ],
+     "faces": {
+      "north": "#684633",
+      "east": "#30271f",
+      "south": "#30271f",
+      "west": "#30271f",
+      "up": "#4b3327",
+      "down": "#30271f"
+     },
+     "surface_details": [],
+     "paint": {
+      "material": "wood",
+      "base": "#684633"
+     }
+    },
+    {
+     "name": "jaw_moss_left",
+     "origin": [
+      -4,
+      24,
+      -9
+     ],
+     "size": [
+      2,
+      1,
+      2
+     ],
+     "faces": {
+      "north": "#718b3d",
+      "east": "#435b2f",
+      "south": "#435b2f",
+      "west": "#435b2f",
+      "up": "#718b3d",
+      "down": "#435b2f"
+     },
+     "surface_details": [],
+     "paint": {
+      "material": "leaf",
+      "base": "#718b3d"
+     }
+    },
+    {
+     "name": "jaw_moss_right",
+     "origin": [
+      2,
+      24,
+      -9
+     ],
+     "size": [
+      2,
+      1,
+      2
+     ],
+     "faces": {
+      "north": "#718b3d",
+      "east": "#718b3d",
+      "south": "#718b3d",
+      "west": "#718b3d",
+      "up": "#9cad54",
+      "down": "#718b3d"
+     },
+     "surface_details": [],
+     "paint": {
+      "material": "leaf",
+      "base": "#718b3d"
+     }
+    }
+   ]
+  },
+  {
+   "name": "leg_front_left",
+   "parent": "torso",
+   "pivot": [
+    -4,
+    11,
+    -3
+   ],
+   "rotation": [
+    0,
+    0,
+    0
+   ],
+   "cubes": [
+    {
+     "name": "front_shaft",
+     "origin": [
+      -6,
+      3,
+      -5
+     ],
+     "size": [
+      4,
+      8,
+      4
+     ],
+     "faces": {
+      "north": "#684633",
+      "east": "#684633",
+      "south": "#684633",
+      "west": "#684633",
+      "up": "#4b3327",
+      "down": "#684633"
+     },
+     "surface_details": [
+      {
+       "face": "north",
+       "x": 0,
+       "y": 2,
+       "width": 1,
+       "height": 4,
+       "color": "#30271f"
+      },
+      {
+       "face": "north",
+       "x": 3,
+       "y": 0,
+       "width": 1,
+       "height": 3,
+       "color": "#435b2f"
+      }
+     ],
+     "paint": {
+      "material": "wood",
+      "base": "#684633"
+     }
+    },
+    {
+     "name": "front_moss_cap",
+     "origin": [
+      -6,
+      9,
+      -5
+     ],
+     "size": [
+      4,
+      2,
+      4
+     ],
+     "faces": {
+      "north": "#718b3d",
+      "east": "#718b3d",
+      "south": "#718b3d",
+      "west": "#718b3d",
+      "up": "#9cad54",
+      "down": "#718b3d"
+     },
+     "surface_details": [
+      {
+       "face": "north",
+       "x": 1,
+       "y": 0,
+       "width": 2,
+       "height": 1,
+       "color": "#9cad54"
+      }
+     ],
+     "paint": {
+      "material": "leaf",
+      "base": "#718b3d"
+     }
+    }
+   ]
+  },
+  {
+   "name": "foot_front_left",
+   "parent": "leg_front_left",
+   "pivot": [
+    -4,
+    3,
+    -3
+   ],
+   "rotation": [
+    0,
+    0,
+    0
+   ],
+   "cubes": [
+    {
+     "name": "foot_block",
+     "origin": [
+      -6,
+      0,
+      -6
+     ],
+     "size": [
+      4,
+      4,
+      6
+     ],
+     "faces": {
+      "north": "#4b3327",
+      "east": "#4b3327",
+      "south": "#4b3327",
+      "west": "#4b3327",
+      "up": "#30271f",
+      "down": "#4b3327"
+     },
+     "surface_details": [
+      {
+       "face": "north",
+       "x": 0,
+       "y": 1,
+       "width": 1,
+       "height": 2,
+       "color": "#241d18"
+      },
+      {
+       "face": "north",
+       "x": 3,
+       "y": 0,
+       "width": 1,
+       "height": 2,
+       "color": "#435b2f"
+      }
+     ],
+     "paint": {
+      "material": "wood",
+      "base": "#4b3327"
+     }
+    },
+    {
+     "name": "root_toe_left",
+     "origin": [
+      -7,
+      0,
+      -8
+     ],
+     "size": [
+      2,
+      2,
+      2
+     ],
+     "faces": {
+      "north": "#241d18",
+      "east": "#241d18",
+      "south": "#241d18",
+      "west": "#241d18",
+      "up": "#4b3327",
+      "down": "#241d18"
+     },
+     "surface_details": [],
+     "paint": {
+      "material": "wood",
+      "base": "#241d18"
+     }
+    },
+    {
+     "name": "root_toe_right",
+     "origin": [
+      -3,
+      0,
+      -8
+     ],
+     "size": [
+      2,
+      2,
+      2
+     ],
+     "faces": {
+      "north": "#241d18",
+      "east": "#241d18",
+      "south": "#241d18",
+      "west": "#241d18",
+      "up": "#4b3327",
+      "down": "#241d18"
+     },
+     "surface_details": [],
+     "paint": {
+      "material": "wood",
+      "base": "#241d18"
+     }
+    }
+   ]
+  },
+  {
+   "name": "leg_front_right",
+   "parent": "torso",
+   "pivot": [
+    4,
+    11,
+    -3
+   ],
+   "rotation": [
+    0,
+    0,
+    0
+   ],
+   "cubes": [
+    {
+     "name": "front_shaft",
+     "origin": [
+      2,
+      3,
+      -5
+     ],
+     "size": [
+      4,
+      8,
+      4
+     ],
+     "faces": {
+      "north": "#684633",
+      "east": "#684633",
+      "south": "#684633",
+      "west": "#684633",
+      "up": "#4b3327",
+      "down": "#684633"
+     },
+     "surface_details": [
+      {
+       "face": "north",
+       "x": 0,
+       "y": 2,
+       "width": 1,
+       "height": 4,
+       "color": "#30271f"
+      },
+      {
+       "face": "north",
+       "x": 3,
+       "y": 0,
+       "width": 1,
+       "height": 3,
+       "color": "#435b2f"
+      }
+     ],
+     "paint": {
+      "material": "wood",
+      "base": "#684633"
+     }
+    },
+    {
+     "name": "front_moss_cap",
+     "origin": [
+      2,
+      9,
+      -5
+     ],
+     "size": [
+      4,
+      2,
+      4
+     ],
+     "faces": {
+      "north": "#718b3d",
+      "east": "#718b3d",
+      "south": "#718b3d",
+      "west": "#718b3d",
+      "up": "#9cad54",
+      "down": "#718b3d"
+     },
+     "surface_details": [
+      {
+       "face": "north",
+       "x": 1,
+       "y": 0,
+       "width": 2,
+       "height": 1,
+       "color": "#9cad54"
+      }
+     ],
+     "paint": {
+      "material": "leaf",
+      "base": "#718b3d"
+     }
+    }
+   ]
+  },
+  {
+   "name": "foot_front_right",
+   "parent": "leg_front_right",
+   "pivot": [
+    4,
+    3,
+    -3
+   ],
+   "rotation": [
+    0,
+    0,
+    0
+   ],
+   "cubes": [
+    {
+     "name": "foot_block",
+     "origin": [
+      2,
+      0,
+      -6
+     ],
+     "size": [
+      4,
+      4,
+      6
+     ],
+     "faces": {
+      "north": "#4b3327",
+      "east": "#4b3327",
+      "south": "#4b3327",
+      "west": "#4b3327",
+      "up": "#30271f",
+      "down": "#4b3327"
+     },
+     "surface_details": [
+      {
+       "face": "north",
+       "x": 0,
+       "y": 1,
+       "width": 1,
+       "height": 2,
+       "color": "#241d18"
+      },
+      {
+       "face": "north",
+       "x": 3,
+       "y": 0,
+       "width": 1,
+       "height": 2,
+       "color": "#435b2f"
+      }
+     ],
+     "paint": {
+      "material": "wood",
+      "base": "#4b3327"
+     }
+    },
+    {
+     "name": "root_toe_left",
+     "origin": [
+      1,
+      0,
+      -8
+     ],
+     "size": [
+      2,
+      2,
+      2
+     ],
+     "faces": {
+      "north": "#241d18",
+      "east": "#241d18",
+      "south": "#241d18",
+      "west": "#241d18",
+      "up": "#4b3327",
+      "down": "#241d18"
+     },
+     "surface_details": [],
+     "paint": {
+      "material": "wood",
+      "base": "#241d18"
+     }
+    },
+    {
+     "name": "root_toe_right",
+     "origin": [
+      5,
+      0,
+      -8
+     ],
+     "size": [
+      2,
+      2,
+      2
+     ],
+     "faces": {
+      "north": "#241d18",
+      "east": "#241d18",
+      "south": "#241d18",
+      "west": "#241d18",
+      "up": "#4b3327",
+      "down": "#241d18"
+     },
+     "surface_details": [],
+     "paint": {
+      "material": "wood",
+      "base": "#241d18"
+     }
+    }
+   ]
+  },
+  {
+   "name": "leg_back_left",
+   "parent": "torso",
+   "pivot": [
+    -4,
+    11,
+    3
+   ],
+   "rotation": [
+    0,
+    0,
+    0
+   ],
+   "cubes": [
+    {
+     "name": "back_shaft",
+     "origin": [
+      -6,
+      3,
+      1
+     ],
+     "size": [
+      4,
+      8,
+      4
+     ],
+     "faces": {
+      "north": "#684633",
+      "east": "#684633",
+      "south": "#684633",
+      "west": "#684633",
+      "up": "#4b3327",
+      "down": "#684633"
+     },
+     "surface_details": [
+      {
+       "face": "north",
+       "x": 0,
+       "y": 2,
+       "width": 1,
+       "height": 4,
+       "color": "#30271f"
+      },
+      {
+       "face": "north",
+       "x": 3,
+       "y": 0,
+       "width": 1,
+       "height": 3,
+       "color": "#435b2f"
+      }
+     ],
+     "paint": {
+      "material": "wood",
+      "base": "#684633"
+     }
+    },
+    {
+     "name": "back_moss_cap",
+     "origin": [
+      -6,
+      9,
+      1
+     ],
+     "size": [
+      4,
+      2,
+      4
+     ],
+     "faces": {
+      "north": "#718b3d",
+      "east": "#718b3d",
+      "south": "#718b3d",
+      "west": "#718b3d",
+      "up": "#9cad54",
+      "down": "#718b3d"
+     },
+     "surface_details": [
+      {
+       "face": "north",
+       "x": 1,
+       "y": 0,
+       "width": 2,
+       "height": 1,
+       "color": "#9cad54"
+      }
+     ],
+     "paint": {
+      "material": "leaf",
+      "base": "#718b3d"
+     }
+    }
+   ]
+  },
+  {
+   "name": "foot_back_left",
+   "parent": "leg_back_left",
+   "pivot": [
+    -4,
+    3,
+    3
+   ],
+   "rotation": [
+    0,
+    0,
+    0
+   ],
+   "cubes": [
+    {
+     "name": "foot_block",
+     "origin": [
+      -6,
+      0,
+      0
+     ],
+     "size": [
+      4,
+      4,
+      6
+     ],
+     "faces": {
+      "north": "#4b3327",
+      "east": "#4b3327",
+      "south": "#4b3327",
+      "west": "#4b3327",
+      "up": "#30271f",
+      "down": "#4b3327"
+     },
+     "surface_details": [
+      {
+       "face": "north",
+       "x": 0,
+       "y": 1,
+       "width": 1,
+       "height": 2,
+       "color": "#241d18"
+      },
+      {
+       "face": "north",
+       "x": 3,
+       "y": 0,
+       "width": 1,
+       "height": 2,
+       "color": "#435b2f"
+      }
+     ],
+     "paint": {
+      "material": "wood",
+      "base": "#4b3327"
+     }
+    },
+    {
+     "name": "root_toe_left",
+     "origin": [
+      -7,
+      0,
+      -2
+     ],
+     "size": [
+      2,
+      2,
+      2
+     ],
+     "faces": {
+      "north": "#241d18",
+      "east": "#241d18",
+      "south": "#241d18",
+      "west": "#241d18",
+      "up": "#4b3327",
+      "down": "#241d18"
+     },
+     "surface_details": [],
+     "paint": {
+      "material": "wood",
+      "base": "#241d18"
+     }
+    },
+    {
+     "name": "root_toe_right",
+     "origin": [
+      -3,
+      0,
+      -2
+     ],
+     "size": [
+      2,
+      2,
+      2
+     ],
+     "faces": {
+      "north": "#241d18",
+      "east": "#241d18",
+      "south": "#241d18",
+      "west": "#241d18",
+      "up": "#4b3327",
+      "down": "#241d18"
+     },
+     "surface_details": [],
+     "paint": {
+      "material": "wood",
+      "base": "#241d18"
+     }
+    }
+   ]
+  },
+  {
+   "name": "leg_back_right",
+   "parent": "torso",
+   "pivot": [
+    4,
+    11,
+    3
+   ],
+   "rotation": [
+    0,
+    0,
+    0
+   ],
+   "cubes": [
+    {
+     "name": "back_shaft",
+     "origin": [
+      2,
+      3,
+      1
+     ],
+     "size": [
+      4,
+      8,
+      4
+     ],
+     "faces": {
+      "north": "#684633",
+      "east": "#684633",
+      "south": "#684633",
+      "west": "#684633",
+      "up": "#4b3327",
+      "down": "#684633"
+     },
+     "surface_details": [
+      {
+       "face": "north",
+       "x": 0,
+       "y": 2,
+       "width": 1,
+       "height": 4,
+       "color": "#30271f"
+      },
+      {
+       "face": "north",
+       "x": 3,
+       "y": 0,
+       "width": 1,
+       "height": 3,
+       "color": "#435b2f"
+      }
+     ],
+     "paint": {
+      "material": "wood",
+      "base": "#684633"
+     }
+    },
+    {
+     "name": "back_moss_cap",
+     "origin": [
+      2,
+      9,
+      1
+     ],
+     "size": [
+      4,
+      2,
+      4
+     ],
+     "faces": {
+      "north": "#718b3d",
+      "east": "#718b3d",
+      "south": "#718b3d",
+      "west": "#718b3d",
+      "up": "#9cad54",
+      "down": "#718b3d"
+     },
+     "surface_details": [
+      {
+       "face": "north",
+       "x": 1,
+       "y": 0,
+       "width": 2,
+       "height": 1,
+       "color": "#9cad54"
+      }
+     ],
+     "paint": {
+      "material": "leaf",
+      "base": "#718b3d"
+     }
+    }
+   ]
+  },
+  {
+   "name": "foot_back_right",
+   "parent": "leg_back_right",
+   "pivot": [
+    4,
+    3,
+    3
+   ],
+   "rotation": [
+    0,
+    0,
+    0
+   ],
+   "cubes": [
+    {
+     "name": "foot_block",
+     "origin": [
+      2,
+      0,
+      0
+     ],
+     "size": [
+      4,
+      4,
+      6
+     ],
+     "faces": {
+      "north": "#4b3327",
+      "east": "#4b3327",
+      "south": "#4b3327",
+      "west": "#4b3327",
+      "up": "#30271f",
+      "down": "#4b3327"
+     },
+     "surface_details": [
+      {
+       "face": "north",
+       "x": 0,
+       "y": 1,
+       "width": 1,
+       "height": 2,
+       "color": "#241d18"
+      },
+      {
+       "face": "north",
+       "x": 3,
+       "y": 0,
+       "width": 1,
+       "height": 2,
+       "color": "#435b2f"
+      }
+     ],
+     "paint": {
+      "material": "wood",
+      "base": "#4b3327"
+     }
+    },
+    {
+     "name": "root_toe_left",
+     "origin": [
+      1,
+      0,
+      -2
+     ],
+     "size": [
+      2,
+      2,
+      2
+     ],
+     "faces": {
+      "north": "#241d18",
+      "east": "#241d18",
+      "south": "#241d18",
+      "west": "#241d18",
+      "up": "#4b3327",
+      "down": "#241d18"
+     },
+     "surface_details": [],
+     "paint": {
+      "material": "wood",
+      "base": "#241d18"
+     }
+    },
+    {
+     "name": "root_toe_right",
+     "origin": [
+      5,
+      0,
+      -2
+     ],
+     "size": [
+      2,
+      2,
+      2
+     ],
+     "faces": {
+      "north": "#241d18",
+      "east": "#241d18",
+      "south": "#241d18",
+      "west": "#241d18",
+      "up": "#4b3327",
+      "down": "#241d18"
+     },
+     "surface_details": [],
+     "paint": {
+      "material": "wood",
+      "base": "#241d18"
+     }
+    }
+   ]
+  },
+  {
+   "name": "branch_left",
+   "parent": "head",
+   "pivot": [
+    -6,
+    34,
+    1
+   ],
+   "rotation": [
+    0,
+    0,
+    0
+   ],
+   "cubes": [
+    {
+     "name": "branch_stem",
+     "origin": [
+      -8,
+      34,
+      0
+     ],
+     "size": [
+      2,
+      5,
+      2
+     ],
+     "faces": {
+      "north": "#30271f",
+      "east": "#30271f",
+      "south": "#30271f",
+      "west": "#30271f",
+      "up": "#684633",
+      "down": "#30271f"
+     },
+     "surface_details": [],
+     "paint": {
+      "material": "wood",
+      "base": "#30271f"
+     }
+    },
+    {
+     "name": "branch_crook",
+     "origin": [
+      -10,
+      37,
+      0
+     ],
+     "size": [
+      2,
+      2,
+      2
+     ],
+     "faces": {
+      "north": "#4b3327",
+      "east": "#4b3327",
+      "south": "#4b3327",
+      "west": "#4b3327",
+      "up": "#684633",
+      "down": "#4b3327"
+     },
+     "surface_details": [],
+     "paint": {
+      "material": "wood",
+      "base": "#4b3327"
+     }
+    }
+   ]
+  },
+  {
+   "name": "branch_right",
+   "parent": "head",
+   "pivot": [
+    6,
+    34,
+    2
+   ],
+   "rotation": [
+    0,
+    0,
+    0
+   ],
+   "cubes": [
+    {
+     "name": "branch_stem",
+     "origin": [
+      6,
+      34,
+      1
+     ],
+     "size": [
+      2,
+      5,
+      2
+     ],
+     "faces": {
+      "north": "#684633",
+      "east": "#4b3327",
+      "south": "#4b3327",
+      "west": "#4b3327",
+      "up": "#684633",
+      "down": "#4b3327"
+     },
+     "surface_details": [],
+     "paint": {
+      "material": "wood",
+      "base": "#684633"
+     }
+    },
+    {
+     "name": "branch_crook",
+     "origin": [
+      8,
+      37,
+      1
+     ],
+     "size": [
+      2,
+      2,
+      2
+     ],
+     "faces": {
+      "north": "#4b3327",
+      "east": "#30271f",
+      "south": "#30271f",
+      "west": "#30271f",
+      "up": "#684633",
+      "down": "#30271f"
+     },
+     "surface_details": [],
+     "paint": {
+      "material": "wood",
+      "base": "#4b3327"
+     }
+    }
+   ]
+  },
+  {
+   "name": "branch_right_tip",
+   "parent": "branch_right",
+   "pivot": [
+    9,
+    38,
+    1
+   ],
+   "rotation": [
+    0,
+    0,
+    0
+   ],
+   "cubes": [
+    {
+     "name": "branch_tip",
+     "origin": [
+      9,
+      38,
+      1
+     ],
+     "size": [
+      2,
+      3,
+      2
+     ],
+     "faces": {
+      "north": "#4b3327",
+      "east": "#435b2f",
+      "south": "#435b2f",
+      "west": "#435b2f",
+      "up": "#718b3d",
+      "down": "#435b2f"
+     },
+     "surface_details": [],
+     "paint": {
+      "material": "wood",
+      "base": "#4b3327"
+     }
+    }
+   ]
+  }
+ ],
+ "animations": [
+  {
+   "name": "idle",
+   "length": 3,
+   "loop": true,
+   "channels": [
+    {
+     "bone": "torso",
+     "keyframes": [
+      {
+       "time": 0,
+       "rotation": [
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 1.5,
+       "rotation": [
+        1,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 3,
+       "rotation": [
+        0,
+        0,
+        0
+       ]
+      }
+     ]
+    },
+    {
+     "bone": "head",
+     "keyframes": [
+      {
+       "time": 0,
+       "rotation": [
+        0,
+        -2,
+        0
+       ]
+      },
+      {
+       "time": 1.5,
+       "rotation": [
+        1,
+        2,
+        0
+       ]
+      },
+      {
+       "time": 3,
+       "rotation": [
+        0,
+        -2,
+        0
+       ]
+      }
+     ]
+    },
+    {
+     "bone": "branch_left",
+     "keyframes": [
+      {
+       "time": 0,
+       "rotation": [
+        0,
+        0,
+        -3
+       ]
+      },
+      {
+       "time": 1.5,
+       "rotation": [
+        0,
+        0,
+        3
+       ]
+      },
+      {
+       "time": 3,
+       "rotation": [
+        0,
+        0,
+        -3
+       ]
+      }
+     ]
+    },
+    {
+     "bone": "branch_right",
+     "keyframes": [
+      {
+       "time": 0,
+       "rotation": [
+        0,
+        0,
+        2
+       ]
+      },
+      {
+       "time": 1.5,
+       "rotation": [
+        0,
+        0,
+        -2
+       ]
+      },
+      {
+       "time": 3,
+       "rotation": [
+        0,
+        0,
+        2
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "walk",
+   "length": 1,
+   "loop": true,
+   "channels": [
+    {
+     "bone": "leg_front_left",
+     "keyframes": [
+      {
+       "time": 0,
+       "rotation": [
+        22,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.125,
+       "rotation": [
+        15.56,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.25,
+       "rotation": [
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.375,
+       "rotation": [
+        -15.56,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.5,
+       "rotation": [
+        -22,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.625,
+       "rotation": [
+        -15.56,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.75,
+       "rotation": [
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.875,
+       "rotation": [
+        15.56,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 1,
+       "rotation": [
+        22,
+        0,
+        0
+       ]
+      }
+     ]
+    },
+    {
+     "bone": "leg_back_right",
+     "keyframes": [
+      {
+       "time": 0,
+       "rotation": [
+        22,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.125,
+       "rotation": [
+        15.56,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.25,
+       "rotation": [
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.375,
+       "rotation": [
+        -15.56,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.5,
+       "rotation": [
+        -22,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.625,
+       "rotation": [
+        -15.56,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.75,
+       "rotation": [
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.875,
+       "rotation": [
+        15.56,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 1,
+       "rotation": [
+        22,
+        0,
+        0
+       ]
+      }
+     ]
+    },
+    {
+     "bone": "leg_front_right",
+     "keyframes": [
+      {
+       "time": 0,
+       "rotation": [
+        -22,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.125,
+       "rotation": [
+        -15.56,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.25,
+       "rotation": [
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.375,
+       "rotation": [
+        15.56,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.5,
+       "rotation": [
+        22,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.625,
+       "rotation": [
+        15.56,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.75,
+       "rotation": [
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.875,
+       "rotation": [
+        -15.56,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 1,
+       "rotation": [
+        -22,
+        0,
+        0
+       ]
+      }
+     ]
+    },
+    {
+     "bone": "leg_back_left",
+     "keyframes": [
+      {
+       "time": 0,
+       "rotation": [
+        -22,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.125,
+       "rotation": [
+        -15.56,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.25,
+       "rotation": [
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.375,
+       "rotation": [
+        15.56,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.5,
+       "rotation": [
+        22,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.625,
+       "rotation": [
+        15.56,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.75,
+       "rotation": [
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.875,
+       "rotation": [
+        -15.56,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 1,
+       "rotation": [
+        -22,
+        0,
+        0
+       ]
+      }
+     ]
+    },
+    {
+     "bone": "head",
+     "keyframes": [
+      {
+       "time": 0,
+       "rotation": [
+        0,
+        -2,
+        0
+       ]
+      },
+      {
+       "time": 0.5,
+       "rotation": [
+        0,
+        2,
+        0
+       ]
+      },
+      {
+       "time": 1,
+       "rotation": [
+        0,
+        -2,
+        0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "hurt",
+   "length": 0.8,
+   "loop": true,
+   "channels": [
+    {
+     "bone": "torso",
+     "keyframes": [
+      {
+       "time": 0,
+       "rotation": [
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.2,
+       "rotation": [
+        -8,
+        0,
+        7
+       ]
+      },
+      {
+       "time": 0.8,
+       "rotation": [
+        0,
+        0,
+        0
+       ]
+      }
+     ]
+    },
+    {
+     "bone": "head",
+     "keyframes": [
+      {
+       "time": 0,
+       "rotation": [
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.2,
+       "rotation": [
+        8,
+        0,
+        -7
+       ]
+      },
+      {
+       "time": 0.8,
+       "rotation": [
+        0,
+        0,
+        0
+       ]
+      }
+     ]
+    },
+    {
+     "bone": "jaw",
+     "keyframes": [
+      {
+       "time": 0,
+       "rotation": [
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.2,
+       "rotation": [
+        12,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.8,
+       "rotation": [
+        0,
+        0,
+        0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "charge",
+   "length": 1.6,
+   "loop": true,
+   "channels": [
+    {
+     "bone": "torso",
+     "keyframes": [
+      {
+       "time": 0,
+       "rotation": [
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.8,
+       "rotation": [
+        -5,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 1.6,
+       "rotation": [
+        0,
+        0,
+        0
+       ]
+      }
+     ]
+    },
+    {
+     "bone": "head",
+     "keyframes": [
+      {
+       "time": 0,
+       "rotation": [
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.8,
+       "rotation": [
+        8,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 1.6,
+       "rotation": [
+        0,
+        0,
+        0
+       ]
+      }
+     ]
+    },
+    {
+     "bone": "branch_left",
+     "keyframes": [
+      {
+       "time": 0,
+       "rotation": [
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.8,
+       "rotation": [
+        0,
+        0,
+        -8
+       ]
+      },
+      {
+       "time": 1.6,
+       "rotation": [
+        0,
+        0,
+        0
+       ]
+      }
+     ]
+    },
+    {
+     "bone": "branch_right",
+     "keyframes": [
+      {
+       "time": 0,
+       "rotation": [
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.8,
+       "rotation": [
+        0,
+        0,
+        8
+       ]
+      },
+      {
+       "time": 1.6,
+       "rotation": [
+        0,
+        0,
+        0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "attack",
+   "length": 1.2,
+   "loop": true,
+   "channels": [
+    {
+     "bone": "jaw",
+     "keyframes": [
+      {
+       "time": 0,
+       "rotation": [
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.35,
+       "rotation": [
+        -18,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.8,
+       "rotation": [
+        8,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 1.2,
+       "rotation": [
+        0,
+        0,
+        0
+       ]
+      }
+     ]
+    },
+    {
+     "bone": "head",
+     "keyframes": [
+      {
+       "time": 0,
+       "rotation": [
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.35,
+       "rotation": [
+        10,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.8,
+       "rotation": [
+        -4,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 1.2,
+       "rotation": [
+        0,
+        0,
+        0
+       ]
+      }
+     ]
+    },
+    {
+     "bone": "torso",
+     "keyframes": [
+      {
+       "time": 0,
+       "rotation": [
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.35,
+       "rotation": [
+        -4,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 0.8,
+       "rotation": [
+        3,
+        0,
+        0
+       ]
+      },
+      {
+       "time": 1.2,
+       "rotation": [
+        0,
+        0,
+        0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "look",
+   "length": 2.4,
+   "loop": true,
+   "channels": [
+    {
+     "bone": "head",
+     "keyframes": [
+      {
+       "time": 0,
+       "rotation": [
+        0,
+        -14,
+        0
+       ]
+      },
+      {
+       "time": 1.2,
+       "rotation": [
+        0,
+        14,
+        0
+       ]
+      },
+      {
+       "time": 2.4,
+       "rotation": [
+        0,
+        -14,
+        0
+       ]
+      }
+     ]
+    },
+    {
+     "bone": "branch_left",
+     "keyframes": [
+      {
+       "time": 0,
+       "rotation": [
+        0,
+        0,
+        -5
+       ]
+      },
+      {
+       "time": 1.2,
+       "rotation": [
+        0,
+        0,
+        5
+       ]
+      },
+      {
+       "time": 2.4,
+       "rotation": [
+        0,
+        0,
+        -5
+       ]
+      }
+     ]
+    },
+    {
+     "bone": "branch_right",
+     "keyframes": [
+      {
+       "time": 0,
+       "rotation": [
+        0,
+        0,
+        5
+       ]
+      },
+      {
+       "time": 1.2,
+       "rotation": [
+        0,
+        0,
+        -5
+       ]
+      },
+      {
+       "time": 2.4,
+       "rotation": [
+        0,
+        0,
+        5
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

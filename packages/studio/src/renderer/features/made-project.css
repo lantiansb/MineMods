@@ -1,0 +1,26 @@
+.made-bar {
+  position: fixed;
+  top: 64px;
+  left: 50%;
+  z-index: 100;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 85vw;
+  padding: 10px 14px 10px 20px;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-pill);
+  background: var(--surface-solid);
+  color: var(--text);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: 0 10px 32px color-mix(in srgb, var(--shadow) 15%, transparent);
+}
+.made-bar strong {
+  font-weight: 600;
+}
+.made-bar .made-close {
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+}

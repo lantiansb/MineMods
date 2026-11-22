@@ -1,0 +1,49 @@
+/* A command inside a sentence of the play instructions: the line to paste and the button that copies it. */
+.play-command {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  margin: 2px 0;
+  vertical-align: middle;
+}
+.play-command code {
+  min-width: 0;
+  padding: 2px 6px;
+  border: 2px solid var(--line);
+  background: var(--panel-dark, rgba(0, 0, 0, 0.25));
+  color: var(--text);
+  font-size: 12px;
+  overflow-wrap: anywhere;
+  user-select: all;
+}
+.play-command .play-command-copy {
+  min-height: 0;
+  padding: 2px 8px;
+  font-size: 12px;
+}
+
+/* A piece of code an AI or a tool quoted inside a sentence: the sentence keeps its words, the name is set apart as what it is (round 18). */
+.said-code {
+  padding: 0 4px;
+  border: 1px solid var(--line);
+  background: var(--panel-dark, rgba(0, 0, 0, 0.25));
+  color: var(--text);
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+}
+/* What stands where technical lines were kept for 高级. */
+.said-hidden {
+  color: var(--muted, inherit);
+  font-size: 12px;
+  list-style: none;
+}
+
+/* What an AI or a check wrote apart from its plain lines, shown only under 高级. */
+.said-technical {
+  color: var(--muted, inherit);
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}

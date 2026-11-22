@@ -1,0 +1,428 @@
+/* 玩法：AI 写的代码。验收卡上先说人话（它会做什么、挂在哪、检查了什么、怎么试），源代码收在「高级」里。 */
+.gp-card {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+.gp-card svg {
+  flex: none;
+}
+:root:root .gp-card h4 {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0 0 4px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 400;
+}
+.gp-part {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+/* The standing notice: whose code this is, and that nobody tried it in the game. */
+.gp-ai {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  gap: 2px 8px;
+  align-items: center;
+  margin: 0;
+  padding: 8px 10px;
+  border: 2px solid var(--outline);
+  background: var(--slot);
+  color: #ffffff;
+  box-shadow:
+    inset 2px 2px 0 var(--slot-dark),
+    inset -2px -2px 0 var(--slot-light);
+}
+.gp-ai svg {
+  width: 14px;
+  height: 14px;
+  color: var(--warning);
+}
+.gp-ai strong {
+  font-size: 15px;
+  font-weight: 400;
+}
+.gp-ai span {
+  grid-column: 2;
+  color: #d8d8d8;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.gp-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  margin: -4px 0 0;
+  padding: 6px 10px;
+  border: 2px solid var(--outline);
+  background: var(--raised);
+  font-size: 13px;
+  line-height: 1.5;
+  list-style: none;
+}
+.gp-strip li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+.gp-strip .gp-tick {
+  margin-top: 0;
+}
+.gp-strip li[data-state="bad"] {
+  color: var(--warning);
+}
+.gp-strip li[data-state="none"] {
+  color: var(--muted);
+}
+.gp-kept {
+  padding: 8px 10px;
+  border: 2px solid var(--warning);
+  background: var(--panel-soft);
+  font-size: 13px;
+  line-height: 1.7;
+}
+.gp-kept strong {
+  color: var(--warning);
+  font-size: 14px;
+  font-weight: 400;
+}
+.gp-kept ul {
+  margin: 4px 0 0;
+  padding-left: 18px;
+}
+.gp-does {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: gp;
+}
+.gp-does li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 10px 8px 34px;
+  border: 2px solid var(--line);
+  background: var(--panel-soft);
+  font-size: 14px;
+  line-height: 1.6;
+  counter-increment: gp;
+}
+.gp-does li::before {
+  content: counter(gp);
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  width: 18px;
+  height: 18px;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--outline);
+  background: var(--stone);
+  color: #ffffff;
+  font-size: 12px;
+  line-height: 1;
+}
+.gp-does strong {
+  color: var(--accent-text);
+  font-weight: 400;
+}
+.gp-does small {
+  color: var(--muted);
+  font-size: 13px;
+}
+.gp-not {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+.gp-not strong {
+  color: var(--text);
+  font-weight: 400;
+}
+.gp-uses {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.gp-use {
+  max-width: 100%;
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 10px 4px 6px;
+  color: #ffffff;
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+}
+.gp-use em {
+  flex: none;
+  padding: 1px 5px;
+  border: 2px solid var(--outline);
+  background: var(--stone);
+  color: #ffffff;
+  font-size: 12px;
+  font-style: normal;
+}
+.gp-use span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.gp-use:hover:not(:disabled),
+.gp-use:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: -2px;
+}
+.gp-use:disabled {
+  color: var(--muted);
+  cursor: default;
+}
+.gp-count {
+  padding: 0 6px;
+  border: 2px solid var(--warning);
+  color: var(--warning);
+  font-size: 12px;
+  font-style: normal;
+}
+.gp-checks {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  border: 2px solid var(--outline);
+  background: var(--raised);
+  list-style: none;
+}
+.gp-checks > li {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  gap: 8px;
+  padding: 7px 10px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.gp-checks > li + li {
+  border-top: 2px solid var(--line);
+}
+.gp-checks > li > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.gp-checks strong {
+  font-weight: 400;
+}
+.gp-checks small {
+  color: var(--muted);
+  font-size: 13px;
+}
+.gp-checks > li[data-state="bad"] strong {
+  color: var(--warning);
+}
+.gp-checks > li[data-state="none"] strong {
+  color: var(--muted);
+}
+.gp-tick {
+  width: 14px;
+  height: 14px;
+  margin-top: 4px;
+}
+.gp-tick[data-state="ok"] {
+  color: var(--accent-text);
+}
+.gp-tick[data-state="bad"] {
+  color: var(--warning);
+}
+.gp-tick[data-state="none"] {
+  color: var(--muted);
+}
+.gp-found {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 2px 0 0;
+  padding: 6px 8px;
+  border: 2px solid var(--line);
+  background: var(--panel-soft);
+  font-size: 13px;
+  line-height: 1.6;
+  list-style: none;
+  word-break: break-word;
+}
+.gp-found b {
+  margin-right: 6px;
+  padding: 0 4px;
+  background: var(--stone);
+  color: #ffffff;
+  font-weight: 400;
+}
+.gp-found i {
+  display: block;
+  color: var(--muted);
+  font-style: normal;
+}
+/* 「怎么在游戏里试」 */
+.gp-try {
+  border: 2px solid var(--outline);
+  background: var(--raised);
+  font-size: 14px;
+  line-height: 1.7;
+}
+.gp-try .fold-summary,
+.gp-limits .fold-summary {
+  padding: 7px 10px;
+  color: var(--accent-text);
+  cursor: pointer;
+}
+.gp-try .fold-summary:hover,
+.gp-limits .fold-summary:hover {
+  color: #ffffff;
+}
+.gp-try > .fold-content > * {
+  margin: 0 10px 8px;
+}
+:root:root .gp-try h5 {
+  margin: 6px 10px 2px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 400;
+}
+.gp-try ul,
+.gp-try ol {
+  padding-left: 20px;
+}
+.gp-try ol li {
+  margin-bottom: 6px;
+}
+.gp-try ol span {
+  display: block;
+}
+.gp-try b {
+  color: var(--muted);
+  font-weight: 400;
+}
+/* 高级：只读的源代码 */
+.gp-advanced {
+  padding-top: 8px;
+  border-top: 2px solid var(--line);
+}
+.gp-code {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: 2px solid var(--outline);
+  background: #1b1b1b;
+}
+.gp-files {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  padding: 4px 4px 0;
+  background: var(--stone-dark, #3a3a3a);
+}
+.gp-file {
+  max-width: 100%;
+  padding: 3px 10px;
+  border: 2px solid var(--outline);
+  border-bottom: 0;
+  background: var(--stone);
+  color: #d8d8d8;
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.gp-file[aria-selected="true"] {
+  background: #1b1b1b;
+  color: #ffffff;
+}
+.gp-file:hover {
+  color: #ffffff;
+}
+.gp-path {
+  margin: 0;
+  padding: 4px 10px;
+  border-bottom: 2px solid #000000;
+  color: #a8a8a8;
+  font-size: 12px;
+  word-break: break-all;
+}
+.gp-source {
+  max-height: 320px;
+  margin: 0;
+  padding: 6px 0;
+  overflow: auto;
+  color: #e6e6e6;
+  font-family: Consolas, "Cascadia Mono", "Courier New", monospace;
+  font-size: 12px;
+  line-height: 1.55;
+  tab-size: 4;
+}
+.gp-line {
+  display: flex;
+  width: max-content;
+  min-width: 100%;
+}
+.gp-line i {
+  flex: none;
+  width: 42px;
+  padding-right: 10px;
+  color: #7a7a7a;
+  font-style: normal;
+  text-align: right;
+  user-select: none;
+}
+.gp-line code {
+  font: inherit;
+  white-space: pre;
+}
+.gp-line.flagged {
+  background: #5a2a22;
+}
+.gp-line.flagged i {
+  color: #ffb4a8;
+}
+.gp-rounds {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
+  line-height: 1.6;
+  list-style: none;
+}
+.gp-rounds li {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  gap: 8px;
+  word-break: break-word;
+}
+.gp-rounds small {
+  color: var(--muted);
+}
+.gp-limits {
+  border: 2px solid var(--line);
+  background: var(--panel-soft);
+  font-size: 13px;
+  line-height: 1.7;
+}
+.gp-limits ul {
+  margin: 0 10px 8px;
+  padding-left: 18px;
+}

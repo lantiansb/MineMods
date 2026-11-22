@@ -1,0 +1,196 @@
+/* 书: the preview is laid out in the game's GUI pixels (`--bk-u` CSS pixels each), so a page here is the page in the game, scaled. */
+.bk-preview {
+  --bk-u: 1.6px;
+  display: grid;
+  gap: 8px;
+  justify-items: start;
+  min-width: 0;
+}
+.bk-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.bk-language {
+  display: inline-flex;
+  gap: 4px;
+  margin-left: 8px;
+}
+.bk-language [aria-pressed="true"] {
+  outline: 2px solid var(--accent, #c9a25a);
+}
+.bk-panel {
+  position: relative;
+  flex: none;
+  max-width: 100%;
+  overflow: hidden;
+  background: var(--bk-edge);
+  font-size: calc(var(--bk-u) * 8);
+  line-height: calc(var(--bk-u) * 9);
+  letter-spacing: calc(var(--bk-u) * 1);
+  font-family: "Unifont", "SimSun", "Songti SC", monospace;
+  image-rendering: pixelated;
+}
+.bk-panel:focus-visible {
+  outline: 2px solid var(--accent, #c9a25a);
+  outline-offset: 2px;
+}
+.bk-cover,
+.bk-sheet {
+  position: absolute;
+  inset: 0;
+}
+.bk-cover {
+  background: var(--bk-cover);
+  box-shadow: inset 0 0 0 calc(var(--bk-u) * 4) var(--bk-edge);
+  color: var(--bk-ink);
+}
+.bk-spine {
+  position: absolute;
+  top: calc(var(--bk-u) * 4);
+  bottom: calc(var(--bk-u) * 4);
+  left: calc(var(--bk-u) * 12);
+  width: calc(var(--bk-u) * 2);
+  background: var(--bk-edge);
+}
+.bk-rule {
+  position: absolute;
+  left: calc(var(--bk-u) * 24);
+  right: calc(var(--bk-u) * 18);
+  height: calc(var(--bk-u) * 1);
+  background: var(--bk-ink);
+}
+.bk-cover-title {
+  position: absolute;
+  left: calc(var(--bk-u) * 14);
+  right: 0;
+  text-align: center;
+  font-size: calc(var(--bk-u) * 16);
+  line-height: calc(var(--bk-u) * 20);
+}
+.bk-author {
+  position: absolute;
+  left: calc(var(--bk-u) * 14);
+  right: 0;
+  text-align: center;
+}
+.bk-sheet {
+  background: #f4ebd3;
+  box-shadow: inset 0 0 0 calc(var(--bk-u) * 3) var(--bk-edge);
+  color: var(--bk-body, #2b2118);
+}
+/* A look's picture covers the whole cover or page (r29); the plain colour and its edge go. */
+.bk-cover.bk-art,
+.bk-sheet.bk-art {
+  background: none;
+  box-shadow: none;
+}
+.bk-whole {
+  position: absolute;
+  inset: 0;
+}
+.bk-line {
+  position: absolute;
+  left: calc(var(--bk-u) * 16);
+  white-space: pre;
+}
+.bk-title {
+  color: var(--bk-heading, #4a2f1a);
+}
+.bk-margin {
+  color: var(--bk-faint, #8a7a66);
+  font-size: calc(var(--bk-u) * 8 * var(--bk-scale, 1));
+  line-height: calc(var(--bk-u) * 9 * var(--bk-scale, 1));
+  letter-spacing: calc(var(--bk-u) * 1 * var(--bk-scale, 1));
+}
+.bk-number {
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: var(--bk-faint, #8a7a66);
+}
+.bk-image {
+  position: absolute;
+}
+.bk-picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.bk-missing {
+  display: grid;
+  place-items: center;
+  background: repeating-linear-gradient(45deg, #e0cfc0, #e0cfc0 6px, #f4ebd3 6px, #f4ebd3 12px);
+  color: #b02a1a;
+}
+.bk-over {
+  background: rgba(220, 40, 30, 0.22);
+  color: #b0180c;
+  outline: 1px solid rgba(200, 30, 20, 0.6);
+}
+.bk-problems {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--danger, #c0392b);
+}
+.bk-fit {
+  margin: 0;
+  color: var(--muted, #888);
+}
+.bk-pages .bk-help {
+  margin: 0;
+  color: var(--muted, #888);
+}
+.bk-columns {
+  display: grid;
+  grid-template-columns: minmax(280px, 1fr) auto;
+  gap: 16px;
+  align-items: start;
+}
+.bk-cards {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+.bk-side {
+  position: sticky;
+  top: 8px;
+}
+.bk-card {
+  display: grid;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 2px solid var(--line, #444);
+}
+.bk-card.current {
+  border-color: var(--accent, #c9a25a);
+}
+.bk-card .field {
+  display: grid;
+  gap: 4px;
+}
+.bk-card .field.bad textarea,
+.bk-card .field.bad input {
+  outline: 2px solid var(--danger, #c0392b);
+}
+.bk-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.bk-bad {
+  color: var(--danger, #c0392b);
+}
+@media (max-width: 980px) {
+  .bk-columns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .bk-side {
+    position: static;
+  }
+  .bk-preview {
+    --bk-u: 1px;
+  }
+}

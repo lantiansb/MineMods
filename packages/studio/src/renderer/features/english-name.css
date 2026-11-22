@@ -1,0 +1,44 @@
+/* The English-name box on a card (english-name.tsx). */
+.en-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+.en-card label {
+  font-size: 14px;
+  color: var(--muted);
+}
+.en-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  min-width: 0;
+}
+.en-row input {
+  flex: 1;
+  min-width: 0;
+  min-height: 38px;
+  padding: 6px 10px;
+  color: inherit;
+  background: #1b252b;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+.en-row input[aria-invalid="true"] {
+  border-color: #c4685f;
+}
+.en-help,
+.en-said {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.en-help.bad {
+  color: #e59a92;
+}
+/* The box a finding's button brought the person to: a moment of outline so it is found at a glance. */
+.en-card:focus-within .en-row input {
+  outline: 2px solid #d69b70;
+  outline-offset: 2px;
+}

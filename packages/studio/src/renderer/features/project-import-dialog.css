@@ -1,0 +1,27 @@
+.pji-body { display: flex; flex-direction: column; gap: 10px; padding: 16px 18px; max-height: 70vh; overflow: auto; color: var(--text); }
+.pji-line { margin: 0; line-height: 1.5; }
+.pji-muted { color: var(--muted); font-size: 12px; }
+.pji-sources { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.pji-source { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 10px; white-space: normal; text-align: left; }
+.pji-source small { color: var(--muted); }
+.pji-group { border: 1px solid var(--edge-dark); padding: 6px 10px 8px; margin: 0; display: flex; flex-wrap: wrap; gap: 4px 14px; }
+.pji-group legend { padding: 0 4px; color: var(--muted); font-size: 12px; }
+.pji-pick { display: inline-flex; align-items: center; gap: 6px; }
+.pji-same { margin-top: 4px; }
+.pji-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.pji-table th, .pji-table td { text-align: left; vertical-align: top; padding: 4px 6px; border-bottom: 1px solid var(--edge-dark); }
+.pji-table td small { display: block; color: var(--muted); }
+.pji-body h4 { margin: 6px 0 0; font-size: 13px; }
+.pji-notes { margin: 0; padding-left: 18px; line-height: 1.5; font-size: 13px; }
+.pji-stop { color: var(--danger); }
+.pji-actions { display: flex; gap: 8px; align-items: center; }
+@media (max-width: 640px) { .pji-sources { grid-template-columns: minmax(0, 1fr); } }
+.pji-body .pji-actions { flex-direction: row; justify-content: flex-start; }
+.pji-body .pji-actions .studio-button { margin: 0; width: auto; }
+/* Checkboxes here are small boxes beside their names, not the full-width text fields the global input style makes. */
+.pji-pick input[type="checkbox"], .pji-check { width: auto; min-width: 0; min-height: 0; height: auto; padding: 0; margin: 0; flex: none; box-shadow: none; }
+/* r29b: a thing the main project has under the same id or name with other content: marked, with the three ways to bring it. */
+.pji-namesake { display: flex; flex-direction: column; gap: 4px; margin-top: 4px; padding: 4px 6px; border-left: 3px solid var(--warning, var(--danger)); }
+.pji-table td .pji-flag { color: var(--text); font-weight: 600; }
+.pji-namesake select { width: auto; max-width: 100%; }
+.pji-inline { display: inline; padding: 0 4px; }

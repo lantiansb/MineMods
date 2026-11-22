@@ -1,0 +1,117 @@
+/* Desktop navigation and reusable workbench controls. */
+.studio-root[data-page="home"] .page {
+  max-width: 1300px;
+  padding: 32px;
+}
+.home-layout .sidebar .home-identity {
+  padding: 12px 12px 22px;
+}
+.home-identity strong {
+  display: block;
+  font-size: 15px;
+}
+.home-identity small {
+  display: block;
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.home-navigation {
+  gap: 7px !important;
+}
+.home-navigation .nav-link {
+  min-height: 40px;
+}
+.home-sidebar-footer {
+  margin-top: auto;
+  padding: 12px;
+  color: var(--muted);
+  font-size: 11px;
+}
+.asset-navigation {
+  margin: 8px 0;
+}
+.asset-navigation .fold-summary {
+  cursor: pointer;
+  min-height: 30px;
+  color: var(--muted);
+  font-size: 11px;
+  padding: 6px 11px;
+}
+.asset-navigation .fold-summary > span {
+  float: right;
+}
+.asset-navigation .nav-link {
+  min-height: 34px;
+  padding-block: 7px;
+}
+.asset-navigation .module-name {
+  min-width: 0;
+  margin-right: auto;
+  color: inherit;
+}
+.asset-navigation .nav-link > span:last-child:not(.module-name) {
+  color: var(--muted);
+  font-size: 10px;
+  opacity: 0.65;
+}
+.asset-navigation .nav-link.active > span:last-child {
+  color: var(--on-accent);
+}
+.asset-navigation .tree-entry {
+  min-height: 30px;
+}
+.voice-input {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+}
+.voice-input p {
+  color: var(--danger);
+  width: 100%;
+  line-height: 1.5;
+}
+@supports (padding-right: env(titlebar-area-width)) {
+  .titlebar {
+    padding-right: max(18px, calc(100vw - env(titlebar-area-width, 100vw) + 10px));
+  }
+}
+@media (max-width: 1100px) {
+  .studio-root[data-page="home"] .page {
+    padding: 26px;
+  }
+  .home-welcome {
+    flex-wrap: wrap;
+  }
+  .home-welcome .page-actions {
+    margin-left: 0;
+  }
+  .project-grid {
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  }
+}
+.theme-settings {
+  max-width: 920px;
+  margin: 0 auto 24px;
+  padding: 24px 30px;
+}
+.theme-settings .theme-choice-grid {
+  margin-bottom: 0;
+}
+/* The line under the title bar while 高级 is on: what the switch added to this page, so pressing it is never a silent change. */
+.advanced-note {
+  margin: 0;
+  padding: 8px 18px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--muted);
+  border-bottom: 1px dashed var(--line);
+  background: #ffffff08;
+}
+.build-drawer-body > .advanced-note {
+  border: 1px dashed var(--line);
+  border-radius: 6px;
+  margin-bottom: 14px;
+}

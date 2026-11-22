@@ -1,0 +1,684 @@
+/*
+ * 动态边栏：现在正在发生什么。
+ *
+ * 放在哪里（1280×720 上不能挤占验收卡）：
+ * - 没有打开卡片时，它站在页面右边，页面给它让出位置；收起以后只剩一条窄边（--ac-rail）。
+ * - 打开了卡片、窗口又不够宽（窄于 project-activity.tsx 里的 roomy）时，它自动收成贴在右边缘的一个小把手，
+ *   画在卡片外面那圈留白里，卡片一个像素都不让；点把手，它才作为抽屉盖在卡片右侧，再点收回。
+ * - 窗口够宽时，它留在卡片旁边，遮罩只盖到它的左边。
+ */
+.project-assets {
+  --ac-width: 300px;
+  --ac-rail: 30px;
+}
+.project-assets.pa-activity {
+  padding-right: calc(14px + var(--ac-rail) + 8px);
+}
+.project-assets.pa-activity.pa-activity-open {
+  padding-right: calc(14px + var(--ac-width) + 10px);
+}
+.ac-panel {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  bottom: 14px;
+  z-index: 5;
+  display: flex;
+  font-size: 13px;
+}
+.ac-panel.open.docked .ac-rail {
+  display: none;
+}
+
+/* ---------- the closed edge ---------- */
+.ac-rail {
+  width: var(--ac-rail);
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  color: var(--text);
+  font-size: 13px;
+}
+.ac-rail:hover,
+.ac-rail:focus-visible {
+  border-color: #ffffff;
+  outline: 0;
+}
+.ac-rail-word {
+  writing-mode: vertical-rl;
+  letter-spacing: 4px;
+}
+.ac-rail > svg {
+  width: 14px;
+  height: 14px;
+  margin-top: auto;
+  color: var(--muted);
+}
+.ac-rail > svg.back {
+  transform: scaleX(-1);
+}
+.ac-count {
+  min-width: 20px;
+  padding: 1px 3px;
+  border: 2px solid var(--outline);
+  background: #ffd83d;
+  color: #4a3500;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14px;
+  text-align: center;
+}
+/* Over an open card on a narrow window: a handle in the margin around the card, and the drawer on demand. */
+.ac-panel:not(.docked) {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 26;
+  align-items: center;
+  pointer-events: none;
+}
+.ac-panel:not(.docked) > * {
+  pointer-events: auto;
+}
+.ac-panel:not(.docked) .ac-rail {
+  order: 2;
+  width: 20px;
+  height: 96px;
+  gap: 4px;
+  padding: 4px 0;
+}
+.ac-panel:not(.docked) .ac-rail-word,
+.ac-panel:not(.docked) .ac-rail > svg {
+  display: none;
+}
+.ac-panel:not(.docked) .ac-rail .ac-mark {
+  width: 14px;
+  height: 14px;
+}
+.ac-panel:not(.docked) .ac-count {
+  min-width: 16px;
+  padding: 0;
+  border-width: 1px;
+  font-size: 11px;
+}
+.ac-panel:not(.docked) .ac-drawer {
+  height: calc(100% - 20px);
+  box-shadow:
+    inset 2px 2px 0 var(--edge-light),
+    inset -2px -2px 0 var(--edge-dark),
+    -6px 0 0 rgba(0, 0, 0, 0.35);
+}
+
+/* ---------- the open panel ---------- */
+.ac-drawer {
+  width: var(--ac-width);
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 8px 8px 8px 10px;
+}
+.ac-head {
+  flex: none;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 2px 8px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--line);
+}
+.ac-head strong {
+  font-size: 16px;
+  font-weight: 400;
+}
+.ac-head .pa-mini {
+  grid-row: 1;
+  grid-column: 2;
+}
+.ac-summary {
+  grid-column: 1 / -1;
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.ac-stalled {
+  flex: none;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 8px 0 0;
+  padding: 6px 8px;
+  border: 2px solid var(--warning);
+  background: var(--warning-bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+.ac-stalled .ac-mark {
+  margin-top: 2px;
+}
+.ac-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+  padding-right: 4px;
+}
+.ac-empty {
+  margin: 0;
+  padding: 16px 6px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.ac-jump {
+  flex: none;
+  margin-top: 6px;
+  padding: 5px 8px;
+  border: 2px solid var(--outline);
+  background: #ffd83d;
+  color: #4a3500;
+  font-size: 13px;
+}
+.ac-jump:hover {
+  border-color: #ffffff;
+}
+
+/* ---------- one thing ---------- */
+.ac-mark {
+  --tile: #8b8b8b;
+  --ink: #ffffff;
+  width: 18px;
+  height: 18px;
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  border: 2px solid #1e1e1e;
+  background: var(--tile);
+  color: var(--ink);
+}
+.ac-mark svg {
+  width: 100%;
+  height: 100%;
+}
+.ac-mark[data-state="run"] {
+  --tile: #f0dc8c;
+  --ink: #5a4100;
+}
+.ac-mark[data-state="ok"] {
+  --tile: #3c8527;
+}
+.ac-mark[data-state="fail"] {
+  --tile: #a3221a;
+}
+.ac-mark[data-state="warn"] {
+  --tile: #e89b4a;
+  --ink: #4a2300;
+}
+.ac-mark[data-state="note"] {
+  --tile: #c6c6c6;
+  --ink: #505050;
+}
+.ac-mark[data-state="idle"] {
+  --tile: #2f2f2f;
+  --ink: #b8b8b8;
+}
+.ac-mark.live svg {
+  animation: pa-blink 1s steps(2) infinite;
+}
+/* ---------- a thing: one row ---------- */
+/* Closed, a thing is one row: its newest picture in a slot, its name and state, a strip of its rounds and the one line
+   of what it is doing. Everything else (each step, what was said) opens under it on request. Hierarchy comes from
+   size and weight, not from boxes inside boxes. */
+.ac-thing {
+  flex: none;
+  border: 2px solid var(--outline);
+  background: var(--slot);
+  box-shadow:
+    inset 2px 2px 0 var(--slot-dark),
+    inset -2px -2px 0 var(--slot-light);
+  color: #ffffff;
+}
+.ac-thing[data-state="run"] {
+  border-color: #000;
+  box-shadow:
+    inset 2px 2px 0 var(--slot-dark),
+    inset -2px -2px 0 var(--slot-light),
+    0 0 0 2px #e8b931;
+}
+.ac-thing-row {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  padding: 6px;
+}
+.ac-slot {
+  width: 40px;
+  height: 40px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 2px solid #000;
+  background: #2b2b2b;
+  box-shadow: inset 2px 2px 0 #1a1a1a;
+}
+.ac-slot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  image-rendering: pixelated;
+}
+.ac-slot .ac-mark {
+  border: 0;
+}
+.ac-thing-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.ac-thing-main:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+.ac-thing-head {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+}
+.ac-thing-head b {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  font-size: 14px;
+  font-weight: 400;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-shadow: 1px 1px 0 #2a2a2a;
+}
+.ac-thing-head em {
+  flex: none;
+  font-size: 12px;
+  font-style: normal;
+  color: #d6d6d6;
+}
+.ac-thing-head em[data-state="run"] {
+  color: #ffe680;
+}
+.ac-thing-head em[data-state="ok"] {
+  color: #9be37f;
+}
+.ac-thing-head em[data-state="warn"] {
+  color: #ffc07a;
+}
+.ac-thing-head em[data-state="fail"] {
+  color: #ffb0a8;
+}
+.ac-thing-now {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  color: #d6d6d6;
+  font-size: 12px;
+}
+.ac-thing-now.live {
+  color: #ffe680;
+}
+.ac-now-text[data-presence="warn"] {
+  color: #ffc07a;
+}
+.ac-now-text[data-presence="fail"] {
+  color: #ffb0a8;
+}
+.ac-now-text {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* The rounds as a strip of squares: the same colours the floor's hotbar speaks. */
+.ac-pips {
+  flex: none;
+  display: flex;
+  gap: 2px;
+}
+.ac-pips i {
+  width: 8px;
+  height: 8px;
+  box-sizing: border-box;
+  border: 2px solid #000;
+  background: #8b8b8b;
+}
+.ac-pips i[data-state="redo"] {
+  background: #e89b4a;
+}
+.ac-pips i[data-state="failed"] {
+  background: #e0443a;
+}
+.ac-pips i[data-state="passed"] {
+  background: #e8b931;
+}
+.ac-pips i[data-state="now"] {
+  background: #ffe680;
+  animation: pa-blink 1s steps(2) infinite;
+}
+.ac-open {
+  width: 24px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #b8b8b8;
+  cursor: pointer;
+}
+.ac-open svg {
+  width: 14px;
+  height: 14px;
+}
+.ac-open:hover,
+.ac-open:focus-visible {
+  outline: 0;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.12);
+}
+.ac-lasted {
+  display: block;
+  margin: -2px 8px 2px 54px;
+  color: #b8b8b8;
+  font-size: 11px;
+}
+
+/* ---------- the whole project: a milestone between the things ---------- */
+.ac-mile {
+  flex: none;
+  color: var(--text);
+}
+.ac-mile-line {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 2px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.ac-mile-line:hover,
+.ac-mile-line:focus-visible {
+  outline: 0;
+  background: rgba(0, 0, 0, 0.06);
+}
+.ac-mile .ac-mark {
+  width: 14px;
+  height: 14px;
+  border-width: 1px;
+}
+.ac-mile-words {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  overflow: hidden;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.ac-mile-words b {
+  flex: none;
+  font-weight: 400;
+}
+.ac-mile-words span {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--muted);
+  text-overflow: ellipsis;
+}
+/* The rule either side of a milestone, so it reads as a divider and not as one more thing. */
+.ac-mile-line::after {
+  content: "";
+  width: 14px;
+  height: 2px;
+  flex: none;
+  background: var(--line);
+}
+.ac-mile time,
+.ac-step time {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+/* ---------- the steps, opened ---------- */
+.ac-steps {
+  margin: 0;
+  padding: 0 6px 6px 54px;
+  list-style: none;
+}
+.ac-mile .ac-steps {
+  padding: 2px 4px 4px 22px;
+}
+.ac-step {
+  position: relative;
+  color: #f0f0f0;
+}
+.ac-mile .ac-step {
+  color: var(--text);
+}
+.ac-step::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: -10px;
+  width: 6px;
+  height: 6px;
+  background: #8b8b8b;
+}
+.ac-step[data-mark="run"]::before {
+  background: #f0dc8c;
+}
+.ac-step[data-mark="ok"]::before {
+  background: #5fb347;
+}
+.ac-step[data-mark="fail"]::before {
+  background: #e0443a;
+}
+.ac-step[data-mark="warn"]::before {
+  background: #e89b4a;
+}
+.ac-step-line {
+  width: 100%;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 2px 4px 2px 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: left;
+  cursor: pointer;
+}
+.ac-step-line:disabled {
+  cursor: default;
+  opacity: 1;
+}
+.ac-step-line:not(:disabled):hover,
+.ac-step-line:focus-visible {
+  outline: 0;
+  background: rgba(255, 255, 255, 0.12);
+}
+.ac-mile .ac-step-line:not(:disabled):hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+.ac-step:not(.open) .ac-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ac-text {
+  flex: 1;
+  min-width: 0;
+  word-break: break-word;
+}
+.ac-step[data-mark="fail"] .ac-text {
+  color: #ffc9c4;
+}
+.ac-mile .ac-step[data-mark="fail"] .ac-text {
+  color: var(--error-text, #7a1410);
+}
+.ac-step.quiet {
+  opacity: 0.62;
+}
+.ac-step-more {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  margin: 2px 0 6px 38px;
+}
+.ac-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding-left: 8px;
+  border-left: 2px solid rgba(255, 255, 255, 0.3);
+  font-size: 12px;
+  opacity: 0.92;
+}
+.ac-mile .ac-lines {
+  border-left-color: var(--line);
+}
+.ac-thumb {
+  width: 64px;
+  height: 64px;
+  border: 2px solid #1e1e1e;
+  background: #2f2f2f;
+  object-fit: cover;
+}
+.ac-go {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #ffe680;
+  font-size: 12px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.ac-mile .ac-go {
+  color: var(--accent-text);
+}
+.ac-missed {
+  margin: 0 4px 4px 0;
+  color: #ffe680;
+  font-size: 12px;
+}
+.ac-tech {
+  max-width: 100%;
+  margin: 0;
+  padding: 3px 6px;
+  overflow: auto;
+  max-height: 120px;
+  background: #1e1e1e;
+  color: #b8e0b0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ac-mark.live svg,
+  .ac-pips i[data-state="now"] {
+    animation: none;
+  }
+}
+.reduce-motion .ac-mark.live svg,
+.reduce-motion .ac-pips i[data-state="now"] {
+  animation: none;
+}
+/* The panel beside the page stays in reach: whatever is laid over the page stops where the panel begins. */
+.project-assets.pa-activity-beside > .pa-veil {
+  right: calc(14px + var(--ac-rail) + 4px);
+}
+.project-assets.pa-activity-beside.pa-activity-open > .pa-veil {
+  right: calc(14px + var(--ac-width) + 4px);
+}
+/* A 1280-wide window with the panel open beside the page: the panel is a little narrower and the road of stages is drawn tighter, so nothing is cut off. */
+@media (max-width: 1400px) {
+  .project-assets {
+    --ac-width: 268px;
+  }
+  .project-assets.pa-activity-open .pa-road {
+    padding: 5px 4px;
+  }
+  .project-assets.pa-activity-open .pa-stop {
+    gap: 5px;
+    padding: 2px 4px 2px 2px;
+  }
+  .project-assets.pa-activity-open .pa-stop-frame {
+    width: 30px;
+    height: 30px;
+  }
+  .project-assets.pa-activity-open .pa-stop-frame svg {
+    width: 16px;
+    height: 16px;
+  }
+  .project-assets.pa-activity-open .pa-stop-words strong {
+    font-size: 14px;
+  }
+  .project-assets.pa-activity-open .pa-stop-words small {
+    font-size: 12px;
+  }
+  .project-assets.pa-activity-open .pa-road-link {
+    min-width: 4px;
+    flex-basis: 4px;
+    margin: 0 1px;
+  }
+}
+/* Beside the panel the card needs less air round it. */
+.project-assets.pa-activity-beside.pa-activity-open > .pa-veil {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+/* A blinking block cursor after the line being written now (used on 制作现场 too). */
+.ac-cursor {
+  width: 7px;
+  height: 13px;
+  flex: none;
+  margin-top: 4px;
+  background: currentColor;
+  animation: pa-blink 1s steps(2) infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ac-cursor {
+    animation: none;
+  }
+}
+.reduce-motion .ac-cursor {
+  animation: none;
+}

@@ -1,0 +1,16 @@
+.more-menu-popover {
+  position: fixed;
+  z-index: 10000;
+  display: grid;
+  max-width: min(360px, calc(100vw - 16px));
+  max-height: calc(100vh - 16px);
+  overflow: auto;
+  padding: 4px;
+  color: var(--text);
+}
+.more-menu-popover:focus {
+  outline: none;
+}
+.more-menu-popover [role="menuitem"] {
+  text-align: start;
+}

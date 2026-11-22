@@ -1,0 +1,650 @@
+.resource-manager {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.resource-manager .page-heading {
+  margin-bottom: 0;
+}
+.resource-manager p {
+  line-height: 1.65;
+}
+.resource-manager .page-heading p {
+  margin-top: 8px;
+}
+.resource-message {
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.resource-message.error,
+.resource-warning {
+  color: #c77e68;
+}
+.resource-jobs {
+  display: grid;
+  gap: 8px;
+}
+.resource-job {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.resource-job p {
+  font-size: 13px;
+  white-space: pre-wrap;
+  max-height: 90px;
+  overflow: auto;
+  margin-top: 5px;
+}
+.resource-job.failed {
+  border-color: #bb735f;
+}
+.resource-summary {
+  padding: 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+}
+.resource-summary p {
+  margin-top: 9px;
+}
+.resource-summary .studio-button {
+  flex-shrink: 0;
+}
+.resource-items {
+  display: grid;
+  gap: 14px;
+}
+.resource-item {
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.resource-item header,
+.import-report > header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.resource-path {
+  font-size: 12px;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+  user-select: text;
+}
+.import-layout {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+.import-projects {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.import-projects h2 {
+  font-size: 17px;
+  margin-bottom: 6px;
+}
+.import-projects > button {
+  color: inherit;
+  text-align: left;
+  background: transparent;
+  border: 1px solid var(--line);
+  padding: 13px;
+  border-radius: 7px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-wrap: anywhere;
+}
+.import-projects > button.selected {
+  border-color: var(--copper, #aa773f);
+  background: #aa773f12;
+}
+.import-projects small {
+  color: var(--muted);
+}
+.import-empty {
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  color: var(--muted);
+}
+.import-empty svg {
+  width: 44px;
+  height: 44px;
+}
+.import-report {
+  min-width: 0;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.import-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.import-facts > div {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  overflow-wrap: anywhere;
+}
+.import-facts small {
+  color: var(--muted);
+}
+.resource-manager .fold {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+.resource-manager .fold-summary {
+  cursor: pointer;
+  line-height: 1.5;
+}
+.resource-manager .fold p {
+  margin-top: 10px;
+}
+.resource-manager pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 300px;
+  overflow: auto;
+  font-size: 12px;
+  line-height: 1.7;
+  margin-top: 12px;
+}
+.import-mods {
+  max-height: 360px;
+  overflow: auto;
+}
+.import-mods > div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+.import-mods span {
+  color: var(--muted);
+  font-size: 13px;
+}
+.import-report footer {
+  flex-wrap: wrap;
+}
+.import-analysis {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--panel, transparent) 72%, transparent);
+  min-width: 0;
+}
+.import-analysis-heading,
+.import-analysis-result-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.import-analysis-heading h3 {
+  margin: 0;
+}
+.import-analysis-heading p {
+  margin-top: 6px;
+}
+.import-analysis-request textarea {
+  box-sizing: border-box;
+  width: 100%;
+  resize: vertical;
+  padding: 11px 13px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  color: var(--text, inherit);
+  background: var(--input, transparent);
+  font: inherit;
+  line-height: 1.55;
+}
+.import-analysis-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.import-analysis-history {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.import-analysis-history > strong {
+  margin-right: 4px;
+}
+.import-analysis-history button {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 150px;
+  max-width: 100%;
+  padding: 9px 11px;
+  color: inherit;
+  text-align: left;
+  overflow-wrap: anywhere;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: transparent;
+}
+.import-analysis-history button.selected {
+  border-color: var(--copper, #aa773f);
+  background: #aa773f12;
+}
+.import-analysis-history small,
+.import-analysis-result small {
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+.import-analysis-result {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+.import-analysis-callout,
+.import-analysis-export-warning {
+  padding: 13px 15px;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--copper, #aa773f);
+  border-radius: 6px;
+  overflow-wrap: anywhere;
+}
+.import-analysis-callout p,
+.import-analysis-export-warning p {
+  margin-top: 8px;
+}
+.import-analysis-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+.import-analysis-section h4,
+.import-analysis-result h4 {
+  margin: 0;
+}
+.import-analysis-section article,
+.import-analysis-changes article {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+  overflow-wrap: anywhere;
+}
+.import-analysis-section article p,
+.import-analysis-changes article p {
+  margin: 0;
+}
+.import-analysis-changes pre {
+  max-height: 260px;
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  user-select: text;
+}
+.import-analysis code {
+  overflow-wrap: anywhere;
+  user-select: text;
+}
+.reverse-project {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--panel, transparent) 72%, transparent);
+}
+.reverse-heading,
+.reverse-modules .reverse-module > header,
+.reverse-files > header,
+.reverse-ai > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.reverse-heading h3,
+.reverse-files h4,
+.reverse-ai h4 {
+  margin: 0;
+}
+.reverse-heading p,
+.reverse-files header p,
+.reverse-ai header p {
+  margin: 6px 0 0;
+}
+.reverse-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.reverse-actions > small {
+  color: var(--muted);
+}
+.reverse-warning,
+.reverse-callout {
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--copper, #aa773f);
+  border-radius: 6px;
+  overflow-wrap: anywhere;
+}
+.reverse-warning p,
+.reverse-callout p {
+  margin: 7px 0 0;
+}
+.reverse-project-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 8px 16px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  overflow-wrap: anywhere;
+}
+.reverse-project-summary span {
+  color: var(--muted);
+}
+.reverse-project-warnings {
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  overflow-wrap: anywhere;
+}
+.reverse-project-warnings > .fold-summary {
+  cursor: pointer;
+}
+.reverse-project-warnings ul,
+.reverse-export-warning-list {
+  display: grid;
+  gap: 7px;
+  margin: 10px 0 0;
+  padding-left: 22px;
+  overflow-wrap: anywhere;
+}
+.reverse-project-warnings ul {
+  max-height: 300px;
+  overflow: auto;
+}
+.reverse-project-warnings .muted {
+  margin: 10px 0 0;
+}
+.reverse-export-warning-list {
+  color: #c77e68;
+}
+.reverse-modules {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 330px), 1fr));
+  gap: 10px;
+}
+.reverse-modules > header {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: minmax(150px, auto) minmax(220px, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.reverse-modules > header input {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  padding: 8px 10px;
+  color: var(--text, inherit);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--input, transparent);
+}
+.reverse-module-more {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+}
+.reverse-module,
+.reverse-files,
+.reverse-ai {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  padding: 13px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+}
+.reverse-module > header > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.reverse-module small,
+.reverse-file-meta small,
+.reverse-operation p {
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+.reverse-module dl {
+  display: grid;
+  grid-template-columns: 100px minmax(0, 1fr);
+  gap: 5px 10px;
+  margin: 0;
+  font-size: 13px;
+}
+.reverse-module-status pre {
+  max-height: 180px;
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  user-select: text;
+}
+.reverse-module dt {
+  color: var(--muted);
+}
+.reverse-module dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.reverse-operation-list,
+.reverse-operation,
+.reverse-run {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  min-width: 0;
+}
+.reverse-operation-list {
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+}
+.reverse-operation p {
+  margin: 5px 0 0;
+}
+.reverse-operation pre,
+.reverse-preview,
+.reverse-run pre {
+  max-height: 280px;
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.reverse-browser {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.65fr) minmax(0, 1.35fr);
+  min-height: 300px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  overflow: hidden;
+}
+.reverse-file-list {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  max-height: 580px;
+  overflow: auto;
+  border-right: 1px solid var(--line);
+}
+.reverse-file-list button,
+.reverse-history button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 9px 11px;
+  color: inherit;
+  text-align: left;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+}
+.reverse-file-list button.selected,
+.reverse-history button.selected {
+  background: color-mix(in srgb, var(--copper, #aa773f) 12%, transparent);
+}
+.reverse-file-list button span {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+.reverse-file-list button small {
+  color: var(--muted);
+}
+.reverse-editor {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  min-width: 0;
+  padding: 12px;
+}
+.reverse-file-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  overflow-wrap: anywhere;
+}
+.reverse-editor textarea,
+.reverse-ai textarea,
+.reverse-files input {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  padding: 10px 12px;
+  color: var(--text, inherit);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--input, transparent);
+  font:
+    13px/1.5 ui-monospace,
+    SFMono-Regular,
+    Consolas,
+    monospace;
+}
+.reverse-editor textarea {
+  min-height: 260px;
+  resize: vertical;
+  white-space: pre;
+  tab-size: 4;
+}
+.reverse-preview {
+  margin: 0;
+  user-select: text;
+}
+.reverse-ai textarea {
+  resize: vertical;
+  font: inherit;
+}
+.reverse-history {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+.reverse-history button {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  overflow-wrap: anywhere;
+}
+.reverse-exports {
+  justify-content: flex-end;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+.reverse-run article {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+  overflow-wrap: anywhere;
+}
+.reverse-run article small {
+  color: var(--muted);
+}
+.reverse-run h5 {
+  margin: 2px 0;
+}
+.reverse-run .fold > .fold-summary {
+  margin: 8px 0;
+}
+.reverse-run pre {
+  user-select: text;
+}
+@media (max-width: 760px) {
+  .reverse-browser {
+    grid-template-columns: 1fr;
+  }
+  .reverse-file-list {
+    max-height: 240px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .reverse-modules > header {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 1000px) {
+  .import-layout {
+    grid-template-columns: 1fr;
+  }
+  .resource-summary {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

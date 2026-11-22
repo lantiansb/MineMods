@@ -1,0 +1,30 @@
+/* The buttons under a finding that take the person to the field to fill (finding-go.tsx). */
+.fg-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+  align-items: center;
+  margin-top: 6px;
+}
+.fg-go {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  font-size: 13px;
+  color: inherit;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+.fg-go:hover {
+  border-color: #d69b70;
+}
+.fg-go svg {
+  width: 14px;
+  height: 14px;
+}
+.fg-more {
+  color: var(--muted);
+  font-size: 13px;
+}

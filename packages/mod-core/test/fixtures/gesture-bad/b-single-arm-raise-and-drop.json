@@ -1,0 +1,56 @@
+{
+  "kind": "gesture",
+  "format": 2,
+  "name": "举手",
+  "english_name": "Arm Raise",
+  "trigger": {
+    "type": "key",
+    "key": "h"
+  },
+  "aim": true,
+  "mirror_for_left_handed": true,
+  "first_person": {
+    "arms": true,
+    "items": true
+  },
+  "hold_seconds": 0,
+  "custom": {
+    "windup": {
+      "length": 0.5,
+      "bones": {
+        "right_arm": {
+          "rotation": [
+            {
+              "time": 0.5,
+              "value": [
+                -120,
+                0,
+                0
+              ],
+              "easing": "linear"
+            }
+          ]
+        }
+      }
+    },
+    "hold": null,
+    "release": {
+      "length": 0.5,
+      "bones": {
+        "right_arm": {
+          "rotation": [
+            {
+              "time": 0.5,
+              "value": [
+                0,
+                0,
+                0
+              ],
+              "easing": "linear"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

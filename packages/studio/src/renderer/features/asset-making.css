@@ -1,0 +1,1257 @@
+/* 「它是怎么做出来的」：部件说明、每一轮的图和它自己的检查、最后的验收。只有图片，没有活的 3D 视图。 */
+
+/* ---------- on the card's first page ---------- */
+.mk-teaser {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px 6px 6px;
+  border: 2px solid var(--outline);
+  background: var(--raised);
+  color: var(--text);
+  box-shadow:
+    inset 2px 2px 0 var(--edge-light),
+    inset -2px -2px 0 var(--edge-dark);
+  text-align: left;
+  cursor: pointer;
+}
+.mk-teaser:hover,
+.mk-teaser:focus-visible {
+  border-color: #ffffff;
+  outline: 0;
+}
+.mk-teaser-film {
+  flex: none;
+  display: flex;
+  gap: 3px;
+}
+.mk-teaser-film img {
+  width: 44px;
+  height: 44px;
+  display: block;
+  border: 2px solid var(--outline);
+  background: #2f2f2f;
+  object-fit: contain;
+}
+.mk-teaser-film:empty {
+  display: none;
+}
+.mk-teaser-words {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.mk-teaser-words strong {
+  font-size: 15px;
+  font-weight: 400;
+}
+.mk-teaser-words small {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.mk-teaser[data-passed="true"] .mk-teaser-words small {
+  color: var(--accent-text);
+}
+.mk-teaser[data-passed="false"] .mk-teaser-words small,
+.mk-teaser[data-state="stopped"] .mk-teaser-words small {
+  color: var(--warning);
+}
+.mk-teaser em {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--accent-text);
+  font-size: 14px;
+  font-style: normal;
+  text-decoration: underline;
+}
+.mk-teaser em svg {
+  width: 14px;
+  height: 14px;
+}
+/* The two pages of the card, in its title bar. */
+.mk-tabs {
+  flex: none;
+  display: flex;
+}
+.mk-tabs .pa-move + .pa-move {
+  margin-left: -2px;
+}
+.mk-tabs .pa-move {
+  min-height: 28px;
+  font-size: 13px;
+}
+.mk-tabs .pa-move[aria-selected="true"] {
+  background: var(--accent);
+  color: #ffffff;
+  box-shadow:
+    inset 2px 2px 0 rgba(255, 255, 255, 0.3),
+    inset -2px -2px 0 rgba(0, 0, 0, 0.3);
+  text-shadow: 1px 1px 0 #143a0c;
+}
+.pa-card-body[hidden] {
+  display: none;
+}
+/* Which round a slot is on, in the corner the status mark does not use. */
+.pa-round {
+  position: absolute;
+  left: -3px;
+  top: -3px;
+  z-index: 1;
+  padding: 0 4px;
+  border: 2px solid #1e1e1e;
+  background: #ffe680;
+  color: #2a2200;
+  font-size: 12px;
+  font-style: normal;
+  line-height: 16px;
+  white-space: nowrap;
+}
+.pa-slot.small .pa-round {
+  font-size: 11px;
+  line-height: 13px;
+  padding: 0 2px;
+}
+.pa-check-title small {
+  margin-left: 6px;
+  font-size: 12px;
+}
+
+/* ---------- the story ---------- */
+.mk-story {
+  min-height: 0;
+  flex: 0 1 600px;
+  display: grid;
+  grid-template-columns: minmax(280px, 34%) minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 8px 14px;
+}
+.mk-story:has(> .mk-play) {
+  grid-template-rows: auto auto minmax(0, 1fr);
+}
+.mk-story.editing {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+/* Two rounds side by side need the whole width: the sheet steps aside until the comparing is over. */
+.mk-story.comparing {
+  grid-template-columns: minmax(0, 1fr);
+}
+.mk-story.comparing .mk-sheet {
+  display: none;
+}
+/* 制作现场: nothing is changed there, so the sheet folds to one line above the rounds and the pictures take the width. */
+.mk-story.folded {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto auto minmax(0, 1fr);
+}
+.mk-story.folded.comparing .mk-sheet {
+  display: flex;
+}
+.mk-story.folded .mk-sheet {
+  overflow: visible;
+  padding: 4px 8px;
+  border: 2px solid var(--outline);
+  background: var(--panel-soft);
+}
+.mk-story.folded .mk-sheet:has(.mk-sheet-fold[data-open]) {
+  max-height: 46vh;
+  overflow: auto;
+}
+.mk-sheet-fold > .fold-summary {
+  font-size: 15px;
+}
+/* The fold's own line already names it. */
+:root:root .mk-sheet-fold > .fold-content > h4:first-child {
+  display: none;
+}
+.mk-sheet-fold > .fold-summary small {
+  margin-left: 10px;
+  color: var(--muted);
+  font-size: 12px;
+}
+/* How rounds are counted: asked for, not always said. */
+.mk-counts > .fold-summary {
+  width: max-content;
+  color: var(--muted);
+  font-size: 12px;
+}
+.mk-more-angles {
+  align-self: center;
+  font-size: 12px;
+}
+.mk-story h4,
+.mk-story h5 {
+  margin: 0;
+  font-weight: 400;
+}
+:root:root .mk-story h4 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 10px;
+  font-size: 16px;
+}
+:root:root .mk-story h5 {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 13px;
+}
+.mk-story h4 small,
+.mk-story h5 small {
+  margin-left: 8px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.mk-story h4 small {
+  margin-left: 0;
+  font-size: 13px;
+}
+.mk-story ul,
+.mk-story dl,
+.mk-story p {
+  margin: 0;
+}
+.mk-story ul {
+  padding: 0;
+  list-style: none;
+}
+.mk-status {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 10px;
+  border: 2px solid var(--outline);
+  background: var(--panel-soft);
+  font-size: 14px;
+  line-height: 1.6;
+}
+/* 播放动作: one folded line under the status, opened to the model's own view. */
+.mk-play {
+  grid-column: 1 / -1;
+  min-width: 0;
+  max-height: min(340px, 42vh);
+  overflow: auto;
+  padding: 4px 8px;
+  border: 2px solid var(--outline);
+  background: var(--panel-soft);
+}
+.mk-play > .fold-summary {
+  font-size: 15px;
+}
+.mk-play > .fold-summary small {
+  margin-left: 10px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.mk-status[data-state="describing"],
+.mk-status[data-state="making"],
+.mk-status[data-state="reviewing"] {
+  background: #fff3bf;
+  color: #2a2200;
+}
+.mk-status[data-passed="true"] {
+  border-color: var(--accent-lip);
+  background: var(--accent-dim);
+}
+.mk-status[data-state="stopped"],
+.mk-status[data-passed="false"] {
+  border-color: var(--warning);
+  background: var(--warning-bg);
+}
+/* Still at work: the same moving strip the slots use, as a small square. */
+.mk-busy {
+  width: 16px;
+  height: 10px;
+  flex: none;
+  box-sizing: border-box;
+  display: inline-block;
+  border: 2px solid #1e1e1e;
+  background: repeating-linear-gradient(90deg, #ffe680 0 4px, #b89b2e 4px 8px);
+  background-size: 16px 100%;
+  animation: mk-work 0.8s steps(4) infinite;
+}
+@keyframes mk-work {
+  to {
+    background-position: 16px 0;
+  }
+}
+.reduce-motion .mk-busy {
+  animation: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .mk-busy {
+    animation: none;
+  }
+}
+.mk-mark {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  color: var(--accent-text);
+}
+.mk-mark[data-passed="false"] {
+  color: var(--warning);
+}
+.mk-halt {
+  width: 14px;
+  height: 14px;
+  box-sizing: border-box;
+  display: block;
+  border: 2px solid #1e1e1e;
+  background: #ffb347;
+}
+
+/* ---------- the part sheet ---------- */
+.mk-sheet,
+.mk-rounds {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.mk-sheet {
+  overflow: auto;
+  padding-right: 6px;
+}
+.mk-remark {
+  padding: 6px 10px;
+  border: 2px solid var(--outline);
+  background: #f0d9bd;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.mk-remark strong {
+  display: block;
+  font-weight: 400;
+}
+.mk-remark q {
+  color: var(--text);
+}
+.mk-subject {
+  padding: 6px 10px;
+  border: 2px solid var(--outline);
+  background: var(--raised);
+  font-size: 15px;
+  line-height: 1.6;
+}
+.mk-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.mk-chips li {
+  padding: 1px 8px;
+  border: 2px solid var(--outline);
+  background: #c5d8f0;
+  color: #12305c;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.mk-parts {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid var(--line);
+  background: var(--panel-soft);
+}
+.mk-parts li + li {
+  border-top: 2px solid var(--line);
+}
+.mk-parts button {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 0 8px;
+  padding: 4px 8px;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.6;
+  text-align: left;
+  cursor: pointer;
+}
+.mk-parts button::before {
+  content: "▸";
+  color: var(--muted);
+}
+.mk-parts button[aria-expanded="true"]::before {
+  content: "▾";
+}
+.mk-parts button:hover,
+.mk-parts button:focus-visible {
+  background: var(--raised);
+  outline: 0;
+}
+.mk-parts b {
+  font-weight: 400;
+}
+.mk-parts button > span {
+  grid-column: 2 / -1;
+  color: var(--muted);
+  font-size: 13px;
+}
+.mk-parts dl {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 2px 10px;
+  padding: 4px 8px 8px 26px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.mk-parts dt {
+  color: var(--muted);
+  white-space: nowrap;
+}
+.mk-parts dd {
+  margin: 0;
+  word-break: break-word;
+}
+/* What the person did not ask for: marked wherever it appears. */
+.mk-ai {
+  flex: none;
+  align-self: center;
+  padding: 0 5px;
+  border: 2px solid #7a4a00;
+  background: #ffd591;
+  color: #4a2300;
+  font-size: 12px;
+  font-style: normal;
+  line-height: 16px;
+  white-space: nowrap;
+}
+.mk-assumed {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.mk-assumed li {
+  font-size: 13px;
+  line-height: 1.6;
+}
+.mk-assumed .mk-ai {
+  display: inline-block;
+  margin-right: 6px;
+}
+/* What can be done with the sheet stays in reach however long the sheet is. */
+.mk-sheet-foot {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: auto;
+  padding: 6px 0 0;
+  border-top: 2px solid var(--line);
+  background: var(--panel);
+}
+.mk-sheet-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* ---------- changing the sheet ---------- */
+.mk-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.mk-field {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  align-items: baseline;
+  gap: 6px;
+  font-size: 13px;
+}
+.mk-edit > .mk-field {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2px;
+}
+.mk-field > span {
+  color: var(--muted);
+}
+:root:root .mk-edit .pa-input {
+  padding: 4px 8px;
+  font-size: 14px;
+}
+.mk-lines {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.mk-lines legend {
+  padding: 0 0 2px;
+  color: var(--muted);
+  font-size: 13px;
+}
+.mk-lines > .pa-link {
+  align-self: flex-start;
+}
+.mk-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.mk-part-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px;
+  border: 2px solid var(--line);
+  background: var(--panel-soft);
+}
+.mk-part-edit[data-assumed="true"] {
+  border-color: #7a4a00;
+}
+.mk-part-edit > .pa-link {
+  align-self: flex-start;
+}
+:root:root .mk-edit .mk-name {
+  flex: 1;
+}
+.mk-check {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.mk-check input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+}
+
+/* ---------- the rounds ---------- */
+.mk-film {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  overflow-x: auto;
+  padding: 2px 2px 4px;
+}
+.mk-stop {
+  flex: none;
+  width: 78px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  padding: 4px 2px 3px;
+  border: 2px solid transparent;
+  background: transparent;
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.4;
+}
+button.mk-stop {
+  cursor: pointer;
+}
+button.mk-stop:hover,
+button.mk-stop:focus-visible {
+  border-color: var(--outline);
+  outline: 0;
+}
+.mk-stop[aria-selected="true"] {
+  border-color: var(--outline);
+  background: var(--raised);
+  box-shadow:
+    inset 2px 2px 0 var(--edge-light),
+    inset -2px -2px 0 var(--edge-dark);
+}
+.mk-stop b {
+  font-weight: 400;
+}
+.mk-stop small {
+  color: var(--muted);
+  font-size: 12px;
+}
+/* Only a review that passed is the colour of a pass. A maker's own "done" keeps the plain colour: it is an opinion, not a verdict. */
+.mk-stop[data-tone="pass"] small,
+.mk-stop.end[data-passed="true"] small {
+  color: var(--accent-text);
+}
+.mk-stop[data-tone="fail"] small,
+.mk-stop[data-tone="revise"] small,
+.mk-stop.end:not([data-passed="true"]) small {
+  color: var(--warning);
+}
+.mk-thumb {
+  width: 52px;
+  height: 52px;
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.mk-thumb img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+}
+.mk-stop.pending .mk-thumb,
+.mk-stop.end .mk-thumb {
+  border: 2px dashed #7d7d7d;
+}
+.mk-stop.end .mk-thumb {
+  border-style: solid;
+  border-color: var(--outline);
+  background: var(--panel-soft);
+}
+.mk-stop.end .mk-mark {
+  width: 28px;
+  height: 28px;
+}
+.mk-link {
+  width: 14px;
+  height: 2px;
+  flex: none;
+  margin-bottom: 34px;
+  background: var(--outline);
+}
+.mk-cap {
+  flex: none;
+  margin-left: 10px;
+  color: var(--muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+.mk-detail {
+  min-height: 0;
+  flex: 1;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 6px 8px 8px;
+  border: 2px solid var(--outline);
+  background: var(--raised);
+}
+.mk-detail-head {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 32px;
+}
+.mk-detail-head strong {
+  font-size: 16px;
+  font-weight: 400;
+}
+.mk-detail-head small {
+  color: var(--muted);
+  font-size: 12px;
+}
+.mk-round {
+  display: grid;
+  grid-template-columns: minmax(220px, 56%) minmax(0, 1fr);
+  align-items: start;
+  gap: 12px;
+}
+/* Two rounds held against each other need the width the words would take: they go below. */
+.mk-round.compare {
+  grid-template-columns: minmax(0, 1fr);
+}
+.mk-round.compare .mk-look {
+  position: static;
+}
+.mk-look {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  position: sticky;
+  top: 0;
+}
+.mk-shot {
+  position: relative;
+  width: 100%;
+  /* The loop's sheets are three wide and two high; anything else is fitted inside. */
+  aspect-ratio: 3 / 2;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  overflow: hidden;
+  cursor: zoom-in;
+}
+.mk-shot.empty {
+  color: #b0b0b0;
+  font-size: 13px;
+  cursor: default;
+}
+.mk-shot:hover,
+.mk-shot:focus-visible {
+  border-color: #ffffff;
+  outline: 0;
+}
+.mk-shot img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+}
+.mk-story img.pixel,
+.mk-teaser img.pixel,
+.mk-zoom img.pixel {
+  image-rendering: pixelated;
+}
+.mk-shot:has(> em) {
+  grid-template-rows: auto minmax(0, 1fr);
+}
+.mk-shot em {
+  order: -1;
+  justify-self: stretch;
+  padding: 1px 8px;
+  background: rgba(0, 0, 0, 0.72);
+  color: #ffffff;
+  font-size: 13px;
+  font-style: normal;
+}
+/* On a small motion picture: what the pink in it means, along its foot, so it is not read as a fault in the picture. */
+.mk-legend {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 8px;
+  background: rgba(0, 0, 0, 0.78);
+  color: #ffffff;
+  font-size: 12px;
+  line-height: 1.3;
+  pointer-events: none;
+}
+.mk-legend i {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  background: rgb(255, 0, 200);
+}
+.mk-legend.large {
+  position: static;
+  align-self: center;
+  width: max-content;
+  max-width: 100%;
+  font-size: 14px;
+}
+.mk-angles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+.mk-angles .pa-move {
+  min-height: 26px;
+  padding: 0 7px;
+  font-size: 12px;
+}
+.mk-words {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.mk-words.pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: start;
+  gap: 10px;
+}
+.mk-notes {
+  padding: 3px 8px 5px;
+  border-left: 4px solid var(--outline);
+  background: var(--panel-soft);
+}
+.mk-notes[data-tone="good"] {
+  border-left-color: #3c8527;
+}
+.mk-notes[data-tone="bad"] {
+  border-left-color: var(--warning);
+}
+.mk-notes[data-tone="next"] {
+  border-left-color: #3a6fb5;
+}
+:root:root .mk-notes h5 {
+  margin: 0;
+  color: var(--text);
+  font-size: 14px;
+}
+.mk-notes[data-tone="rule"] h5 {
+  color: var(--muted);
+  font-size: 13px;
+}
+.mk-notes ul {
+  padding-left: 16px;
+  list-style: square;
+}
+.mk-notes li {
+  font-size: 13px;
+  line-height: 1.65;
+}
+.mk-notes[data-tone="rule"] li {
+  color: var(--muted);
+}
+.mk-turn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+/* What a review said of this version, on the version itself. */
+.mk-round-review {
+  padding: 4px 10px;
+  border: 2px solid var(--warning);
+  background: var(--warning-bg);
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+.mk-round-review[data-tone="pass"] {
+  border-color: var(--accent-lip);
+  background: var(--accent-dim);
+  color: var(--accent-text);
+}
+.mk-name-plain {
+  flex: 1;
+  min-width: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+.mk-verdict {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 10px;
+  border: 2px solid var(--accent-lip);
+  background: var(--accent-dim);
+  color: var(--accent-text);
+}
+.mk-verdict[data-passed="false"] {
+  border-color: var(--warning);
+  background: var(--warning-bg);
+  color: var(--text);
+}
+.mk-verdict strong {
+  font-size: 18px;
+  font-weight: 400;
+}
+.mk-verdict .mk-mark {
+  width: 21px;
+  height: 21px;
+}
+.mk-honest {
+  padding: 5px 10px;
+  border: 2px solid var(--warning);
+  background: var(--warning-bg);
+  font-size: 13px;
+  line-height: 1.65;
+}
+/* Two neighbouring rounds, the earlier one on the left. */
+.mk-compare {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+/* As tall as the window can spare, so both rounds and what was said about them stay in sight. */
+.mk-compare .mk-shot {
+  width: auto;
+  height: clamp(170px, calc(100vh - 530px), 290px);
+}
+/* One cell of the six-view sheet, cut out by showing the whole sheet three times as wide and twice as high. */
+.mk-shot.cut {
+  aspect-ratio: 1 / 1;
+}
+.mk-shot .mk-cell {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.mk-shot .mk-cell img {
+  position: absolute;
+  width: 300%;
+  height: 200%;
+  max-width: none;
+  object-fit: fill;
+}
+.mk-arrow {
+  width: 33px;
+  height: 27px;
+  color: var(--text);
+}
+/* One picture as large as the window allows, with the rounds to flip between above it. */
+.mk-zoom {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px 16px;
+  background: rgba(0, 0, 0, 0.88);
+}
+.mk-zoom header {
+  flex: none;
+  align-self: stretch;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  color: #ffffff;
+}
+.mk-zoom strong {
+  min-width: 150px;
+  padding: 0 6px;
+  font-size: 16px;
+  font-weight: 400;
+  text-align: center;
+}
+.mk-zoom small {
+  color: #c8c8c8;
+  font-size: 13px;
+}
+.mk-zoom .pa-move:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+.mk-zoom img {
+  min-width: 0;
+  min-height: 0;
+  flex: 0 1 auto;
+  max-width: 100%;
+  max-height: calc(100% - 44px);
+  border: 2px solid #ffffff;
+  background: #2f2f2f;
+  object-fit: contain;
+  cursor: zoom-out;
+}
+@media (max-height: 760px) {
+  .mk-story {
+    gap: 6px 12px;
+  }
+  .mk-thumb {
+    width: 44px;
+    height: 44px;
+  }
+  .mk-link {
+    margin-bottom: 30px;
+  }
+}
+
+/* ---------- the two kinds of finding, and a version kept although its AI was not satisfied ---------- */
+/* Polish reads as a quiet aside; what has to change keeps the warning colour. */
+.mk-notes[data-tone="advice"] {
+  border-left: 4px dotted #8a8a8a;
+  background: transparent;
+}
+.mk-notes[data-tone="advice"] li {
+  color: var(--muted);
+}
+.mk-unsat {
+  padding: 6px 10px;
+  border: 2px solid var(--warning);
+  background: var(--warning-bg);
+  font-size: 13px;
+  line-height: 1.65;
+}
+/* On the last stop of a kept version: neither a tick nor a cross, it was handed over. */
+.mk-handed {
+  width: 18px;
+  height: 18px;
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+  border: 2px solid #1e1e1e;
+  background: #ffb347;
+}
+.mk-handed::before {
+  content: "!";
+  color: #1e1e1e;
+  font-size: 14px;
+  font-style: normal;
+  line-height: 1;
+}
+.mk-verdict small {
+  color: var(--muted);
+  font-size: 13px;
+}
+.mk-honest b {
+  font-weight: 400;
+  text-decoration: underline;
+}
+.mk-tag {
+  padding: 0 7px;
+  border: 2px solid var(--warning);
+  background: var(--warning-bg);
+  font-size: 12px;
+  font-style: normal;
+  line-height: 20px;
+}
+.mk-tag.plain {
+  border-color: var(--outline);
+  background: var(--panel-soft);
+  color: var(--muted);
+}
+/* Who each picture of a round was drawn for. */
+.mk-angles small {
+  flex: 0 0 100%;
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.mk-angles small:first-child {
+  margin-top: 0;
+}
+.mk-teaser[data-kept="true"] {
+  align-items: flex-start;
+  border-color: var(--warning);
+}
+.mk-teaser[data-kept="true"] .mk-teaser-words small {
+  color: var(--muted);
+}
+.mk-why {
+  margin: 2px 0;
+  padding-left: 16px;
+  list-style: square;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.mk-status[data-kept="true"] {
+  border-color: var(--warning);
+  background: var(--warning-bg);
+}
+.mk-stop.end[data-kept="true"] small {
+  color: var(--warning);
+}
+/* The small mark on a slot and in a card's title bar: its AI was not satisfied with this version. */
+.pa-unsat {
+  flex: none;
+  padding: 0 6px;
+  border: 2px solid var(--warning);
+  background: var(--warning-bg);
+  color: var(--text);
+  font-size: 12px;
+  font-style: normal;
+  line-height: 18px;
+  white-space: nowrap;
+}
+/* On a slot it sits where the round badge sat while the thing was being made: the two are never there together. */
+.pa-cell .pa-unsat {
+  position: absolute;
+  left: -3px;
+  top: -3px;
+  z-index: 1;
+  padding: 0 4px;
+  border-color: #1e1e1e;
+  line-height: 16px;
+}
+.pa-slot.small .pa-unsat {
+  display: none;
+}
+
+/* ---------- reference images: what the person gave the AI to go by, and views an AI drew ---------- */
+.mk-refs {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 6px;
+  padding: 6px 8px 7px;
+  border: 2px solid var(--line);
+  background: var(--panel-soft);
+}
+.mk-refs[data-over="true"] {
+  border-color: #ffffff;
+  background: #c5d8f0;
+}
+.mk-refs h5 {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 400;
+}
+:root:root .mk-story .mk-refs h5 {
+  margin-top: 0;
+}
+.mk-refs h5 small {
+  margin-left: 8px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.mk-ref-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.mk-ref-list li {
+  position: relative;
+  flex: none;
+}
+.mk-ref {
+  width: 56px;
+  height: 56px;
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  overflow: hidden;
+  cursor: pointer;
+  color: var(--text);
+}
+.mk-ref img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+.mk-ref:hover:not(:disabled),
+.mk-ref:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: -2px;
+}
+/* An AI-drawn view is told apart at a glance: the same chip the sheet uses for what the AI decided. */
+.mk-ref-list .mk-ai {
+  position: absolute;
+  left: -3px;
+  bottom: -3px;
+  pointer-events: auto;
+}
+.mk-refs .mk-ref-drop {
+  position: absolute;
+  right: -5px;
+  top: -5px;
+  width: 18px;
+  height: 18px;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+}
+.mk-refs .mk-ref-drop svg {
+  width: 10px;
+  height: 10px;
+}
+.mk-ref-add .mk-ref {
+  grid-template-rows: auto auto;
+  align-content: center;
+  gap: 0;
+  border: 2px dashed var(--outline);
+  background: transparent;
+  box-shadow: none;
+  color: var(--muted);
+  font-size: 12px;
+}
+.mk-ref-add .mk-ref b {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 18px;
+}
+.mk-ref-add .mk-ref:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+.mk-refs .pa-hint {
+  margin: 0;
+}
+/* Advanced: the script a version came out of. Folded away; the person never has to read it. */
+.mk-advanced {
+  border: 2px solid var(--line);
+  background: var(--panel-soft);
+  font-size: 12px;
+}
+.mk-advanced .fold-summary {
+  padding: 3px 8px;
+  color: var(--muted);
+  cursor: pointer;
+}
+.mk-advanced .pa-hint {
+  margin: 0;
+  padding: 0 8px 4px;
+}
+.mk-advanced pre {
+  max-height: 220px;
+  margin: 0;
+  padding: 6px 8px;
+  overflow: auto;
+  border-top: 2px solid var(--line);
+  background: #1e1e1e;
+  color: #e6e6e6;
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  white-space: pre;
+}
+/* Advanced: each motion's measured numbers, one sentence per motion. */
+.mk-advanced .mk-facts {
+  margin: 0;
+  padding: 4px 8px 6px 24px;
+  border-top: 2px solid var(--line);
+  line-height: 1.5;
+}
+
+/* A block or an item set among the game's own: a button, a line on what it is, and the picture once drawn. */
+.mk-beside {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+.mk-beside .pa-hint {
+  margin: 0;
+}
+.mk-beside-shot {
+  width: 100%;
+  padding: 0;
+  border: 2px solid var(--line);
+  background: none;
+  cursor: zoom-in;
+}
+.mk-beside-shot img {
+  display: block;
+  width: 100%;
+}
+
+/* 盲认: the reviewer's answer before it knew the name, under the verdict. */
+.mk-blind {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0;
+  padding: 4px 10px;
+  border: 2px solid var(--line);
+  background: var(--panel-soft);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.mk-blind b {
+  flex: none;
+  padding: 0 6px;
+  border: 2px solid var(--outline);
+  background: var(--slot-dark);
+  color: #ffffff;
+  font-weight: 400;
+}
+.mk-blind[data-recognised="false"] {
+  border-color: var(--warning);
+  background: var(--warning-bg);
+}

@@ -1,0 +1,452 @@
+.reverse-project.reverse-project {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+  gap: 10px;
+  color: var(--text);
+  background: var(--panel);
+  padding: 12px;
+}
+.reverse-project * {
+  box-sizing: border-box;
+}
+.reverse-project .reverse-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex: none;
+}
+.reverse-project .reverse-toolbar-title {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+}
+.reverse-project .reverse-toolbar-title > strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.reverse-project .reverse-toolbar-title svg {
+  width: 18px;
+  height: 18px;
+  color: var(--accent);
+  flex: none;
+}
+.reverse-project .reverse-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.reverse-project .reverse-license {
+  margin: 0;
+  color: var(--muted);
+  font-size: 11px;
+  flex: none;
+}
+.reverse-project .reverse-tabs {
+  display: flex;
+  gap: 4px;
+  flex: none;
+  border-bottom: 1px solid var(--line);
+}
+.reverse-project .reverse-tabs button {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: var(--muted);
+  padding: 8px 11px;
+  cursor: pointer;
+  font: inherit;
+}
+.reverse-project .reverse-tabs button.active {
+  color: var(--text);
+  border-color: var(--accent);
+}
+.reverse-project .reverse-tabs span {
+  color: var(--muted);
+  font-size: 11px;
+}
+.reverse-project .reverse-workbench-content {
+  min-height: 0;
+  flex: 1;
+  overflow: auto;
+  padding: 2px 2px 8px;
+}
+.reverse-project .reverse-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 2px 0 12px;
+}
+.reverse-project .reverse-panel-head > div:first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+.reverse-project .reverse-panel-head small {
+  color: var(--muted);
+  font-size: 11px;
+}
+.reverse-project input,
+.reverse-project textarea {
+  color: var(--text);
+  background: var(--panel-soft);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 8px 10px;
+  font: inherit;
+}
+.reverse-project input {
+  min-width: 190px;
+}
+.reverse-project .reverse-module-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+}
+.reverse-project .reverse-module-card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 11px;
+  background: var(--panel-soft);
+  border: 1px solid var(--line);
+  border-radius: 7px;
+}
+.reverse-project .reverse-module-card > strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+}
+.reverse-project .reverse-module-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.reverse-project .reverse-module-card-top svg {
+  width: 16px;
+  height: 16px;
+  color: var(--muted);
+}
+.reverse-project .reverse-module-id,
+.reverse-project .reverse-module-count {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--muted);
+  font-size: 11px;
+}
+.reverse-project .reverse-status {
+  border-radius: 10px;
+  padding: 2px 7px;
+  color: var(--muted);
+  background: var(--panel);
+  font-size: 10px;
+}
+.reverse-project .reverse-module-status {
+  border-top: 1px solid var(--line);
+  padding-top: 6px;
+  margin-top: 2px;
+  font-size: 11px;
+}
+.reverse-project .fold > .fold-summary {
+  cursor: pointer;
+  color: var(--muted);
+}
+.reverse-project .fold p {
+  overflow-wrap: anywhere;
+}
+.reverse-project pre {
+  max-height: 260px;
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  padding: 9px;
+  border-radius: 6px;
+  background: var(--panel);
+  font-size: 11px;
+}
+.reverse-project .reverse-module-buttons {
+  margin-top: 3px;
+}
+.reverse-project .reverse-module-buttons button {
+  font-size: 11px;
+}
+.reverse-project .reverse-more {
+  margin-top: 10px;
+}
+.reverse-project .reverse-file-controls {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.reverse-project .reverse-browser {
+  display: grid;
+  grid-template-columns: minmax(230px, 34%) minmax(0, 1fr);
+  min-height: 360px;
+  height: calc(100% - 52px);
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  overflow: hidden;
+}
+.reverse-project .reverse-file-list {
+  overflow: auto;
+  min-height: 0;
+  border-right: 1px solid var(--line);
+  padding: 5px;
+  background: var(--panel-soft);
+}
+.reverse-project .reverse-file-list button {
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr);
+  gap: 2px 7px;
+  width: 100%;
+  text-align: left;
+  border: 0;
+  border-radius: 5px;
+  padding: 7px;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+}
+.reverse-project .reverse-file-list button.selected {
+  background: var(--panel);
+  outline: 1px solid var(--line);
+}
+.reverse-project .reverse-file-list svg {
+  width: 15px;
+  height: 15px;
+  grid-row: span 2;
+  color: var(--muted);
+}
+.reverse-project .reverse-file-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+}
+.reverse-project .reverse-file-list small {
+  color: var(--muted);
+  font-size: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.reverse-project .reverse-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  overflow: auto;
+  min-width: 0;
+  min-height: 0;
+  padding: 10px;
+}
+.reverse-project .reverse-file-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.reverse-project .reverse-file-meta strong {
+  overflow-wrap: anywhere;
+  font-size: 12px;
+}
+.reverse-project .reverse-file-meta small {
+  color: var(--muted);
+  font-size: 10px;
+  overflow-wrap: anywhere;
+}
+.reverse-project .reverse-editor textarea {
+  min-height: 240px;
+  flex: 1;
+  resize: vertical;
+  font:
+    12px/1.5 ui-monospace,
+    monospace;
+}
+.reverse-project .reverse-preview {
+  margin: 0;
+}
+.reverse-project .reverse-image-preview {
+  flex: 1;
+  min-height: 220px;
+  display: grid;
+  place-items: center;
+  background: var(--panel-soft);
+  border-radius: 6px;
+  overflow: auto;
+}
+.reverse-project .reverse-image-preview img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.reverse-project .reverse-ai-compose {
+  padding: 11px;
+  background: var(--panel-soft);
+  border: 1px solid var(--line);
+  border-radius: 7px;
+}
+.reverse-project .reverse-ai-compose textarea {
+  width: 100%;
+  resize: vertical;
+}
+.reverse-project .reverse-ai-compose .field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.reverse-project .reverse-history {
+  display: flex;
+  gap: 7px;
+  overflow: auto;
+  padding: 10px 0;
+}
+.reverse-project .reverse-history button {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 150px;
+  text-align: left;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--panel-soft);
+  color: var(--text);
+  cursor: pointer;
+}
+.reverse-project .reverse-history button.selected {
+  border-color: var(--accent);
+}
+.reverse-project .reverse-history small {
+  color: var(--muted);
+  font-size: 10px;
+}
+.reverse-project .reverse-run-card,
+.reverse-project .reverse-operation {
+  padding: 11px;
+  margin-bottom: 8px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--panel-soft);
+}
+.reverse-project .reverse-run-head,
+.reverse-project .reverse-operation > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.reverse-project .reverse-run-head small,
+.reverse-project .reverse-operation small {
+  color: var(--muted);
+  font-size: 10px;
+}
+.reverse-project .reverse-run-head button {
+  margin-left: auto;
+}
+.reverse-project .reverse-callout,
+.reverse-project .reverse-inline-details {
+  padding: 9px;
+  margin: 8px 0;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+.reverse-project .reverse-callout p,
+.reverse-project .reverse-inline-details p {
+  font-size: 12px;
+}
+.reverse-project .reverse-summary-card {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 6px;
+  background: var(--panel);
+}
+.reverse-project .reverse-summary-card small {
+  color: var(--muted);
+}
+.reverse-project .reverse-summary-card p {
+  margin: 5px 0 0;
+}
+.reverse-project .reverse-result-group {
+  margin: 10px 0;
+}
+.reverse-project .reverse-result-group h4 {
+  margin: 6px 0;
+  font-size: 13px;
+}
+.reverse-project .reverse-result-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 8px;
+}
+.reverse-project .reverse-result-grid article,
+.reverse-project .reverse-change-card {
+  min-width: 0;
+  padding: 9px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+.reverse-project .reverse-result-grid p {
+  margin: 0 0 6px;
+  font-size: 12px;
+}
+.reverse-project .reverse-result-grid small,
+.reverse-project .reverse-change-card small {
+  color: var(--muted);
+  font-size: 10px;
+  overflow-wrap: anywhere;
+}
+.reverse-project .reverse-change-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 7px 0;
+}
+.reverse-project .reverse-change-card code {
+  overflow-wrap: anywhere;
+}
+.reverse-project .reverse-operation-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 8px;
+}
+.reverse-project .reverse-empty {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+}
+.reverse-project .reverse-export-warning-list {
+  margin: 0;
+  font-size: 11px;
+}
+@media (max-width: 760px) {
+  .reverse-project .reverse-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .reverse-project .reverse-browser {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+  .reverse-project .reverse-file-list {
+    max-height: 240px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .reverse-project .reverse-file-controls {
+    flex-wrap: wrap;
+  }
+}

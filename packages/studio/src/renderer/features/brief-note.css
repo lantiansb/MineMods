@@ -1,0 +1,91 @@
+/*
+ * 要它做成什么样: a written order, not a terminal. A page in the colour of the game's written books, its corner turned
+ * down, dark ink; the headline larger, each point on its own line behind a small square, named motions as chips.
+ */
+.bn-note {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 14px 10px 12px;
+  border: 2px solid #000;
+  background: #eadcb6;
+  color: #3b2a14;
+  box-shadow:
+    inset 2px 2px 0 #fbf3dc,
+    inset -2px -2px 0 #b59a62;
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%);
+}
+/* The turned-down corner. */
+.bn-note::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 14px;
+  height: 14px;
+  background: linear-gradient(225deg, transparent 50%, #c9b07a 50%);
+  box-shadow: -2px 2px 0 rgba(0, 0, 0, 0.18);
+}
+.bn-head {
+  margin: 0;
+  padding-right: 10px;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.bn-points {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.bn-points li {
+  position: relative;
+  padding-left: 14px;
+  font-size: 13px;
+  line-height: 1.65;
+}
+.bn-points li::before {
+  content: "";
+  position: absolute;
+  top: 0.62em;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  background: #7a5a2a;
+}
+.bn-chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  margin: 1px 4px 1px 0;
+  padding: 0 6px 0 0;
+  border: 2px solid #7a5a2a;
+  background: #f6edd3;
+  line-height: 1.5;
+  white-space: normal;
+}
+.bn-chip code {
+  padding: 0 4px;
+  background: #7a5a2a;
+  color: #fbf3dc;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+.bn-more {
+  align-self: flex-start;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #6b4a1a;
+  font-size: 12px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.bn-more:hover,
+.bn-more:focus-visible {
+  outline: 0;
+  color: #3b2a14;
+}

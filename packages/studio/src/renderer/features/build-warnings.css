@@ -1,0 +1,40 @@
+.pack-warnings {
+  display: grid;
+  gap: 6px;
+}
+
+.pack-warnings .fold-summary {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: left;
+  line-height: 1.45;
+}
+
+.pack-warning-level > .fold-summary {
+  font-weight: 700;
+}
+
+.pack-warning-list {
+  list-style: none;
+  margin: 0;
+  padding-left: 10px;
+}
+
+.pack-warning-detail {
+  padding: 4px 0;
+  overflow-wrap: anywhere;
+}
+
+.pack-warning-detail p {
+  margin: 2px 0;
+}
+
+.pack-warning-refs {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 3px 0;
+  gap: 3px 10px;
+  font-size: 0.9em;
+}

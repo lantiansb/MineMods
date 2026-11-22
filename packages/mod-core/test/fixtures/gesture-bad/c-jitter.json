@@ -1,0 +1,947 @@
+{
+  "kind": "gesture",
+  "format": 2,
+  "name": "乱抖",
+  "english_name": "Jitter",
+  "trigger": {
+    "type": "key",
+    "key": "k"
+  },
+  "aim": true,
+  "mirror_for_left_handed": true,
+  "first_person": {
+    "arms": true,
+    "items": true
+  },
+  "hold_seconds": 0.8,
+  "custom": {
+    "windup": {
+      "length": 0.8,
+      "bones": {
+        "right_arm": {
+          "rotation": [
+            {
+              "time": 0.1,
+              "value": [
+                -15,
+                18,
+                28
+              ],
+              "easing": "out_quad"
+            },
+            {
+              "time": 0.2,
+              "value": [
+                -94,
+                -10,
+                18
+              ],
+              "easing": "out_cubic"
+            },
+            {
+              "time": 0.3,
+              "value": [
+                -145,
+                3,
+                43
+              ],
+              "easing": "out_cubic"
+            },
+            {
+              "time": 0.4,
+              "value": [
+                -34,
+                -13,
+                55
+              ],
+              "easing": "in_out_sine"
+            },
+            {
+              "time": 0.5,
+              "value": [
+                -139,
+                -22,
+                58
+              ],
+              "easing": "in_out_sine"
+            },
+            {
+              "time": 0.6,
+              "value": [
+                -111,
+                19,
+                18
+              ],
+              "easing": "in_out_sine"
+            },
+            {
+              "time": 0.7,
+              "value": [
+                -39,
+                43,
+                46
+              ],
+              "easing": "in_quad"
+            },
+            {
+              "time": 0.8,
+              "value": [
+                -29,
+                -26,
+                42
+              ],
+              "easing": "out_cubic"
+            }
+          ]
+        },
+        "left_arm": {
+          "rotation": [
+            {
+              "time": 0.1,
+              "value": [
+                -38,
+                16,
+                43
+              ],
+              "easing": "out_quad"
+            },
+            {
+              "time": 0.2,
+              "value": [
+                19,
+                34,
+                10
+              ],
+              "easing": "out_quad"
+            },
+            {
+              "time": 0.3,
+              "value": [
+                -104,
+                12,
+                10
+              ],
+              "easing": "in_out_sine"
+            },
+            {
+              "time": 0.4,
+              "value": [
+                -14,
+                -10,
+                58
+              ],
+              "easing": "in_quad"
+            },
+            {
+              "time": 0.5,
+              "value": [
+                -148,
+                20,
+                40
+              ],
+              "easing": "linear"
+            },
+            {
+              "time": 0.6,
+              "value": [
+                -20,
+                3,
+                6
+              ],
+              "easing": "out_quad"
+            },
+            {
+              "time": 0.7,
+              "value": [
+                -149,
+                -21,
+                18
+              ],
+              "easing": "in_quad"
+            },
+            {
+              "time": 0.8,
+              "value": [
+                24,
+                23,
+                59
+              ],
+              "easing": "out_quad"
+            }
+          ]
+        },
+        "torso": {
+          "rotation": [
+            {
+              "time": 0.1,
+              "value": [
+                -8,
+                5,
+                4
+              ],
+              "easing": "out_quad"
+            },
+            {
+              "time": 0.2,
+              "value": [
+                11,
+                17,
+                -2
+              ],
+              "easing": "in_quad"
+            },
+            {
+              "time": 0.3,
+              "value": [
+                2,
+                -19,
+                4
+              ],
+              "easing": "out_quad"
+            },
+            {
+              "time": 0.4,
+              "value": [
+                19,
+                -9,
+                4
+              ],
+              "easing": "out_cubic"
+            },
+            {
+              "time": 0.5,
+              "value": [
+                14,
+                -6,
+                -1
+              ],
+              "easing": "out_cubic"
+            },
+            {
+              "time": 0.6,
+              "value": [
+                -5,
+                -13,
+                -6
+              ],
+              "easing": "in_out_sine"
+            },
+            {
+              "time": 0.7,
+              "value": [
+                19,
+                -15,
+                1
+              ],
+              "easing": "out_cubic"
+            },
+            {
+              "time": 0.8,
+              "value": [
+                2,
+                -9,
+                -3
+              ],
+              "easing": "linear"
+            }
+          ]
+        },
+        "head": {
+          "rotation": [
+            {
+              "time": 0.1,
+              "value": [
+                -6,
+                28,
+                0
+              ],
+              "easing": "out_cubic"
+            },
+            {
+              "time": 0.2,
+              "value": [
+                -9,
+                0,
+                0
+              ],
+              "easing": "in_quad"
+            },
+            {
+              "time": 0.3,
+              "value": [
+                -8,
+                8,
+                0
+              ],
+              "easing": "in_quad"
+            },
+            {
+              "time": 0.4,
+              "value": [
+                -6,
+                8,
+                0
+              ],
+              "easing": "out_quad"
+            },
+            {
+              "time": 0.5,
+              "value": [
+                10,
+                -26,
+                0
+              ],
+              "easing": "in_quad"
+            },
+            {
+              "time": 0.6,
+              "value": [
+                9,
+                -24,
+                0
+              ],
+              "easing": "out_cubic"
+            },
+            {
+              "time": 0.7,
+              "value": [
+                -16,
+                -16,
+                0
+              ],
+              "easing": "linear"
+            },
+            {
+              "time": 0.8,
+              "value": [
+                0,
+                -29,
+                0
+              ],
+              "easing": "in_quad"
+            }
+          ]
+        }
+      }
+    },
+    "hold": {
+      "length": 0.8,
+      "loop": false,
+      "bones": {
+        "right_arm": {
+          "rotation": [
+            {
+              "time": 0.1,
+              "value": [
+                -12,
+                34,
+                3
+              ],
+              "easing": "out_quad"
+            },
+            {
+              "time": 0.2,
+              "value": [
+                -78,
+                46,
+                1
+              ],
+              "easing": "out_quad"
+            },
+            {
+              "time": 0.3,
+              "value": [
+                -117,
+                -26,
+                51
+              ],
+              "easing": "linear"
+            },
+            {
+              "time": 0.4,
+              "value": [
+                21,
+                -17,
+                50
+              ],
+              "easing": "out_quad"
+            },
+            {
+              "time": 0.5,
+              "value": [
+                -85,
+                2,
+                51
+              ],
+              "easing": "in_quad"
+            },
+            {
+              "time": 0.6,
+              "value": [
+                -111,
+                -23,
+                29
+              ],
+              "easing": "out_quad"
+            },
+            {
+              "time": 0.7,
+              "value": [
+                -132,
+                -27,
+                6
+              ],
+              "easing": "linear"
+            },
+            {
+              "time": 0.8,
+              "value": [
+                -106,
+                -11,
+                22
+              ],
+              "easing": "in_out_sine"
+            }
+          ]
+        },
+        "left_arm": {
+          "rotation": [
+            {
+              "time": 0.1,
+              "value": [
+                -78,
+                -8,
+                20
+              ],
+              "easing": "in_out_sine"
+            },
+            {
+              "time": 0.2,
+              "value": [
+                -68,
+                -25,
+                29
+              ],
+              "easing": "out_quad"
+            },
+            {
+              "time": 0.3,
+              "value": [
+                -89,
+                42,
+                59
+              ],
+              "easing": "in_out_sine"
+            },
+            {
+              "time": 0.4,
+              "value": [
+                13,
+                43,
+                43
+              ],
+              "easing": "out_quad"
+            },
+            {
+              "time": 0.5,
+              "value": [
+                -137,
+                23,
+                38
+              ],
+              "easing": "out_cubic"
+            },
+            {
+              "time": 0.6,
+              "value": [
+                -104,
+                37,
+                21
+              ],
+              "easing": "in_out_sine"
+            },
+            {
+              "time": 0.7,
+              "value": [
+                -64,
+                -4,
+                25
+              ],
+              "easing": "in_out_sine"
+            },
+            {
+              "time": 0.8,
+              "value": [
+                -88,
+                -15,
+                55
+              ],
+              "easing": "in_out_sine"
+            }
+          ]
+        },
+        "torso": {
+          "rotation": [
+            {
+              "time": 0.1,
+              "value": [
+                7,
+                15,
+                7
+              ],
+              "easing": "out_quad"
+            },
+            {
+              "time": 0.2,
+              "value": [
+                -4,
+                24,
+                5
+              ],
+              "easing": "in_out_sine"
+            },
+            {
+              "time": 0.3,
+              "value": [
+                -7,
+                -18,
+                3
+              ],
+              "easing": "out_cubic"
+            },
+            {
+              "time": 0.4,
+              "value": [
+                -5,
+                -23,
+                0
+              ],
+              "easing": "in_quad"
+            },
+            {
+              "time": 0.5,
+              "value": [
+                19,
+                4,
+                4
+              ],
+              "easing": "out_cubic"
+            },
+            {
+              "time": 0.6,
+              "value": [
+                6,
+                12,
+                7
+              ],
+              "easing": "out_cubic"
+            },
+            {
+              "time": 0.7,
+              "value": [
+                -10,
+                -13,
+                -1
+              ],
+              "easing": "in_out_sine"
+            },
+            {
+              "time": 0.8,
+              "value": [
+                3,
+                -22,
+                -5
+              ],
+              "easing": "out_cubic"
+            }
+          ]
+        },
+        "head": {
+          "rotation": [
+            {
+              "time": 0.1,
+              "value": [
+                17,
+                -24,
+                0
+              ],
+              "easing": "linear"
+            },
+            {
+              "time": 0.2,
+              "value": [
+                10,
+                13,
+                0
+              ],
+              "easing": "out_quad"
+            },
+            {
+              "time": 0.3,
+              "value": [
+                13,
+                -3,
+                0
+              ],
+              "easing": "in_quad"
+            },
+            {
+              "time": 0.4,
+              "value": [
+                11,
+                -3,
+                0
+              ],
+              "easing": "out_quad"
+            },
+            {
+              "time": 0.5,
+              "value": [
+                0,
+                29,
+                0
+              ],
+              "easing": "linear"
+            },
+            {
+              "time": 0.6,
+              "value": [
+                -6,
+                12,
+                0
+              ],
+              "easing": "out_quad"
+            },
+            {
+              "time": 0.7,
+              "value": [
+                6,
+                11,
+                0
+              ],
+              "easing": "out_cubic"
+            },
+            {
+              "time": 0.8,
+              "value": [
+                6,
+                21,
+                0
+              ],
+              "easing": "linear"
+            }
+          ]
+        }
+      }
+    },
+    "release": {
+      "length": 0.4,
+      "bones": {
+        "right_arm": {
+          "rotation": [
+            {
+              "time": 0.05,
+              "value": [
+                26,
+                -10,
+                4
+              ],
+              "easing": "linear"
+            },
+            {
+              "time": 0.1,
+              "value": [
+                -7,
+                17,
+                20
+              ],
+              "easing": "linear"
+            },
+            {
+              "time": 0.15,
+              "value": [
+                -16,
+                42,
+                37
+              ],
+              "easing": "in_quad"
+            },
+            {
+              "time": 0.2,
+              "value": [
+                -71,
+                -20,
+                1
+              ],
+              "easing": "out_cubic"
+            },
+            {
+              "time": 0.25,
+              "value": [
+                -69,
+                29,
+                56
+              ],
+              "easing": "out_quad"
+            },
+            {
+              "time": 0.3,
+              "value": [
+                -52,
+                32,
+                41
+              ],
+              "easing": "out_cubic"
+            },
+            {
+              "time": 0.35,
+              "value": [
+                -94,
+                -4,
+                30
+              ],
+              "easing": "out_quad"
+            },
+            {
+              "time": 0.4,
+              "value": [
+                -124,
+                32,
+                50
+              ],
+              "easing": "out_cubic"
+            }
+          ]
+        },
+        "left_arm": {
+          "rotation": [
+            {
+              "time": 0.05,
+              "value": [
+                -44,
+                48,
+                17
+              ],
+              "easing": "in_out_sine"
+            },
+            {
+              "time": 0.1,
+              "value": [
+                -79,
+                5,
+                53
+              ],
+              "easing": "in_quad"
+            },
+            {
+              "time": 0.15,
+              "value": [
+                -61,
+                35,
+                2
+              ],
+              "easing": "out_cubic"
+            },
+            {
+              "time": 0.2,
+              "value": [
+                -148,
+                9,
+                28
+              ],
+              "easing": "out_cubic"
+            },
+            {
+              "time": 0.25,
+              "value": [
+                -90,
+                34,
+                33
+              ],
+              "easing": "in_out_sine"
+            },
+            {
+              "time": 0.3,
+              "value": [
+                -18,
+                -20,
+                16
+              ],
+              "easing": "in_quad"
+            },
+            {
+              "time": 0.35,
+              "value": [
+                -104,
+                -29,
+                41
+              ],
+              "easing": "in_quad"
+            },
+            {
+              "time": 0.4,
+              "value": [
+                -58,
+                -29,
+                58
+              ],
+              "easing": "in_out_sine"
+            }
+          ]
+        },
+        "torso": {
+          "rotation": [
+            {
+              "time": 0.05,
+              "value": [
+                16,
+                5,
+                1
+              ],
+              "easing": "out_quad"
+            },
+            {
+              "time": 0.1,
+              "value": [
+                -3,
+                -6,
+                -4
+              ],
+              "easing": "in_out_sine"
+            },
+            {
+              "time": 0.15,
+              "value": [
+                10,
+                -11,
+                6
+              ],
+              "easing": "in_quad"
+            },
+            {
+              "time": 0.2,
+              "value": [
+                8,
+                24,
+                -3
+              ],
+              "easing": "linear"
+            },
+            {
+              "time": 0.25,
+              "value": [
+                15,
+                24,
+                3
+              ],
+              "easing": "out_cubic"
+            },
+            {
+              "time": 0.3,
+              "value": [
+                11,
+                15,
+                0
+              ],
+              "easing": "out_cubic"
+            },
+            {
+              "time": 0.35,
+              "value": [
+                18,
+                1,
+                6
+              ],
+              "easing": "out_cubic"
+            },
+            {
+              "time": 0.4,
+              "value": [
+                11,
+                21,
+                0
+              ],
+              "easing": "in_out_sine"
+            }
+          ]
+        },
+        "head": {
+          "rotation": [
+            {
+              "time": 0.05,
+              "value": [
+                3,
+                26,
+                0
+              ],
+              "easing": "in_quad"
+            },
+            {
+              "time": 0.1,
+              "value": [
+                2,
+                10,
+                0
+              ],
+              "easing": "in_out_sine"
+            },
+            {
+              "time": 0.15,
+              "value": [
+                4,
+                16,
+                0
+              ],
+              "easing": "linear"
+            },
+            {
+              "time": 0.2,
+              "value": [
+                -5,
+                24,
+                0
+              ],
+              "easing": "in_out_sine"
+            },
+            {
+              "time": 0.25,
+              "value": [
+                -14,
+                21,
+                0
+              ],
+              "easing": "in_out_sine"
+            },
+            {
+              "time": 0.3,
+              "value": [
+                2,
+                -11,
+                0
+              ],
+              "easing": "linear"
+            },
+            {
+              "time": 0.35,
+              "value": [
+                15,
+                3,
+                0
+              ],
+              "easing": "in_out_sine"
+            },
+            {
+              "time": 0.4,
+              "value": [
+                -4,
+                17,
+                0
+              ],
+              "easing": "linear"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

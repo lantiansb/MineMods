@@ -1,0 +1,348 @@
+.asset-appearance {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-width: 0;
+  color: var(--text);
+}
+
+.asset-appearance-inner {
+  box-sizing: border-box;
+  width: min(100%, 260px);
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-panel);
+  background: var(--panel);
+  box-shadow: var(--glass-shadow, 0 8px 28px color-mix(in srgb, var(--shadow) 7%, transparent), inset 0 1px 0 var(--theme-highlight-strong));
+  backdrop-filter: var(--glass-blur, blur(24px) saturate(1.35));
+  -webkit-backdrop-filter: var(--glass-blur, blur(24px) saturate(1.35));
+}
+
+.asset-appearance-copy,
+.asset-appearance-heading {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.asset-appearance-copy {
+  margin-top: 10px;
+  text-align: center;
+}
+.asset-appearance-copy strong,
+.asset-appearance-heading strong {
+  overflow: hidden;
+  font-size: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.asset-appearance-copy span,
+.asset-appearance-heading span {
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------- a block or an item as the game shows it ---------- */
+.asset-appearance-ingame {
+  place-items: stretch;
+}
+.asset-ingame {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 18px 34px;
+  padding: 8px 4px 4px;
+}
+.asset-ingame figure {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  min-width: 0;
+  margin: 0;
+}
+.asset-ingame figcaption {
+  max-width: 260px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: center;
+}
+.asset-ingame img,
+.asset-ingame-plain {
+  display: block;
+  image-rendering: pixelated;
+}
+/* The game's own measure at GUI scale 2: an 18-pixel slot holding a 16-pixel picture. */
+.asset-ingame-strip {
+  display: flex;
+}
+.asset-ingame-strip > span {
+  position: relative;
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+}
+.asset-ingame-strip img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+.asset-ingame-strip .asset-ingame-plain {
+  width: 20px;
+  height: 20px;
+}
+.asset-ingame-strip b {
+  position: absolute;
+  right: 2px;
+  bottom: 1px;
+  color: #ffffff;
+  font-family: var(--font-display, inherit);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1;
+  text-shadow: 2px 2px 0 #3f3f3f;
+}
+.asset-ingame-large > div {
+  display: flex;
+  gap: 10px;
+}
+.asset-ingame-slot {
+  display: grid;
+  width: 128px;
+  height: 128px;
+  place-items: center;
+}
+.asset-ingame-slot[data-tone="light"] {
+  background: #d6d6d6;
+  box-shadow:
+    inset 4px 4px 0 #8a8a8a,
+    inset -4px -4px 0 #ffffff;
+}
+.asset-ingame-slot[data-tone="dark"] {
+  background: #262626;
+  box-shadow:
+    inset 4px 4px 0 #0c0c0c,
+    inset -4px -4px 0 #4a4a4a;
+}
+.asset-ingame-slot img {
+  width: 112px;
+  height: 112px;
+  object-fit: contain;
+}
+.asset-ingame-slot .asset-ingame-plain {
+  width: 70px;
+  height: 70px;
+}
+.asset-ingame-hover {
+  align-self: center;
+}
+.asset-ingame-tip {
+  display: grid;
+  gap: 3px;
+  max-width: 250px;
+  margin: 4px;
+  padding: 6px 9px 7px;
+  font-size: 14px;
+  line-height: 1.45;
+  text-align: left;
+}
+.asset-ingame .asset-ingame-tip strong {
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 400;
+  text-align: left;
+}
+.asset-ingame .asset-ingame-tip span {
+  color: #b4b4b4;
+  text-shadow: 1px 1px 0 #2a2a2a;
+}
+.asset-ingame .asset-ingame-tip small {
+  color: #7d7d7d;
+  font-size: 12px;
+  text-shadow: none;
+  overflow-wrap: anywhere;
+}
+
+.asset-appearance-heading {
+  margin-bottom: 13px;
+}
+.asset-appearance-heading strong {
+  text-align: left;
+}
+.asset-appearance-swatches {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 7px;
+}
+.asset-appearance-swatch {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+}
+.asset-appearance-swatch > span {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1.65;
+  border: 1px solid var(--theme-highlight);
+  border-radius: var(--radius);
+  box-shadow: inset 0 1px 0 var(--theme-highlight);
+}
+.asset-appearance-swatch label {
+  color: var(--muted);
+  font-size: 11px;
+}
+.asset-appearance-swatch output {
+  overflow: hidden;
+  color: var(--text);
+  font: inherit;
+  font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.asset-appearance-values {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 14px 0 0;
+}
+.asset-appearance-values > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+.asset-appearance-values dt {
+  color: var(--muted);
+  font-size: 11px;
+}
+.asset-appearance-values dd {
+  margin: 0;
+  color: var(--text);
+  font-size: 13px;
+}
+
+.asset-appearance-state-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.asset-appearance-state {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: 22px minmax(0, 1fr);
+  align-items: center;
+  gap: 2px 6px;
+  padding: 9px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-panel);
+  background: var(--panel-soft);
+}
+.asset-appearance-glyph {
+  grid-row: span 2;
+  width: 19px;
+  height: 19px;
+  color: var(--accent);
+}
+.asset-appearance-state span {
+  color: var(--muted);
+  font-size: 10px;
+}
+.asset-appearance-state strong {
+  overflow: hidden;
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.asset-appearance-light {
+  display: grid;
+  gap: 7px;
+  margin-top: 12px;
+}
+.asset-appearance-light > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 11px;
+}
+.asset-appearance-light output {
+  color: var(--text);
+  font: inherit;
+  font-size: 13px;
+}
+.asset-appearance-light meter {
+  width: 100%;
+  height: 7px;
+  accent-color: var(--accent);
+}
+
+.asset-appearance-terrain {
+  display: flex;
+  flex-direction: column;
+}
+.asset-appearance-layers {
+  display: flex;
+  height: 180px;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-panel);
+  background: var(--field-gradient-end);
+}
+.asset-appearance-layer {
+  display: flex;
+  min-height: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 7px;
+  overflow: hidden;
+  padding: 0 8px;
+  border-top: 1px solid var(--theme-highlight);
+  background: linear-gradient(90deg, var(--field-gradient-mid), var(--field-gradient-mid));
+  color: var(--text);
+}
+.asset-appearance-layer:nth-child(2n) {
+  background: linear-gradient(90deg, var(--grid), var(--field-gradient-end));
+}
+.asset-appearance-layer strong {
+  overflow: hidden;
+  font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.asset-appearance-layer span {
+  flex-shrink: 0;
+  color: var(--muted);
+  font-size: 10px;
+}
+.asset-appearance-features {
+  display: grid;
+  gap: 4px;
+  margin-top: 11px;
+  padding-top: 9px;
+  border-top: 1px solid var(--line);
+}
+.asset-appearance-features span {
+  color: var(--muted);
+  font-size: 10px;
+}
+.asset-appearance-features strong {
+  color: var(--text);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+@media (max-width: 420px) {
+  .asset-appearance-inner {
+    padding: 12px;
+  }
+}

@@ -1,0 +1,231 @@
+/* 「接着做」 (Main.dc.html): the game's 「选择世界」 list, on the world itself. */
+.mm-worlds {
+  width: min(660px, 100%);
+  margin-top: 30px;
+  text-align: left;
+}
+.mm-worlds-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 0 2px 6px;
+}
+.mm-worlds-head h2 {
+  margin: 0;
+  color: var(--world-muted);
+  font-size: 14px;
+  font-weight: 400;
+  text-shadow: 1px 1px 0 #000;
+}
+.mm-worlds-all {
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--world-muted);
+  font: inherit;
+  font-size: 12px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.mm-worlds-all:hover,
+.mm-worlds-all:focus-visible {
+  color: var(--gold);
+}
+.mm-worlds-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px;
+  border: 2px solid #000;
+  background: rgba(0, 0, 0, 0.55);
+  box-shadow: inset 0 0 0 2px #2a2a2a;
+}
+/* A row is no window: none of the card's own frame, drop or lift. */
+:root:root .main-area .mm-world.project-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 0;
+  padding: 6px;
+  border: 2px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: #ffffff;
+  text-align: left;
+  transform: none;
+  transition: none;
+  cursor: pointer;
+}
+:root:root .main-area .mm-world.project-card:hover,
+:root:root .main-area .mm-world.project-card:focus-visible {
+  outline: 0;
+  border-color: #808080;
+  transform: none;
+  box-shadow: none;
+}
+:root:root .main-area .mm-world.project-card.sel {
+  border-color: #ffffff;
+  background: rgba(0, 0, 0, 0.35);
+}
+/* The pointer or the keyboard is on another row: that one is the choice now. */
+:root:root .main-area .mm-worlds-list:hover .mm-world.project-card.sel:not(:hover),
+:root:root .main-area .mm-worlds-list:focus-within .mm-world.project-card.sel:not(:focus-visible) {
+  border-color: transparent;
+  background: transparent;
+}
+:root:root .main-area .mm-world.project-card:focus-visible {
+  border-color: #ffffff;
+  background: rgba(0, 0, 0, 0.35);
+}
+.mm-world-slot {
+  position: relative;
+  flex: none;
+  width: 60px;
+  height: 60px;
+  overflow: hidden;
+}
+:root:root .mm-world-slot .project-art {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  border: none;
+  aspect-ratio: auto;
+  background: none;
+  box-shadow: none;
+}
+.mm-world-play {
+  position: absolute;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.45);
+}
+.mm-world-play svg {
+  width: 22px;
+  height: 22px;
+  animation: mm-world-nudge 1s steps(2) infinite;
+}
+.mm-world.sel .mm-world-play,
+.mm-world:hover .mm-world-play,
+.mm-world:focus-visible .mm-world-play {
+  display: flex;
+}
+.mm-worlds-list:hover .mm-world.sel:not(:hover) .mm-world-play,
+.mm-worlds-list:focus-within .mm-world.sel:not(:focus-visible) .mm-world-play {
+  display: none;
+}
+@keyframes mm-world-nudge {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(3px);
+  }
+}
+.mm-world-words {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+.mm-world-words strong {
+  overflow: hidden;
+  font-size: 16px;
+  font-weight: 400;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mm-world-words small {
+  color: #a8a8a8;
+  font-size: 12px;
+}
+.mm-world-words .mm-world-waits {
+  color: var(--gold);
+}
+.mm-open-ways {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  min-width: 340px;
+}
+.mm-open-ways .title-way {
+  justify-content: flex-start;
+  width: 100%;
+  height: auto;
+  padding: 10px 14px;
+  text-align: left;
+}
+.mm-open-ways .title-way small {
+  display: block;
+  margin-top: 2px;
+  font-size: 12px;
+  opacity: 0.85;
+}
+/* A low window: the three rows stay on the first screen. */
+@media (max-height: 800px) {
+  .title-screen {
+    padding-top: 16px;
+  }
+  .title-start {
+    margin-top: 20px;
+  }
+  .title-ways {
+    margin-top: 14px;
+  }
+  .mm-worlds {
+    margin-top: 12px;
+  }
+  :root:root .main-area .mm-world.project-card {
+    padding: 2px 6px;
+  }
+  .mm-world-slot {
+    width: 48px;
+    height: 48px;
+  }
+}
+/* The cover: the stone slides by, very slowly, and the title falls into place once. A distance of whole tiles, so the loop has no seam. */
+.studio-root[data-page="home"]::before {
+  animation: mm-cover-pan 60s linear infinite;
+}
+@keyframes mm-cover-pan {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: -512px 0;
+  }
+}
+.title-screen .mm-logo-face.fall {
+  animation: mm-logo-drop 0.7s steps(7) 1 both;
+}
+@keyframes mm-logo-drop {
+  0% {
+    transform: translateY(-60px);
+    opacity: 0;
+  }
+  60% {
+    transform: translateY(6px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .studio-root[data-page="home"]::before,
+  .title-screen .mm-logo-face.fall,
+  .mm-world-play svg {
+    animation: none;
+  }
+}
+/* Studio's own 「减少动效」 is a class on the root, and the rule for it reaches every element inside but not the root's own stone. */
+.studio-root.reduce-motion[data-page="home"]::before {
+  animation: none;
+}

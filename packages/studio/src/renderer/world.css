@@ -1,0 +1,903 @@
+/*
+ * The world behind the GUI (10-14). Loaded after skin.css. skin.css makes every surface an inventory window; on a page that
+ * is itself inventory grey nothing stands forward, so here the page becomes the world — dark layered stone, original art
+ * drawn for MineMods (assets/world) — and the inventory windows float on it, the way a game GUI sits over the world.
+ * Game vocabulary carries state: the experience bar is progress, a gold advancement frame is a milestone, an enchanted
+ * glint is "checked in the game", chat colours are what a log line means. Motion answers something that happened; nothing
+ * moves for its own sake, and reduced motion turns every animation off.
+ */
+:root {
+  --world: #1f1e24;
+  --world-text: #ffffff;
+  --world-muted: #b9b8c4;
+  --world-shadow: #3f3f3f;
+  --window-drop: rgba(0, 0, 0, 0.5);
+  /* Game vocabulary */
+  --xp: #80ff20;
+  --xp-dark: #2c5c0b;
+  --xp-track: #10240a;
+  --gold: #ffff55;
+  --gold-deep: #c8a020;
+  --enchant: #b48cff;
+  --redstone: #ff5555;
+  --aqua: #55ffff;
+  --chat-bg: rgba(0, 0, 0, 0.62);
+}
+
+/* ---------- the world ---------- */
+.studio-root {
+  isolation: isolate;
+  background: var(--world);
+}
+.studio-root::before,
+.studio-root::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+.studio-root::before {
+  background: url("./assets/world/night-stone.png") 0 0 / 64px 64px;
+  image-rendering: pixelated;
+}
+/* Light falls on the middle of the screen, the corners stay in the dark. */
+.studio-root::after {
+  background: radial-gradient(ellipse 75% 70% at 55% 42%, rgba(255, 236, 200, 0.07), rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, 0.55) 100%);
+}
+.main-area {
+  background: transparent;
+}
+
+/* Text that stands on the world, not in a window: white with the game's own hard shadow. */
+.pa-header h1,
+.pa-header small,
+.projects-title h2,
+.projects-title .project-count,
+.external-title h1,
+.external-title small,
+.external-title .external-connection,
+:root:root .main-area .page-heading:not(.panel *, .mc-window *) h1 {
+  color: var(--world-text);
+  text-shadow: 2px 2px 0 var(--world-shadow);
+}
+/* A page's lead line and its way back stand on the world too (every page heading outside a window does). */
+.main-area .page-heading:not(.panel *, .mc-window *) p,
+.main-area .page-heading:not(.panel *, .mc-window *) .model-back {
+  color: var(--world-muted);
+  text-shadow: 2px 2px 0 #000;
+}
+.main-area .pa-header h1 small,
+.main-area .external-title h1 small,
+.main-area .projects-title .project-count {
+  color: var(--world-muted);
+  text-shadow: 2px 2px 0 #000;
+}
+
+/* ---------- windows float ---------- */
+/* A hard drop, no blur: the game draws nothing soft. */
+.mc-window,
+.main-area .panel,
+.main-area .project-card,
+.connection-callout {
+  box-shadow:
+    inset 2px 2px 0 var(--edge-light),
+    inset -2px -2px 0 var(--edge-dark),
+    0 0 0 2px #000,
+    6px 6px 0 2px var(--window-drop);
+}
+.main-area .project-card {
+  transition: transform 90ms steps(2), box-shadow 90ms steps(2);
+}
+.main-area .project-card:hover {
+  transform: translate(-2px, -3px);
+  box-shadow:
+    inset 2px 2px 0 var(--edge-light),
+    inset -2px -2px 0 var(--edge-dark),
+    0 0 0 2px #000,
+    9px 10px 0 2px var(--window-drop);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .main-area .project-card,
+  .main-area .project-card:hover {
+    transition: none;
+    transform: none;
+  }
+}
+
+/* ---------- the title screen ---------- */
+.home-page {
+  max-width: 1180px;
+}
+.title-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  padding: clamp(28px, 7vh, 84px) 16px 36px;
+  text-align: center;
+}
+:root:root .title-screen .mm-logo {
+  position: relative;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(56px, 8.2vw, 112px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: 0.04em;
+}
+/* The title is drawn for MineMods (assets/world/title.png): block letters, MINE in stone, MODS in copper. Every part of the
+   art is a multiple of 2 pixels, so it stays crisp at 1x, 1.5x and 2x. */
+.title-screen .mm-logo-face {
+  display: block;
+  width: 548px;
+  height: auto;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 10px 0 rgba(0, 0, 0, 0.35));
+}
+@media (min-width: 1400px) {
+  .title-screen .mm-logo-face {
+    width: 822px;
+  }
+}
+/* The yellow splash: tilted, pulsing, saying one true thing about MineMods. */
+/* It starts just past the title's last letter and rises to the right, so a long line grows away from the title instead
+   of back over it; the large title waits until the window leaves room for the longest line beside it. */
+.title-screen .mm-splash {
+  position: absolute;
+  left: calc(100% + 0.2em);
+  bottom: -0.9em;
+  font-size: clamp(18px, 1.8vw, 26px);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  color: var(--gold);
+  text-shadow: 2px 2px 0 #3f3f15;
+  transform: rotate(-16deg);
+  transform-origin: 0 50%;
+  animation: mm-splash 0.62s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+@keyframes mm-splash {
+  from {
+    transform: rotate(-16deg) scale(0.94);
+  }
+  to {
+    transform: rotate(-16deg) scale(1.06);
+  }
+}
+.title-hello {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 34px 0 0;
+  color: var(--world-text);
+  text-shadow: 2px 2px 0 var(--world-shadow);
+  font-size: 17px;
+}
+.title-hello .avatar {
+  width: 28px;
+  height: 28px;
+}
+.title-start {
+  display: flex;
+  width: min(640px, 100%);
+  gap: 10px;
+  margin-top: 40px;
+}
+.title-hello + .title-start {
+  margin-top: 14px;
+}
+.title-start input {
+  flex: 1;
+  min-width: 0;
+  height: 52px;
+  padding: 0 16px;
+  border: 2px solid #a0a0a0;
+  border-radius: 0;
+  outline: 0;
+  background: #000;
+  color: #e0e0e0;
+  font: inherit;
+  font-size: 18px;
+  box-shadow: 0 0 0 2px #000, 6px 6px 0 2px var(--window-drop);
+}
+.title-start input::placeholder {
+  color: #707070;
+}
+.title-start input:focus {
+  border-color: #ffffff;
+}
+.title-start .studio-button {
+  height: 52px;
+  min-width: 128px;
+  font-size: 18px;
+  box-shadow: 0 0 0 2px #000, 6px 6px 0 2px var(--window-drop);
+}
+.title-hint {
+  max-width: 640px;
+  margin: 16px 0 0;
+  color: var(--world-muted);
+  text-shadow: 2px 2px 0 #000;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.title-ai {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-width: 640px;
+  margin: 10px 0 0;
+  color: var(--gold);
+  text-shadow: 2px 2px 0 #000;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.title-ai .status-light {
+  width: 8px;
+  height: 8px;
+  background: var(--gold);
+}
+.link-button {
+  border: 0;
+  padding: 0;
+  background: none;
+  color: var(--aqua);
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.title-ways {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 34px;
+}
+/* The game's grey stone buttons: light top-left edge, dark bottom-right, white text with its shadow; blue when pointed at. */
+.title-way {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 16px;
+  border: 2px solid #000;
+  border-radius: 0;
+  background: #6f6f6f;
+  box-shadow: inset 2px 2px 0 #aaaaaa, inset -2px -4px 0 #4a4a4a;
+  color: #ffffff;
+  text-shadow: 2px 2px 0 #383838;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+.title-way svg {
+  width: 16px;
+  height: 16px;
+}
+.title-way:hover,
+.title-way:focus-visible {
+  outline: 0;
+  background: #7b86c4;
+  box-shadow: inset 2px 2px 0 #b8c0ee, inset -2px -4px 0 #4f5888;
+  color: #ffffa0;
+}
+.home-page .projects-toolbar {
+  margin-top: 8px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mm-splash {
+    animation: none;
+  }
+}
+
+/* ---------- experience: the production bar ---------- */
+/* The bar fills like the game's experience bar, with its notches; the number of things made sits at its left in the
+   game's outlined green, the way the level sits over the bar. */
+.main-area .pa-progress {
+  position: relative;
+  height: 12px;
+  margin-left: 44px;
+  border: 2px solid #000;
+  background: #1a1a1a;
+  box-shadow: inset 0 2px 0 #0b0b0b;
+}
+.main-area .pa-progress::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(90deg, transparent 0 calc(100% / 18 - 2px), rgba(0, 0, 0, 0.55) calc(100% / 18 - 2px) calc(100% / 18));
+}
+.main-area .pa-progress .done {
+  background: linear-gradient(#c8ff8c 0 2px, var(--xp) 2px 6px, #4fb10f 6px);
+  transition: width 600ms steps(12);
+}
+/* What is being made right now burns like a furnace's progress: warm and moving. */
+.main-area .pa-progress .now {
+  background: repeating-linear-gradient(90deg, #ffd25a 0 6px, #e8932a 6px 12px);
+  background-size: 24px 100%;
+  animation: pa-burn 900ms linear infinite;
+}
+@keyframes pa-burn {
+  to {
+    background-position: 24px 0;
+  }
+}
+.main-area .pa-level {
+  position: absolute;
+  left: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+  min-width: 30px;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1;
+  text-align: center;
+  color: var(--xp);
+  text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000;
+}
+
+/* ---------- enchanted: checked in the game ---------- */
+/* A thing the game itself set out and answered for gets the glint enchanted items have: a slow violet sheen across its
+   slot. Made by an AI and passed by a reviewer is one thing; seen working in the game is another, and it shows. */
+.pa-slot[data-checked="game"] .pa-cell {
+  position: relative;
+  overflow: hidden;
+}
+.pa-slot[data-checked="game"] .pa-cell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 0 42%, rgba(170, 120, 255, 0.32) 47%, rgba(230, 215, 255, 0.4) 50%, rgba(170, 120, 255, 0.32) 53%, transparent 58% 100%);
+  background-size: 300% 300%;
+  mix-blend-mode: screen;
+  animation: mm-glint 3.2s linear infinite;
+}
+@keyframes mm-glint {
+  from {
+    background-position: 100% 100%;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .main-area .pa-progress .now,
+  .pa-slot[data-checked="game"] .pa-cell::after {
+    animation: none;
+  }
+}
+.reduce-motion .main-area .pa-progress .now,
+.reduce-motion .pa-slot[data-checked="game"] .pa-cell::after {
+  animation: none;
+}
+
+/* ---------- the rounds: a hotbar ---------- */
+/* Every round the AI made is a slot in one bar, the way the game's hotbar holds what you carry: the round's picture in
+   the slot, its number in the corner where a stack's count goes, the one being looked at held in the selector frame.
+   The verdict on it stays written underneath, in its colour. The bar ends, after a gap, in the advancement frame of
+   the review: gold once another AI passed it, grey until then. */
+.mk-film {
+  align-items: flex-start;
+  padding: 6px 8px 4px;
+}
+.mk-film .mk-link {
+  display: none;
+}
+.mk-film .mk-link:has(+ .end) {
+  display: block;
+  flex: none;
+  width: 14px;
+  height: 2px;
+  margin: 29px 6px 0 8px;
+  background: repeating-linear-gradient(90deg, #7d7d7d 0 4px, transparent 4px 6px);
+}
+.mk-film .mk-stop,
+.mk-film .mk-stop[aria-selected="true"],
+.mk-film button.mk-stop:hover,
+.mk-film button.mk-stop:focus-visible {
+  position: relative;
+  width: 60px;
+  gap: 3px;
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+.mk-film .mk-stop:not(.end) + .mk-stop:not(.end) {
+  margin-left: -2px;
+}
+.mk-film .mk-thumb {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  padding: 4px;
+  border: 2px solid #000;
+  background: #3a3a3a;
+  box-shadow:
+    inset 2px 2px 0 #1c1c1c,
+    inset -2px -2px 0 #6b6b6b;
+}
+.mk-film .mk-thumb img {
+  image-rendering: pixelated;
+}
+/* A slot the pointer is over lightens, as inventory slots do. */
+.mk-film button.mk-stop:hover .mk-thumb::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.22);
+  pointer-events: none;
+}
+.mk-film .mk-count {
+  position: absolute;
+  right: 3px;
+  bottom: 1px;
+  z-index: 1;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1;
+  color: #ffffff;
+  text-shadow: 2px 2px 0 #3f3f3f;
+  pointer-events: none;
+}
+/* The selector: a light frame standing over the slot, wider than it, black on both sides. */
+.mk-film .mk-stop[aria-selected="true"]::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  width: 70px;
+  height: 70px;
+  z-index: 2;
+  box-sizing: border-box;
+  border: 3px solid #e9e9e9;
+  outline: 2px solid #000;
+  box-shadow: inset 0 0 0 2px #000;
+  pointer-events: none;
+}
+.mk-film button.mk-stop:focus-visible::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  width: 70px;
+  height: 70px;
+  z-index: 2;
+  box-sizing: border-box;
+  border: 3px solid var(--xp);
+  outline: 2px solid #000;
+  pointer-events: none;
+}
+.mk-film .mk-stop small {
+  max-width: 64px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mk-film .mk-stop.pending .mk-thumb {
+  border: 2px dashed #7d7d7d;
+}
+
+/* The review's advancement frame: grey while it is not done, gold with a glint once another AI passed it. */
+.mk-film .mk-stop.end .mk-thumb {
+  padding: 0;
+  border: 2px solid #000;
+  background: #8b8b8b;
+  box-shadow:
+    inset 3px 3px 0 #c6c6c6,
+    inset -3px -3px 0 #555555;
+  clip-path: polygon(4px 0, calc(100% - 4px) 0, 100% 4px, 100% calc(100% - 4px), calc(100% - 4px) 100%, 4px 100%, 0 calc(100% - 4px), 0 4px);
+}
+.mk-film .mk-stop.end[data-passed="true"]:not([data-kept="true"]) .mk-thumb {
+  overflow: hidden;
+  background: #e8b931;
+  box-shadow:
+    inset 3px 3px 0 #fff0a0,
+    inset -3px -3px 0 #9a6a0b;
+}
+.mk-film .mk-stop.end[data-passed="true"]:not([data-kept="true"]) .mk-thumb::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 0 40%, rgba(255, 255, 255, 0.55) 48%, rgba(255, 255, 255, 0.7) 50%, rgba(255, 255, 255, 0.55) 52%, transparent 60% 100%);
+  background-size: 300% 300%;
+  animation: mm-glint 3.6s linear infinite;
+}
+.mk-film .mk-stop.end[data-passed="true"]:not([data-kept="true"]) .mk-mark {
+  color: #1d5e10;
+  filter: drop-shadow(2px 2px 0 rgba(255, 255, 255, 0.45));
+}
+.mk-film .mk-stop.end[data-passed="false"] .mk-mark {
+  color: #b01010;
+}
+.mk-film .mk-stop.end b {
+  font-weight: 400;
+  font-size: 13px;
+}
+.mk-film .mk-cap {
+  align-self: center;
+  margin-left: 14px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mk-film .mk-stop.end .mk-thumb::before {
+    animation: none;
+  }
+}
+.reduce-motion .mk-film .mk-stop.end .mk-thumb::before {
+  animation: none;
+}
+
+/* ---------- the feed: chat ---------- */
+/* 最新动态 reads like the game's chat: white lines on a dark glass over the world, each in the colour of what it means.
+   The thing it is about stands in front like a speaker's name, its kind in brackets like a server's prefix. Red is
+   something that did not work, gold something to keep an eye on, green a thing finished; grey is a step on the way. */
+.mf-feed .mf-follow-scroll {
+  padding: 6px 4px 6px 6px;
+  border: 2px solid #000;
+  background:
+    linear-gradient(var(--chat-bg), var(--chat-bg)),
+    url("./assets/world/night-stone.png") 0 0 / 64px 64px;
+  image-rendering: pixelated;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+  scrollbar-color: #8b8b8b rgba(0, 0, 0, 0.4);
+}
+.mf-feed .mf-node {
+  padding-left: 0;
+}
+.mf-feed .mf-node::before,
+.mf-feed .mf-node::after {
+  content: none;
+}
+.mf-feed .mf-node-main {
+  gap: 6px;
+  padding: 1px 4px;
+  color: #ffffff;
+  text-shadow: 1px 1px 0 var(--world-shadow);
+  image-rendering: auto;
+}
+.mf-feed button.mf-node-main:hover,
+.mf-feed button.mf-node-main:focus-visible {
+  background: rgba(255, 255, 255, 0.14);
+  outline: 0;
+  box-shadow: inset 2px 0 0 #ffffff;
+}
+.mf-feed .mf-node-main time {
+  min-width: 34px;
+  color: #aaaaaa;
+}
+.mf-feed .mf-node-thing {
+  margin-right: 4px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--gold);
+  font-size: inherit;
+}
+.mf-feed .mf-node-thing::before {
+  content: "<";
+}
+.mf-feed .mf-node-thing::after {
+  content: ">";
+}
+.mf-feed .mf-node-kind {
+  margin-right: 4px;
+  color: #aaaaaa;
+  font-size: inherit;
+}
+.mf-feed .mf-node-kind::before {
+  content: "[";
+}
+.mf-feed .mf-node-kind::after {
+  content: "]";
+}
+.mf-feed .mf-node[data-kind="check"] .mf-node-kind {
+  color: var(--aqua);
+}
+.mf-feed .mf-node[data-kind="review"] .mf-node-kind {
+  color: #ff55ff;
+}
+.mf-feed .mf-node[data-kind="build"] .mf-node-kind {
+  color: #ffaa00;
+}
+.mf-feed .mf-node[data-kind="person"] .mf-node-kind {
+  color: #55ff55;
+}
+.mf-feed .mf-node[data-kind="tool"] .mf-node-kind,
+.mf-feed .mf-node[data-kind="task"] .mf-node-kind,
+.mf-feed .mf-node[data-kind="look"] .mf-node-kind {
+  color: #8f8fff;
+}
+.mf-feed .mf-node[data-mark="ok"].end .mf-node-text {
+  color: #55ff55;
+}
+.mf-feed .mf-node[data-mark="fail"] .mf-node-text {
+  color: var(--redstone);
+}
+.mf-feed .mf-node[data-mark="warn"] .mf-node-text {
+  color: #ffaa00;
+}
+/* The name and the prefix keep their own colours whatever the line says. */
+.mf-feed .mf-node .mf-node-text > .mf-node-thing {
+  color: var(--gold);
+}
+.mf-feed .mf-node.quiet,
+.mf-feed .mf-node.step {
+  opacity: 1;
+}
+.mf-feed .mf-node.quiet .mf-node-text,
+.mf-feed .mf-node.step .mf-node-text {
+  color: #aaaaaa;
+}
+.mf-feed .mf-node-lines {
+  color: #c6c6c6;
+}
+.mf-feed .mf-node-lines span {
+  border-left-color: #555555;
+}
+.mf-feed .mf-node[data-mark="fail"] .mf-node-lines span {
+  border-left-color: var(--redstone);
+}
+.mf-feed .mf-node[data-mark="warn"] .mf-node-lines span {
+  border-left-color: #ffaa00;
+}
+.mf-feed .mf-thumb {
+  border-color: #000;
+}
+.mf-feed .mf-thumb:hover {
+  border-color: #ffffff;
+}
+.mf-feed .mf-earlier {
+  margin-left: 4px;
+  color: #aaaaaa;
+  text-shadow: 1px 1px 0 #000;
+}
+.mf-feed .mf-tech {
+  margin-left: 42px;
+  border-color: #333333;
+}
+
+/* ---------- the stage: the thing being looked at ---------- */
+/* On 制作现场 the thing at the head of the right side stands in a small lit pocket of the world and floats there the way
+   a dropped item does, bobbing over its own shadow. Only this one moves: it is the thing the page is about. */
+.mf-thing-head .mf-cell.large {
+  position: relative;
+  width: 76px;
+  height: 76px;
+  padding: 10px 10px 14px;
+  border: 2px solid #000;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 38%, rgba(255, 238, 196, 0.28), rgba(255, 238, 196, 0) 70%),
+    linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),
+    url("./assets/world/night-stone.png") 0 0 / 48px 48px;
+  box-shadow:
+    inset 2px 2px 0 rgba(0, 0, 0, 0.6),
+    inset -2px -2px 0 rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+}
+.mf-thing-head .mf-cell.large img,
+.mf-thing-head .mf-cell.large svg {
+  position: relative;
+  z-index: 1;
+  animation: mm-bob 2.8s steps(8) infinite;
+}
+.mf-thing-head .mf-cell.large::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 7px;
+  width: 36px;
+  height: 6px;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.55);
+  animation: mm-bob-shadow 2.8s steps(8) infinite;
+  pointer-events: none;
+}
+@keyframes mm-bob {
+  0%,
+  100% {
+    transform: translateY(1px);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+@keyframes mm-bob-shadow {
+  0%,
+  100% {
+    width: 38px;
+    opacity: 1;
+  }
+  50% {
+    width: 28px;
+    opacity: 0.6;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mf-thing-head .mf-cell.large img,
+  .mf-thing-head .mf-cell.large svg,
+  .mf-thing-head .mf-cell.large::after {
+    animation: none;
+  }
+}
+.reduce-motion .mf-thing-head .mf-cell.large img,
+.reduce-motion .mf-thing-head .mf-cell.large svg,
+.reduce-motion .mf-thing-head .mf-cell.large::after {
+  animation: none;
+}
+/* The review's word and its verdict share one line under the frame. */
+.mk-film .mk-stop.end {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: center;
+  align-items: baseline;
+  column-gap: 2px;
+  width: auto;
+  min-width: 60px;
+}
+.mk-film .mk-stop.end .mk-thumb {
+  grid-column: 1 / -1;
+  justify-self: center;
+}
+
+/* ---------- the road: an advancement tree ---------- */
+/* 从一句话到游戏里 is drawn the way the game draws its advancement screen: frames on a dark ground, joined by white
+   lines outlined in black. A step done has the gold frame of a completed advancement; the step in hand is held in a
+   white frame that breathes; a step not reached is a dim grey frame on a dim line. */
+.main-area .pa-road {
+  background:
+    linear-gradient(rgba(10, 8, 6, 0.55), rgba(10, 8, 6, 0.55)),
+    url("./assets/world/deep-soil.png") 0 0 / 64px 64px;
+  image-rendering: pixelated;
+}
+.main-area .pa-road .pa-stop {
+  color: #ffffff;
+  text-shadow: 2px 2px 0 var(--world-shadow);
+}
+.main-area .pa-road .pa-stop-words small {
+  color: #c6c6c6;
+}
+.main-area .pa-road .pa-stop[data-state="todo"] strong,
+.main-area .pa-road .pa-stop[data-state="todo"] small {
+  color: #8b8b8b;
+}
+.main-area .pa-road .pa-stop[data-state="now"] strong {
+  color: var(--gold);
+}
+.main-area .pa-road .pa-stop:not(:disabled):hover,
+.main-area .pa-road .pa-stop:focus-visible {
+  border-color: transparent;
+  background: rgba(255, 255, 255, 0.1);
+}
+.main-area .pa-road .pa-stop[aria-pressed="true"],
+.main-area .pa-road .pa-stop[aria-pressed="true"]:not(:disabled):hover {
+  border-color: #000;
+  background: rgba(0, 0, 0, 0.45);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.5);
+}
+.main-area .pa-road .pa-stop-frame {
+  border-color: #000;
+  background: #5a5a5a;
+  color: #2c2c2c;
+  box-shadow:
+    inset 2px 2px 0 #7d7d7d,
+    inset -2px -2px 0 #383838;
+  clip-path: polygon(4px 0, calc(100% - 4px) 0, 100% 4px, 100% calc(100% - 4px), calc(100% - 4px) 100%, 4px 100%, 0 calc(100% - 4px), 0 4px);
+}
+.main-area .pa-road .pa-stop[data-state="done"] .pa-stop-frame {
+  background: #e8b931;
+  color: #3b2a00;
+  box-shadow:
+    inset 2px 2px 0 #fff0a0,
+    inset -2px -2px 0 #9a6a0b;
+}
+.main-area .pa-road .pa-stop[data-state="now"] .pa-stop-frame {
+  background: #8b8b8b;
+  color: #ffffff;
+  box-shadow:
+    inset 2px 2px 0 #c6c6c6,
+    inset -2px -2px 0 #555555;
+  animation: none;
+}
+/* The step in hand: a white frame around its frame, breathing slowly. */
+.main-area .pa-road .pa-stop[data-state="now"] {
+  position: relative;
+}
+.main-area .pa-road .pa-stop[data-state="now"]::before {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: 50%;
+  width: 46px;
+  height: 46px;
+  transform: translateY(-50%);
+  box-sizing: border-box;
+  border: 2px solid #ffffff;
+  outline: 2px solid #000;
+  pointer-events: none;
+  animation: mm-breathe 1.8s steps(6) infinite;
+}
+@keyframes mm-breathe {
+  50% {
+    border-color: rgba(255, 255, 255, 0.35);
+  }
+}
+.main-area .pa-road .pa-road-link {
+  height: 8px;
+  border-top: 2px solid #000;
+  border-bottom: 2px solid #000;
+  background: #3a3a3a;
+}
+.main-area .pa-road .pa-road-link[data-state="done"],
+.main-area .pa-road .pa-road-link[data-state="now"] {
+  background: #ffffff;
+}
+@media (prefers-reduced-motion: reduce) {
+  .main-area .pa-road .pa-stop[data-state="now"]::before {
+    animation: none;
+  }
+}
+.reduce-motion .main-area .pa-road .pa-stop[data-state="now"]::before {
+  animation: none;
+}
+
+/* ---------- little things ---------- */
+/* Pressed, the splash jumps once, in whole steps, and goes back to its beat. */
+.title-screen .mm-splash {
+  pointer-events: auto;
+  user-select: none;
+}
+.title-screen .mm-splash.pop {
+  animation: mm-splash-pop 0.28s steps(4) 1;
+}
+@keyframes mm-splash-pop {
+  0% {
+    transform: rotate(-16deg) scale(1);
+  }
+  50% {
+    transform: rotate(-16deg) translateY(-10px) scale(1.2);
+  }
+  100% {
+    transform: rotate(-16deg) scale(1);
+  }
+}
+/* The block in the title bar being mined: the crack spreads from the middle as it is held. */
+.brand-mark {
+  position: relative;
+}
+.brand-mark[style*="--crack"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Cpath d='M7 7h2v2H7zM9 6h1v1H9zM10 5h1v1h-1zM11 3h1v2h-1zM5 9h2v1H5zM4 10h1v1H4zM3 11h1v2H3zM9 9h1v1H9zM10 10h2v1h-2zM12 11h1v2h-1zM5 6h2v1H5zM4 4h1v2H4zM2 3h2v1H2z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  clip-path: circle(calc(var(--crack) * 15%));
+}
+.mined-drop {
+  position: fixed;
+  z-index: 150;
+  width: 8px;
+  height: 8px;
+  border: 1px solid #000000;
+  background: linear-gradient(#5d9c3a 0 3px, #7a5c3c 3px);
+  pointer-events: none;
+}
+/* The game's experience orbs, on their way to the bar. Script moves them, and only when motion is welcome. */
+.xp-orb {
+  position: fixed;
+  z-index: 150;
+  width: 8px;
+  height: 8px;
+  border: 1px solid #2c5c0b;
+  background: #80ff20;
+  pointer-events: none;
+}

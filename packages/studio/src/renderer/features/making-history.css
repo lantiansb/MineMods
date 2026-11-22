@@ -1,0 +1,371 @@
+/* 验收窗「制作过程」(History.dc.html): versions, two skies side by side, the notes on parchment. */
+.pa-story-page {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow: auto;
+}
+.pa-story-page[hidden] {
+  display: none;
+}
+/* The story that was the whole of this page has its own scrolling panels: it keeps a height to scroll them in. */
+.pa-story-page > :not(.mh-floor) {
+  flex: none;
+  height: max(460px, 62vh);
+  min-height: 0;
+}
+/* Its rows: the status line, the motions to play (when there are any), and the sheet beside the rounds, which alone get what height is left. */
+.pa-story-page .mk-story {
+  grid-template-rows: auto auto minmax(0, 1fr);
+}
+.pa-story-page .mk-story > .mk-play {
+  grid-column: 1 / -1;
+}
+.mh-floor {
+  flex: none;
+  display: flex;
+  gap: 12px;
+  min-width: 0;
+}
+.mh-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.mh-versions,
+.mh-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+.mh-versions {
+  flex: none;
+  flex-wrap: nowrap;
+  align-items: flex-end;
+  padding: 3px;
+  overflow-x: auto;
+}
+.mh-versions > * {
+  flex: none;
+}
+.mh-tools {
+  flex: none;
+}
+.mh-label,
+.mh-hint {
+  color: var(--muted);
+  font-size: 12px;
+}
+.mh-right {
+  margin-left: auto;
+}
+.mh-version {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  min-width: 76px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: inherit;
+  font-family: inherit;
+  cursor: pointer;
+}
+.mh-version:disabled {
+  opacity: 1;
+  cursor: default;
+}
+.mh-version small {
+  font-size: 12px;
+  line-height: 1.25;
+  text-align: center;
+  white-space: nowrap;
+}
+.mh-version-slot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  overflow: hidden;
+}
+.mh-version-slot img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.mh-version[aria-current="true"] .mh-version-slot {
+  outline: 3px solid #ffffff;
+}
+.mh-version[aria-pressed="true"] .mh-version-slot {
+  outline: 3px solid #1f5fbf;
+}
+.mh-tools select {
+  height: 28px;
+  max-width: 140px;
+  font-family: inherit;
+  font-size: 12px;
+}
+.mh-tools input[type="range"] {
+  width: 110px;
+}
+.mh-stages {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 10px;
+  height: 340px;
+}
+.mh-stages[data-side-by-side="true"] {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.mh-stage {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  overflow: hidden;
+  border: 2px solid var(--outline);
+  background: var(--viewport-bg);
+}
+.mh-stage .model-canvas {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+}
+/* The view's own buttons, small, out of the way of the two pictures. */
+.mh-stage .model-canvas-toolbar {
+  inset: 6px 6px auto auto;
+}
+.mh-stage .model-canvas-actions {
+  width: auto;
+  flex-wrap: nowrap;
+}
+.mh-stage .model-canvas-actions button {
+  min-width: 0;
+  min-height: 24px;
+  padding: 2px 6px;
+  font-size: 11px;
+  white-space: nowrap;
+}
+.mh-chip {
+  position: absolute;
+  z-index: 3;
+  left: 8px;
+  bottom: 8px;
+  padding: 3px 8px;
+  border: 2px solid #1f5fbf;
+  background: #c5d8f0;
+  color: #262626;
+  font-size: 13px;
+  pointer-events: none;
+}
+.mh-chip-now {
+  border-color: #000000;
+  background: #ffffff;
+}
+.mh-marks {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.mh-marks.drawing {
+  cursor: crosshair;
+  pointer-events: auto;
+}
+.mh-turn-back {
+  position: absolute;
+  z-index: 3;
+  right: 8px;
+  bottom: 8px;
+}
+.mh-document {
+  flex: 1;
+  min-width: 0;
+  overflow: auto;
+  padding: 8px;
+}
+.mh-empty {
+  margin: auto;
+  color: #262626;
+}
+@media (max-width: 1500px) {
+  .mh-notes {
+    width: 230px !important;
+  }
+  .mh-stage .model-canvas-actions button:nth-child(n + 3) {
+    display: none;
+  }
+}
+.mh-notes {
+  flex: none;
+  width: 280px;
+  max-height: 460px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 0;
+}
+.mh-notes-head {
+  flex: none;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.mh-notes-head small {
+  color: var(--muted);
+  font-size: 12px;
+}
+.mh-note-list {
+  flex: 1;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.mh-note {
+  flex: none;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 6px 8px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.mh-note::after,
+.mh-compose::after {
+  display: none;
+}
+.mh-note[data-status="fixed"] {
+  opacity: 0.8;
+}
+.mh-note-number {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 2px solid #000000;
+  background: #a3221a;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+.mh-note[data-source="review"] .mh-note-number,
+.mh-note[data-status="fixed"] .mh-note-number {
+  background: #8b8b8b;
+}
+.mh-note-words {
+  flex: 1;
+  min-width: 0;
+  word-break: break-word;
+}
+.mh-note-words small {
+  display: block;
+  color: #505050;
+  font-size: 12px;
+}
+.mh-note[data-status="fixed"] .mh-note-words small {
+  color: #1d4d13;
+}
+.mh-compose {
+  flex: none;
+  gap: 6px;
+  padding: 8px;
+  font-size: 13px;
+}
+.mh-compose textarea,
+.mh-extra textarea {
+  width: 100%;
+  box-sizing: border-box;
+  resize: none;
+  border: 2px solid #a0a0a0;
+  background: #000000;
+  color: #e0e0e0;
+  font-family: inherit;
+  font-size: 13px;
+  padding: 4px 6px;
+}
+.mh-compose-actions {
+  display: flex;
+  gap: 6px;
+}
+.mh-extra {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.mh-only {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+.mh-only input {
+  width: 16px;
+  height: 16px;
+  accent-color: #3c8527;
+}
+.mh-brief {
+  flex: none;
+}
+.pa-history-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.pa-history-restore {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+.pa-history-restore small {
+  color: #3a3a5a;
+  font-size: 11px;
+}
+
+/* What a tool asks for, on a line of its own, so the row of tools does not move. */
+.mh-tool-hint {
+  flex: 1 0 100%;
+}
+.mh-marks.drawing:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: -4px;
+}
+.mh-note-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mh-compose-hint {
+  color: #505050;
+  font-size: 12px;
+}
+.mh-taken {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 4px 8px;
+  border: 2px dashed #8b8b8b;
+  color: #505050;
+  font-size: 12px;
+}

@@ -1,0 +1,24 @@
+{
+  "name": "@minemods/ai-service",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./*": "./src/*.ts"
+  },
+  "scripts": {
+    "test": "bun test",
+    "typecheck": "tsgo --noEmit",
+    "dev": "bun src/index.ts"
+  },
+  "dependencies": {
+    "@minemods/studio-ai": "workspace:*",
+    "undici": "7.29.1",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/bun": "catalog:",
+    "@types/node": "catalog:",
+    "@typescript/native-preview": "catalog:"
+  }
+}

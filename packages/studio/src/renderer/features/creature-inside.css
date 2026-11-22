@@ -1,0 +1,330 @@
+.object-workflow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+}
+.object-workflow .workflow-step {
+  flex: 0 1 auto;
+  min-width: 0;
+  padding: 0.45rem 0.75rem;
+}
+.object-workflow .workflow-step:nth-child(3),
+.object-workflow .workflow-step:nth-last-child(2) {
+  margin-left: 0.45rem;
+}
+.object-workflow .thing-menu {
+  margin-left: auto;
+}
+.creature-inside,
+.creature-prompt,
+.review-offer {
+  padding: 1rem 1.25rem;
+}
+.creature-inside {
+  color: #f2e9d4;
+}
+.creature-inside h1 {
+  margin: 0 0 0.8rem;
+}
+.creature-inside .creature-sounds,
+.creature-inside .creature-sounds .resource-item,
+.creature-inside .creature-sounds p,
+.creature-inside .creature-sounds small {
+  color: #293129;
+}
+.inside-columns {
+  display: grid;
+  grid-template-columns: minmax(200px, 0.82fr) minmax(300px, 1.18fr);
+  gap: 1rem;
+  align-items: start;
+}
+.inside-stage {
+  position: sticky;
+  top: 0;
+  min-width: 0;
+}
+.inside-stage .model-canvas {
+  min-height: 240px;
+}
+.inside-detail {
+  min-width: 0;
+}
+.inside-card,
+.show-list li,
+.inside-motion-list article,
+.review-offer,
+.creature-prompt {
+  background: #29312e;
+  color: #f5efdb;
+  border: 1px solid #68725e;
+  padding: 0.8rem 1rem;
+  margin: 0 0 0.7rem;
+  border-radius: 4px;
+}
+.inside-card h3,
+.inside-card h4,
+.inside-card p,
+.show-list p {
+  margin: 0.45rem 0;
+}
+.inside-card header,
+.wizard-actions,
+.phase-line,
+.combo-path,
+.inside-badges {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.inside-card header button {
+  margin-left: auto;
+}
+.inside-card dl {
+  display: grid;
+  grid-template-columns: 5rem 1fr;
+  gap: 0.35rem;
+  margin: 0.5rem 0;
+}
+.inside-card dd {
+  margin: 0;
+}
+.creature-inside button,
+.inside-motion-list button,
+.creature-prompt button,
+.review-offer button {
+  color: #20291c;
+  background: #e4ead5;
+  border: 1px solid #939e80;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  border-radius: 3px;
+}
+.creature-inside button:disabled,
+.connection-wizard button:disabled {
+  color: #e0e3d8;
+  background: #545b51;
+  opacity: 1;
+  cursor: default;
+}
+.phase-health {
+  position: relative;
+  height: 5px;
+  background: #a6b97a;
+  margin: 1.2rem 0.4rem 0.8rem;
+}
+.phase-health i {
+  position: absolute;
+  top: -3px;
+  height: 11px;
+  border-left: 2px solid #e9e6d8;
+}
+.phase-line button {
+  display: grid;
+  gap: 0.15rem;
+  text-align: left;
+}
+.phase-line [aria-pressed="true"],
+.inside-motion-list .selected {
+  outline: 2px solid #e0bc67;
+}
+.inside-card .fold {
+  margin: 0.65rem 0;
+}
+.inside-card .fold p {
+  white-space: pre-line;
+}
+.inside-hint,
+.review-offer {
+  border-left: 3px solid #dbb55f;
+}
+.creature-picture img {
+  max-width: 100%;
+}
+.creature-picture figure {
+  margin: 0;
+}
+.show-track {
+  display: grid;
+  grid-template-columns: 5rem 1fr;
+  align-items: center;
+}
+.show-track > div {
+  position: relative;
+  height: 2rem;
+  background: #414e45;
+  border-bottom: 1px solid #68725e;
+}
+.show-track button {
+  position: absolute;
+  top: 0.1rem;
+}
+.show-list {
+  padding: 0;
+  list-style: none;
+}
+.inside-motion-list p {
+  margin: 0.25rem 0;
+}
+.inside-motion-list small {
+  margin-left: 0.45rem;
+}
+.lair-map {
+  width: 8rem;
+  height: 8rem;
+  border: 5px solid #a89c84;
+  border-radius: 50%;
+  background: repeating-conic-gradient(#737c67 0 25%, #65705c 0 50%) 0 0/12px 12px;
+  display: grid;
+  place-items: center;
+  color: white;
+}
+.connection-wizard {
+  overflow: auto;
+  max-height: 74vh;
+  padding: 1rem 1.4rem;
+}
+.wizard-steps {
+  list-style: none;
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+  padding: 0;
+}
+.wizard-steps li {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.wizard-steps li span {
+  display: grid;
+  place-items: center;
+  width: 1.65rem;
+  height: 1.65rem;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+}
+.wizard-steps [aria-current="step"] {
+  font-weight: 700;
+  text-decoration: underline;
+}
+.wizard-steps [data-done="true"] span {
+  background: #374d34;
+  color: white;
+}
+.wizard-actions {
+  margin-top: 1rem;
+  justify-content: flex-end;
+}
+.wizard-status {
+  margin-left: auto;
+}
+.wizard-advanced {
+  border-top: 1px solid #818c77;
+  margin-top: 1rem;
+}
+.wizard-advanced label {
+  display: block;
+}
+.wizard-advanced textarea {
+  width: 100%;
+}
+.connection-settings.connection-wizard .link-button {
+  color: #17486c !important;
+  text-decoration: underline;
+}
+.connection-wizard {
+  width: 100%;
+  box-sizing: border-box;
+}
+.connection-wizard .wizard-advanced label:has(> input[type="checkbox"]),
+.connection-settings.connection-summary label {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin: 0.65rem 0;
+}
+.connection-settings.connection-summary input[type="checkbox"],
+.connection-wizard .wizard-advanced input[type="checkbox"] {
+  width: 1.3rem;
+  height: 1.3rem;
+  min-width: 1.3rem;
+  margin: 0;
+}
+.asset-workspace .asset-request button:disabled,
+.model-workspace button:disabled,
+.connection-wizard .wizard-actions button:disabled,
+.creature-prompt button:disabled {
+  color: #f3f2e7 !important;
+  background: #51564e !important;
+  opacity: 1 !important;
+}
+@media (max-width: 900px) {
+  .inside-columns {
+    grid-template-columns: 1fr;
+  }
+  .inside-stage {
+    position: static;
+  }
+}
+
+.creature-inside .creature-sounds[data-open="yes"] { padding-bottom: 1rem; }
+.creature-sounds .creature-music-note { margin: 1rem 0 0; line-height: 1.5; }
+
+.creature-stances button[aria-pressed="true"] {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.stance-scales {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.stance-scales th,
+.stance-scales td {
+  padding: 0.35em 0.6em 0.35em 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.combat-hand {
+  scroll-margin-top: 1rem;
+}
+.combat-hand > fieldset {
+  border: 0;
+  padding: 0;
+  min-inline-size: 0;
+}
+.combat-hand-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
+  gap: .65rem;
+  margin: .6rem 0;
+}
+.combat-hand-field {
+  display: grid;
+  gap: .25rem;
+  min-inline-size: 0;
+}
+.combat-hand-field :is(input, select) {
+  width: 100%;
+  min-inline-size: 0;
+}
+.combat-hand-choices {
+  min-inline-size: 0;
+}
+.combat-hand-choices label {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  margin-inline-end: .8rem;
+}
+.combat-hand-choices input[type="checkbox"] {
+  inline-size: 1rem;
+  block-size: 1rem;
+  min-block-size: 0;
+  margin: 0;
+  padding: 0;
+}

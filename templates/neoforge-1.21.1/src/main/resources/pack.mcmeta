@@ -1,0 +1,6 @@
+{
+  "pack": {
+    "description": "{{display_name}}",
+    "pack_format": {{resource_pack_format}}
+  }
+}

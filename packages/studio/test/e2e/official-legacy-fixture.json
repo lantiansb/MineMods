@@ -1,0 +1,26 @@
+{
+  "kind": "gameplay",
+  "slug": "old_vec",
+  "name": "旧版向量玩法",
+  "summary": "以旧的 Vec3d 名称访问游戏向量。",
+  "behaviours": [
+    {
+      "when": "模组初始化",
+      "does": "读取零向量",
+      "shows": "无额外外观"
+    }
+  ],
+  "not_doing": [],
+  "uses": [],
+  "sources": [
+    {
+      "path": "Main.java",
+      "content": "package com.minemods.content_legacy_official.gameplay.old_vec;\nimport com.minemods.content_legacy_official.gameplay.api.GameplayEntry;\nimport net.minecraft.util.math.*;\npublic final class Main implements GameplayEntry {\n @Override public void onInitialize() { Vec3d point = Vec3d.ZERO; }\n}\n"
+    }
+  ],
+  "data": [],
+  "lang": {
+    "zh_cn": {},
+    "en_us": {}
+  }
+}

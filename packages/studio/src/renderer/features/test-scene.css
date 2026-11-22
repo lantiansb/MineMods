@@ -1,0 +1,71 @@
+/* 「测试场」 in the build panel. */
+.test-scene-eula {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  line-height: 1.5;
+  cursor: pointer;
+}
+:root:root .test-scene-eula input[type="checkbox"] {
+  flex: none;
+  width: 16px;
+  min-width: 16px;
+  height: 16px;
+  min-height: 0;
+  margin: 2px 0 0;
+  padding: 0;
+}
+.test-scene-eula span {
+  flex: 1;
+  min-width: 0;
+}
+.test-scene-missing {
+  margin: 0;
+  color: var(--warning);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.test-scene-report {
+  padding: 10px 12px;
+  border: 2px solid var(--line);
+  border-left-width: 4px;
+  font-size: 12px;
+  line-height: 1.55;
+}
+.test-scene-report.clean {
+  border-left-color: var(--success);
+}
+.test-scene-report.found {
+  border-left-color: var(--warning);
+}
+.test-scene-report ul {
+  margin: 6px 0 0;
+  padding-left: 18px;
+}
+.test-scene-report li {
+  overflow-wrap: anywhere;
+}
+.test-scene-fix {
+  display: grid;
+  gap: 8px;
+  justify-items: start;
+  margin-top: 10px;
+}
+.test-scene-fixed {
+  display: grid;
+  gap: 6px;
+  justify-items: start;
+}
+.test-scene-fixed p {
+  margin: 0;
+}
+
+/* A result that is about an earlier state of the project: set apart from the result itself. */
+.test-scene-stale {
+  margin: 6px 0;
+  padding: 6px 8px;
+  border-left: 3px solid #8a6d1c;
+  background: #f1dc8f;
+  color: #2b2410;
+}

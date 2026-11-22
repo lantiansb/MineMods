@@ -1,0 +1,440 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.face_board",
+        "texture_width": 256,
+        "texture_height": 256,
+        "visible_bounds_width": 18,
+        "visible_bounds_height": 12,
+        "visible_bounds_offset": [
+          0,
+          1,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "tile_0",
+          "pivot": [
+            -70.0,
+            12,
+            -70.0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -82.0,
+                4,
+                -80.0
+              ],
+              "size": [
+                24,
+                16,
+                20
+              ],
+              "uv": [
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "name": "tile_1",
+          "pivot": [
+            -42.0,
+            36,
+            -42.0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -54.0,
+                28,
+                -52.0
+              ],
+              "size": [
+                24,
+                16,
+                20
+              ],
+              "uv": [
+                0,
+                40
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "tile_2",
+          "pivot": [
+            -14.0,
+            12,
+            -14.0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -26.0,
+                4,
+                -24.0
+              ],
+              "size": [
+                24,
+                16,
+                20
+              ],
+              "uv": {
+                "east": {
+                  "uv": [
+                    0,
+                    100
+                  ],
+                  "uv_size": [
+                    20,
+                    16
+                  ],
+                  "uv_rotation": 0
+                },
+                "north": {
+                  "uv": [
+                    20,
+                    100
+                  ],
+                  "uv_size": [
+                    24,
+                    16
+                  ],
+                  "uv_rotation": 0
+                },
+                "west": {
+                  "uv": [
+                    44,
+                    100
+                  ],
+                  "uv_size": [
+                    20,
+                    16
+                  ],
+                  "uv_rotation": 0
+                },
+                "south": {
+                  "uv": [
+                    64,
+                    100
+                  ],
+                  "uv_size": [
+                    24,
+                    16
+                  ],
+                  "uv_rotation": 0
+                },
+                "up": {
+                  "uv": [
+                    20,
+                    80
+                  ],
+                  "uv_size": [
+                    24,
+                    20
+                  ],
+                  "uv_rotation": 0
+                },
+                "down": {
+                  "uv": [
+                    44,
+                    80
+                  ],
+                  "uv_size": [
+                    24,
+                    20
+                  ],
+                  "uv_rotation": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "tile_3",
+          "pivot": [
+            14.0,
+            36,
+            14.0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                2.0,
+                28,
+                4.0
+              ],
+              "size": [
+                24,
+                16,
+                20
+              ],
+              "uv": {
+                "east": {
+                  "uv": [
+                    0,
+                    140
+                  ],
+                  "uv_size": [
+                    20,
+                    16
+                  ],
+                  "uv_rotation": 90
+                },
+                "north": {
+                  "uv": [
+                    20,
+                    140
+                  ],
+                  "uv_size": [
+                    24,
+                    16
+                  ],
+                  "uv_rotation": 90
+                },
+                "west": {
+                  "uv": [
+                    44,
+                    140
+                  ],
+                  "uv_size": [
+                    20,
+                    16
+                  ],
+                  "uv_rotation": 90
+                },
+                "south": {
+                  "uv": [
+                    64,
+                    140
+                  ],
+                  "uv_size": [
+                    24,
+                    16
+                  ],
+                  "uv_rotation": 90
+                },
+                "up": {
+                  "uv": [
+                    20,
+                    120
+                  ],
+                  "uv_size": [
+                    24,
+                    20
+                  ],
+                  "uv_rotation": 90
+                },
+                "down": {
+                  "uv": [
+                    44,
+                    120
+                  ],
+                  "uv_size": [
+                    24,
+                    20
+                  ],
+                  "uv_rotation": 90
+                }
+              }
+            }
+          ],
+          "rotation": [
+            7,
+            10,
+            4
+          ]
+        },
+        {
+          "name": "tile_4",
+          "pivot": [
+            42.0,
+            12,
+            42.0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                30.0,
+                4,
+                32.0
+              ],
+              "size": [
+                24,
+                16,
+                20
+              ],
+              "uv": {
+                "east": {
+                  "uv": [
+                    0,
+                    180
+                  ],
+                  "uv_size": [
+                    20,
+                    16
+                  ],
+                  "uv_rotation": 180
+                },
+                "north": {
+                  "uv": [
+                    20,
+                    180
+                  ],
+                  "uv_size": [
+                    24,
+                    16
+                  ],
+                  "uv_rotation": 180
+                },
+                "west": {
+                  "uv": [
+                    44,
+                    180
+                  ],
+                  "uv_size": [
+                    20,
+                    16
+                  ],
+                  "uv_rotation": 180
+                },
+                "south": {
+                  "uv": [
+                    64,
+                    180
+                  ],
+                  "uv_size": [
+                    24,
+                    16
+                  ],
+                  "uv_rotation": 180
+                },
+                "up": {
+                  "uv": [
+                    20,
+                    160
+                  ],
+                  "uv_size": [
+                    24,
+                    20
+                  ],
+                  "uv_rotation": 180
+                },
+                "down": {
+                  "uv": [
+                    44,
+                    160
+                  ],
+                  "uv_size": [
+                    24,
+                    20
+                  ],
+                  "uv_rotation": 180
+                }
+              },
+              "inflate": 1.5
+            }
+          ]
+        },
+        {
+          "name": "tile_5",
+          "pivot": [
+            70.0,
+            36,
+            70.0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                58.0,
+                28,
+                60.0
+              ],
+              "size": [
+                24,
+                16,
+                20
+              ],
+              "uv": {
+                "east": {
+                  "uv": [
+                    0,
+                    220
+                  ],
+                  "uv_size": [
+                    20,
+                    16
+                  ],
+                  "uv_rotation": 270
+                },
+                "north": {
+                  "uv": [
+                    20,
+                    220
+                  ],
+                  "uv_size": [
+                    24,
+                    16
+                  ],
+                  "uv_rotation": 270
+                },
+                "west": {
+                  "uv": [
+                    44,
+                    220
+                  ],
+                  "uv_size": [
+                    20,
+                    16
+                  ],
+                  "uv_rotation": 270
+                },
+                "south": {
+                  "uv": [
+                    64,
+                    220
+                  ],
+                  "uv_size": [
+                    24,
+                    16
+                  ],
+                  "uv_rotation": 270
+                },
+                "up": {
+                  "uv": [
+                    20,
+                    200
+                  ],
+                  "uv_size": [
+                    24,
+                    20
+                  ],
+                  "uv_rotation": 270
+                },
+                "down": {
+                  "uv": [
+                    44,
+                    200
+                  ],
+                  "uv_size": [
+                    24,
+                    20
+                  ],
+                  "uv_rotation": 270
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "kind": "gesture",
+  "format": 2,
+  "name": "剑指",
+  "english_name": "Sword Fingers",
+  "trigger": {
+    "type": "key",
+    "key": "g"
+  },
+  "aim": true,
+  "mirror_for_left_handed": true,
+  "first_person": {
+    "arms": true,
+    "items": true
+  },
+  "hold_seconds": 0.45,
+  "custom": {
+    "windup": {
+      "length": 0.25,
+      "bones": {
+        "right_arm": {
+          "rotation": [
+            {
+              "time": 0.25,
+              "value": [
+                -80,
+                0,
+                0
+              ],
+              "easing": "linear"
+            }
+          ]
+        },
+        "left_arm": {
+          "rotation": [
+            {
+              "time": 0.25,
+              "value": [
+                -35,
+                0,
+                0
+              ],
+              "easing": "linear"
+            }
+          ]
+        }
+      }
+    },
+    "hold": null,
+    "release": {
+      "length": 0.3,
+      "bones": {
+        "right_arm": {
+          "rotation": [
+            {
+              "time": 0.3,
+              "value": [
+                0,
+                0,
+                0
+              ],
+              "easing": "linear"
+            }
+          ]
+        },
+        "left_arm": {
+          "rotation": [
+            {
+              "time": 0.3,
+              "value": [
+                0,
+                0,
+                0
+              ],
+              "easing": "linear"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

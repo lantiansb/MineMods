@@ -1,0 +1,128 @@
+.reward-pool {
+  display: grid;
+  gap: 10px;
+}
+.reward-odds {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--muted);
+}
+.reward-odds strong {
+  color: var(--text);
+  font-size: 15px;
+}
+.reward-bar {
+  display: flex;
+  gap: 2px;
+  height: 12px;
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+}
+.reward-bar span {
+  flex-basis: 0;
+  min-width: 4px;
+  background: var(--accent);
+}
+.reward-bar span:nth-child(even) {
+  background: color-mix(in srgb, var(--accent) 70%, var(--panel));
+}
+.reward-bar span.penalty {
+  background: var(--danger);
+}
+.reward-rows {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.reward-rows li {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: var(--radius);
+  background: var(--panel-soft);
+}
+.reward-rows li.penalty {
+  background: color-mix(in srgb, var(--danger) 10%, var(--panel));
+}
+.reward-chance {
+  font-family: var(--font-display);
+  font-size: 20px;
+  color: var(--accent);
+}
+.reward-rows li.penalty .reward-chance {
+  color: var(--danger);
+}
+.reward-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+}
+.reward-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+}
+.reward-item .custom-item-icon,
+.reward-item .vanilla-item-texture {
+  display: block;
+  width: 24px;
+  height: 24px;
+  border-radius: 3px;
+  image-rendering: pixelated;
+  box-shadow:
+    inset 2px 2px 0 rgba(255, 255, 255, 0.35),
+    inset -2px -2px 0 rgba(0, 0, 0, 0.25);
+}
+.reward-item em,
+.reward-effect em {
+  margin-left: 4px;
+  color: var(--muted);
+  font-style: normal;
+  font-size: 12px;
+}
+.reward-effect {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 0 9px;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--danger) 16%, transparent);
+  color: var(--danger);
+  font-size: 13px;
+}
+.reward-empty {
+  color: var(--muted);
+  font-size: 13px;
+}
+/* Parameter panels style every span/strong; keep the pool readable inside them. */
+.reward-pool .reward-item span,
+.reward-pool .reward-odds strong {
+  color: var(--text);
+}
+.reward-pool strong {
+  text-align: left;
+}
+.reward-pool .reward-chance {
+  color: var(--accent);
+}
+.reward-pool li.penalty .reward-chance,
+.reward-pool .reward-effect {
+  color: var(--danger);
+}
+.reward-pool .reward-item em,
+.reward-pool .reward-effect em,
+.reward-pool .reward-empty {
+  color: var(--muted);
+}
+.document-preview section.reward-pool,
+.parameter-preview section.reward-pool {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}

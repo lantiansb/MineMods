@@ -1,0 +1,65 @@
+{
+  "kind": "gesture",
+  "format": 2,
+  "name": "点头",
+  "english_name": "Nod",
+  "trigger": {
+    "type": "key",
+    "key": "j"
+  },
+  "aim": true,
+  "mirror_for_left_handed": true,
+  "first_person": {
+    "arms": true,
+    "items": true
+  },
+  "hold_seconds": 0.2,
+  "custom": {
+    "windup": {
+      "length": 0.3,
+      "bones": {
+        "head": {
+          "rotation": [
+            {
+              "time": 0.3,
+              "value": [
+                25,
+                0,
+                0
+              ],
+              "easing": "in_out_sine"
+            }
+          ]
+        }
+      }
+    },
+    "hold": null,
+    "release": {
+      "length": 0.3,
+      "bones": {
+        "head": {
+          "rotation": [
+            {
+              "time": 0.15,
+              "value": [
+                -10,
+                0,
+                0
+              ],
+              "easing": "out_quad"
+            },
+            {
+              "time": 0.3,
+              "value": [
+                20,
+                0,
+                0
+              ],
+              "easing": "in_out_sine"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

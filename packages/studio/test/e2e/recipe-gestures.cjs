@@ -1,0 +1,70 @@
+const fs = require('node:fs/promises');
+const path = require('node:path');
+const { expect } = require('@playwright/test');
+const { launch, create, blank, close } = require('./desktop-fixture.cjs');
+
+(async () => {
+  const fixture = await launch('recipe-text-current-');
+  const { page, directory } = fixture;
+  try {
+    await create(page, '文本配方验收', 'copper_aviary');
+    await blank(page, '配方', '文字配方');
+    const slots = page.getByRole('group', { name: '材料格子', exact: true }).locator('button');
+    const pick = async (index, name) => {
+      await slots.nth(index).click();
+      const picker = page.locator('.ae-grid-pick');
+      await picker.getByRole('searchbox', { name: '搜索物品', exact: true }).fill(name);
+      await picker.getByRole('option').filter({ hasText: name }).first().click();
+    };
+    await pick(0, '铜锭');
+    await slots.nth(1).click();
+    await page.locator('.ae-grid-pick').getByLabel('直接填物品 ID', { exact: true }).pressSequentially('minecraft:ancient_debris');
+    await page.locator('.ae-grid-pick').getByRole('button', { name: '填进去', exact: true }).click();
+    await pick(4, '红石粉');
+    const result = page.locator('.ae-field').filter({ has: page.getByText('做出来的是', { exact: true }) });
+    await result.locator('.ae-pick-face').click();
+    await result.getByRole('searchbox', { name: '搜索物品', exact: true }).fill('红石块');
+    await result.getByRole('option').filter({ hasText: '红石块' }).first().click();
+    await page.getByLabel('一次做出几个', { exact: true }).fill('3');
+    await page.getByRole('button', { name: '保存', exact: true }).click();
+    const read = () => page.evaluate(async () => (await window.studio.listProjects())[0].project.recipes[0]);
+    await expect.poll(async () => (await read())?.count).toBe(3);
+    const saved = await read();
+    expect(saved.pattern).toEqual(['minecraft:copper_ingot', 'minecraft:ancient_debris', null, null, 'minecraft:redstone', null, null, null, null]);
+    expect(saved.result).toBe('minecraft:redstone_block');
+    await page.getByRole('tab', { name: '自己改', exact: true }).click();
+    await slots.nth(1).click();
+    await page.locator('.ae-grid-pick').getByRole('button', { name: '清空这一格', exact: true }).click();
+    await page.keyboard.press('Control+s');
+    await expect.poll(async () => (await read()).pattern[1]).toBeNull();
+    await page.getByRole('button', { name: 'MineMods Studio 首页', exact: true }).click();
+    await page.locator('.project-card').filter({ hasText: '文本配方验收' }).click();
+    await page.getByRole('navigation', { name: '工程里的东西', exact: true }).getByRole('button', { name: /^文字配方，配方/ }).click();
+    if (await page.getByRole('button', { name: '打开它', exact: true }).count()) await page.getByRole('button', { name: '打开它', exact: true }).click();
+    await page.getByRole('tab', { name: '自己改', exact: true }).click();
+    await expect(slots.nth(0)).toHaveAttribute('title', '铜锭');
+    await expect(slots.nth(1)).toHaveAttribute('title', '空格子');
+    const before = await read();
+    await slots.nth(2).click();
+    await page.locator('.ae-grid-pick').getByLabel('直接填物品 ID', { exact: true }).fill('完全不存在');
+    await page.locator('.ae-grid-pick').getByRole('button', { name: '填进去', exact: true }).click();
+    await expect(page.locator('.ae-grid-pick').getByRole('alert')).toBeVisible();
+    expect(await read()).toEqual(before);
+    await page.getByLabel('一次做出几个', { exact: true }).fill('65');
+    await page.getByRole('button', { name: '保存', exact: true }).click();
+    await expect(page.getByLabel('一次做出几个', { exact: true })).toHaveAttribute('aria-invalid', 'true');
+    expect(await read()).toEqual(before);
+    await page.getByRole('button', { name: '放弃修改', exact: true }).click();
+    await fixture.app.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows().find(window => window.webContents.getURL().endsWith('/index.html')).setContentSize(980, 900));
+    await page.screenshot({ path: path.join(directory, 'recipe-narrow.png') });
+    expect(await page.locator('.ae-grid').evaluate(node => node.scrollWidth <= node.clientWidth)).toBe(true);
+    await expect(page.getByLabel('手持物品', { exact: true })).toHaveCount(0);
+    expect(fixture.errors).toEqual([]);
+    await fs.writeFile(path.join(directory, 'saved-recipe.json'), JSON.stringify(await read(), null, 2));
+    console.log('PASS: Chinese names, exact IDs, empty slots, Ctrl-S, reopen, invalid selection and save blocking, compact layout');
+  } catch (error) {
+    console.error(error.stack, await page.locator('body').innerText());
+    await page.screenshot({ path: path.join(directory, 'failure.png') });
+    process.exitCode = 1;
+  } finally { console.log('artifacts', directory); await close(fixture); }
+})();

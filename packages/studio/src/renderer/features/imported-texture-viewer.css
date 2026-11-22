@@ -1,0 +1,148 @@
+.itv-card {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 240px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel);
+  color: var(--text);
+}
+.itv-header {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 52px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--line);
+}
+.itv-title {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 3px;
+}
+.itv-title strong {
+  overflow: hidden;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.itv-title span {
+  color: var(--muted);
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+}
+.itv-controls {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: 100%;
+  gap: 5px;
+}
+.itv-controls button,
+.itv-controls select {
+  min-width: 30px;
+  height: 30px;
+  padding: 0 8px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--panel);
+  color: var(--text);
+  font: inherit;
+  font-size: 11px;
+}
+.itv-controls button {
+  flex: 0 0 auto;
+  width: auto;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.itv-controls button:hover,
+.itv-controls select:focus-visible {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
+  background: var(--accent-dim);
+  color: var(--accent);
+}
+.import-assets-workbench .itv-controls select {
+  flex: 0 0 82px;
+  width: 82px;
+  min-width: 82px;
+  cursor: pointer;
+}
+.itv-stage {
+  position: relative;
+  display: grid;
+  flex: 1 1 auto;
+  min-height: 190px;
+  overflow: hidden;
+  place-items: center;
+  outline: none;
+  background-color: color-mix(in srgb, var(--panel) 84%, var(--bg));
+  background-image:
+    linear-gradient(45deg, color-mix(in srgb, var(--muted) 12%, transparent) 25%, transparent 25%),
+    linear-gradient(-45deg, color-mix(in srgb, var(--muted) 12%, transparent) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, color-mix(in srgb, var(--muted) 12%, transparent) 75%),
+    linear-gradient(-45deg, transparent 75%, color-mix(in srgb, var(--muted) 12%, transparent) 75%);
+  background-position:
+    0 0,
+    0 6px,
+    6px -6px,
+    -6px 0;
+  background-size: 12px 12px;
+  cursor: grab;
+  touch-action: none;
+}
+.itv-stage:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+.itv-stage.is-dragging {
+  cursor: grabbing;
+}
+.itv-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  max-width: none;
+  max-height: none;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  pointer-events: none;
+  user-select: none;
+  transform-origin: center;
+}
+.itv-error {
+  padding: 14px 18px;
+  border: 1px solid color-mix(in srgb, #c35545 45%, var(--line));
+  border-radius: 9px;
+  background: var(--panel);
+  color: #c35545;
+  font-size: 12px;
+}
+.itv-hint {
+  position: absolute;
+  right: 10px;
+  bottom: 9px;
+  padding: 4px 7px;
+  border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--panel) 85%, transparent);
+  color: var(--muted);
+  font-size: 10px;
+  pointer-events: none;
+}
+@media (max-width: 660px) {
+  .itv-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .itv-controls {
+    flex-wrap: wrap;
+  }
+}

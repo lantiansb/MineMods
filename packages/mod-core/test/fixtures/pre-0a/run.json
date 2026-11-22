@@ -1,0 +1,38 @@
+{
+  "id": "33333333-3333-4333-8333-333333333333",
+  "project_id": "6df41096-f6f6-40be-90d1-9f1bb70917c5",
+  "prompt": "创建世界观",
+  "state": "completed",
+  "summary": "工程任务已完成。",
+  "questions": [],
+  "tasks": [
+    {
+      "key": "world",
+      "module": "worldview",
+      "title": "世界观",
+      "prompt": "创建世界观",
+      "source": "创建世界观",
+      "dependencies": [],
+      "target_id": null,
+      "id": "11111111-1111-4111-8111-111111111111",
+      "asset_id": "99999999-9999-4999-8999-999999999999",
+      "state": "completed",
+      "detail": "模块资产已保存。",
+      "error": null,
+      "started_at": "2026-10-01T00:00:00.000Z",
+      "finished_at": "2026-10-01T00:00:00.000Z"
+    }
+  ],
+  "events": [
+    {
+      "id": 0,
+      "task_id": null,
+      "time": "2026-10-01T00:00:00.000Z",
+      "message": "开始分析工程需求。"
+    }
+  ],
+  "error": null,
+  "model_complexity": null,
+  "created_at": "2026-10-01T00:00:00.000Z",
+  "updated_at": "2026-10-01T00:00:00.000Z"
+}
