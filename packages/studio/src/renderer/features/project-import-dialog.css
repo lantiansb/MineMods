@@ -25,3 +25,31 @@
 .pji-table td .pji-flag { color: var(--text); font-weight: 600; }
 .pji-namesake select { width: auto; max-width: 100%; }
 .pji-inline { display: inline; padding: 0 4px; }
+
+.pji-mapping {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.pji-mapping textarea {
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  min-height: 5rem;
+  resize: vertical;
+}
+
+.pji-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  gap: 1rem;
+}
+
+.pji-columns section {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.pji-columns small {
+  display: block;
+}

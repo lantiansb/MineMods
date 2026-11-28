@@ -238,7 +238,7 @@ async function route(service: Awaited<ReturnType<typeof createStudioService>>, i
   // 从别的工程导入: the list first (nothing written), then, once the person agreed to that very list, the import.
   if (request.method === "importFromProject") {
     const given = ExternalProjectImportInput.parse(request.input)
-    const input = { projectId: given.projectId, sourceId: given.sourceProjectId, sourcePath: given.sourceProjectPath, picks: given.picks, conflict: given.conflict, choices: given.choices }
+    const input = { projectId: given.projectId, sourceId: given.sourceProjectId, sourcePath: given.sourceProjectPath, picks: given.picks, conflict: given.conflict, choices: given.choices, mapping: given.mapping }
     if (!given.fingerprint) return { written: false, ...importTold(await service.previewProjectImport(input)), how: IMPORT_PREVIEW_TOLD }
     if (given.expectedRevision === undefined) throw new StudioError("真的导入时要带上主工程现在的 expectedRevision（open_project 的 revision）和清单里的 fingerprint。")
     const done = await service.applyProjectImport({ ...input, expectedRevision: given.expectedRevision, fingerprint: given.fingerprint }, true)
@@ -644,12 +644,20 @@ const importTold = (plan: ImportPlan) => ({
   source: { id: plan.source.id, name: plan.source.name, mod_id: plan.source.mod_id, targets: plan.source.targets },
   main: { id: plan.main.id, name: plan.main.name, mod_id: plan.main.mod_id, revision: plan.main.revision, targets: plan.main.targets },
   items: plan.items.map((item) => ({ sourceId: item.source_id, title: item.title, kind: item.kind, why: item.why, action: item.action, assetId: item.target_id, same_as: item.same_as?.title ?? null, renamed: item.renames.filter((rename) => rename.what !== "id").map((rename) => ({ what: rename.what, from: rename.from, to: rename.to })), ...(item.namesake ? { namesake: { title: item.namesake.title, differs: item.namesake.fields } } : {}), ...(item.again ? { again: { title: item.again.title, edited: item.again.edited } } : {}) })),
+  ...(plan.columns ? {
+    mapping: plan.mapping,
+    columns: Object.fromEntries(Object.entries(plan.columns).map(([group, items]) => [group, items.map((item) => ({
+      sourceId: item.source_id, assetId: item.target_id, title: item.title, kind: item.kind,
+      targetTitle: item.same_as?.title ?? null, why: item.why, renamed: item.renames,
+      ...(item.mapping_changed ? { mapping_changed: true } : {}),
+    }))])),
+  } : {}),
   left_out: plan.left_out.map((thing) => ({ title: thing.title, why: thing.why })),
   notes: plan.notes.map((note) => note.text),
   blocked: plan.blocked,
   fingerprint: plan.fingerprint,
 })
-const IMPORT_PREVIEW_TOLD = "这只是清单，什么都没写。用日常的话告诉用户：会带进来哪些东西、为什么带（why）、哪些改了名（renamed）、主工程那边有什么提醒（notes），blocked 不为空时说明为什么导不了、要先改什么。用户同意了，再用同样的参数加上这里的 fingerprint 和主工程的 expectedRevision 调一次 import_from_project 才会真的导入。"
+const IMPORT_PREVIEW_TOLD = "这只是清单，什么都没写。用日常的话告诉用户：会带进来哪些东西、为什么带（why）、哪些改了名（renamed）、主工程那边有什么提醒（notes）；有对照表时按 columns 里的 mapped、renamed、saved 分三组说，mapping_changed 是这次改过的行。blocked 不为空时说明为什么导不了、要先改什么。用户同意了，再用同样的参数加上这里的 fingerprint 和主工程的 expectedRevision 调一次 import_from_project 才会真的导入。"
 const IMPORT_DONE_TOLD = "已经写进主工程（revision 加了一）。源工程没有改。导错了可以用 undo_project_import（传 importId 和主工程最新的 revision）撤销。"
 const TOOLS_TOLD = "这些是用户在 Studio 里打开了的工具，参数照每个工具的 input 填。列表会随时变（用户放进、拿走或停用工具），每次要用之前重新读。没有合适的就如实告诉用户，不要自己找别的程序或服务代替。"
 const TOOL_RUN_TOLD = "工具在 Studio 里跑：用 get_tool_run 轮询到 completed 或 failed。state 是 waiting 时照 ask 做，做好用 finish_tool_run 交回。"

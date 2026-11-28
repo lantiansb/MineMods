@@ -4,7 +4,7 @@ import os from "node:os"
 import path from "node:path"
 import { previewProjectImport } from "@minemods/mod-core/project-import"
 import { createImportBossSample } from "../../mod-core/script/import-boss-sample"
-import { importKindName } from "../src/renderer/features/project-import-words"
+import { importKindName, readMappingTable, writeMappingTable } from "../src/renderer/features/project-import-words"
 
 /**
  * r29c 乙 第 7 件: in the import's list a creature and its setting (the entity document beside it) were both called 「生物」, and read as the same creature listed twice.
@@ -30,3 +30,13 @@ test("导入清单里生物和它的设定分得清", async () => {
     await rm(base, { recursive: true, force: true })
   }
 }, 120000)
+
+test("对照表可粘贴、逐行改，并能读回上次保存的行", () => {
+  const rows = readMappingTable("gear_spark 对上 forge_spark\r\n\r\n旧 钟声\t改名\tforge_bell")
+  expect(rows).toEqual([
+    { source: "gear_spark", action: "map", target: "forge_spark" },
+    { source: "旧 钟声", action: "rename", target: "forge_bell" },
+  ])
+  expect(readMappingTable(writeMappingTable(rows))).toEqual(rows)
+  expect(() => readMappingTable("gear_spark map forge_spark\n\ngear_bell")).toThrow("第 3 行")
+})

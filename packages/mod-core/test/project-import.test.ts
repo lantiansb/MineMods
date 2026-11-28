@@ -6,8 +6,8 @@ import path from "node:path"
 import { fileURLToPath } from "node:url"
 import { assembleBuildSource } from "../src/build-source"
 import { createProject, openProject, saveProject } from "../src/project"
-import { applyProjectImport, ImportRefusal, listProjectImports, previewProjectImport, undoProjectImport } from "../src/project-import"
-import { WorkspaceAssetSchema } from "../src/workspace"
+import { applyProjectImport, ImportRefusal, listProjectImports, planProjectImport, previewProjectImport, readImportSides, undoProjectImport, type ImportMapping } from "../src/project-import"
+import { applyContent, WorkspaceAssetSchema } from "../src/workspace"
 import { createImportBossSample, type ImportTheme } from "../script/import-boss-sample"
 import { createDataGameplaySample } from "../script/data-gameplay-sample"
 import { compileTreeFor } from "./java-tree"
@@ -271,3 +271,220 @@ test("生物的注册名照旧，只有真撞了才改，并写清楚旧存档�
   expect(offered.some((thing) => thing.kind === "model" && thing.id === sample.entities[0]!.id)).toBe(true)
   expect((await previewProjectImport(bare, main, { picks: [sample.entities[0]!.id] })).items.map((item) => item.kind)).toEqual(["model"])
 }, 300000)
+
+async function mappedBoss() {
+  const root = await folder()
+  const from = path.join(root, "source")
+  const main = path.join(root, "main")
+  const made = await createImportBossSample(from, "lava")
+  const sourceWorld = made.entities[0]!
+  const core = made.items.find((item) => item.identifier === "core")!
+  const part = (kind: string) => made.workspace.assets.find((asset) => asset.module === kind)!
+  const floor = { id: randomUUID(), identifier: "gear_floor", name: "机械底座", hardness: 1, luminance: 0, tool: "pickaxe" as const, drop: "self" as const, color: "#334455" }
+  const editing = applyContent(made, { blocks: [floor], items: made.items, recipes: made.recipes, logic: made.logic })
+  const death = {
+    ...sourceWorld.boss!.death,
+    steps: [
+      { type: "place_structure" as const, at: 0.6, forward: 2, left: 0, structure: { blocks: [{ block: floor.identifier, forward: 0, up: 0, left: 0 }] } },
+      { type: "fixture" as const, at: 0.8, do: "light" as const, which: Array.from({ length: 6 }, (_, index) => ({ instance: "beacon_" + (index + 1) })), every_seconds: 0.1 },
+    ],
+  }
+  const arena = { ...sourceWorld.boss!.arena!, fixtures: [{ ...sourceWorld.boss!.arena!.fixtures[0]!, id: "beacon", place: { ring: { count: 6, radius: 6 } } }] }
+  const boss = { ...sourceWorld.boss!, summon: { ...sourceWorld.boss!.summon!, block: floor.identifier }, death, arena }
+  const lair = { biomes: ["minecraft:plains" as const], spacing: 48, radius: 6, floor: [floor.identifier], rim: floor.identifier, clearance: 4 }
+  const setting = part("entity")
+  const builtin = { fog_edge: { particle: { asset: part("particle").id } }, fog_lift: { sound: { asset: part("sound").id } } }
+  const source = await saveProject(from, {
+    ...editing,
+    entities: [{ ...sourceWorld, builtin, boss: { ...boss, lair } }],
+    workspace: { assets: editing.workspace.assets.map((asset) => asset.document.kind === "entity" ? { ...asset, document: { ...asset.document, builtin, boss: { ...boss, lair } } } : asset) },
+    blueprint: {
+      request: "机械守卫", style: { palette: [], shape: "", naming: "", world: "" }, questions: [], revision: 1, state: "confirmed",
+      entries: [{ key: "take_spark", kind: "particle", title: "火星", brief: "火星", owner: null, needs: [], out_of_scope: null, asset_id: part("particle").id }],
+    },
+  }, made.revision)
+  const empty = await createProject({ directory: main, name: "机械工坊", mod_id: "forge_boss", target: "forge-1.20.1" })
+  const withItems = applyContent(empty, {
+    blocks: [], recipes: [], logic: [], items: [
+      { ...core, id: randomUUID(), identifier: "forge_core", name: "工坊核心" },
+      { ...core, id: randomUUID(), identifier: "alternate_core", name: "备用核心" },
+    ],
+  })
+  const newAsset = (kind: "particle" | "sound", name: string) => {
+    const original = part(kind)
+    return WorkspaceAssetSchema.parse({ ...original, id: randomUUID(), title: name, document: { ...original.document, name } })
+  }
+  const particle = newAsset("particle", "forge_spark")
+  const sound = newAsset("sound", "forge_roar")
+  const before = await saveProject(main, { ...withItems, workspace: { assets: [...withItems.workspace.assets, particle, sound] } }, empty.revision)
+  const fixture = part("fixture")
+  const mapping: ImportMapping = [
+    { source: "take_spark", action: "map", target: particle.id },
+    { source: part("sound").id, action: "map", target: "forge_roar" },
+    { source: "core", action: "map", target: "forge_boss:forge_core" },
+    { source: "token", action: "rename", target: "forge_token" },
+    { source: "gear_floor", action: "rename", target: "forge_floor" },
+    { source: fixture.id, action: "rename", target: randomUUID() },
+    { source: part("effect").id, action: "rename", target: randomUUID() },
+  ]
+  const picks = [setting.id]
+  const apply = async (input: { mapping?: ImportMapping } = {}) => {
+    const plan = await previewProjectImport(from, main, { picks, ...input })
+    expect(plan.blocked).toEqual([])
+    return applyProjectImport(from, main, { picks, ...input, expectedRevision: plan.main.revision, fingerprint: plan.fingerprint, importId: randomUUID() })
+  }
+  return { root, from, main, before, source, picks, mapping, apply, particle, sound, fixture }
+}
+
+test("对照表改写整只的依赖和生成资源，沿用主工程的粒子、声音和物品", async () => {
+  const f = await mappedBoss()
+  const { project, plan } = await f.apply({ mapping: f.mapping })
+  expect(plan.columns?.mapped).toHaveLength(3)
+  expect(plan.columns?.renamed).toHaveLength(4)
+  expect(plan.columns?.saved.length).toBeGreaterThan(0)
+  expect(plan.items.every((item) => item.why.length > 0)).toBe(true)
+  expect(project.workspace.assets.filter((asset) => asset.module === "particle").map((asset) => asset.id)).toEqual([f.particle.id])
+  expect(project.workspace.assets.filter((asset) => asset.module === "sound").map((asset) => asset.id)).toEqual([f.sound.id])
+  const entity = project.entities[0]!
+  expect(entity.sounds?.hurt).toEqual({ asset: f.sound.id })
+  expect(entity.builtin).toMatchObject({ fog_edge: { particle: { asset: f.particle.id } }, fog_lift: { sound: { asset: f.sound.id } } })
+  expect(entity.abilities?.flatMap((ability) => ability.events)).toContainEqual(expect.objectContaining({ particle: { asset: f.particle.id } }))
+  expect(entity.boss?.summon).toMatchObject({ item: "forge_token", block: "forge_floor" })
+  expect(entity.boss?.lair).toMatchObject({ floor: ["forge_floor"], rim: "forge_floor" })
+  expect(entity.loot).toEqual([expect.objectContaining({ item: "forge_core", min: 1, max: 1 })])
+  expect(entity.boss?.death.steps?.[0]).toMatchObject({ structure: { blocks: [{ block: "forge_floor" }] } })
+  expect(project.recipes.find((recipe) => recipe.result === "forge_boss:forge_token")?.pattern).toContain("forge_boss:forge_core")
+  expect(project.recipes.some((recipe) => recipe.result === "forge_boss:forge_core")).toBe(true)
+  const ability = project.workspace.assets.find((asset) => asset.module === "ability")!
+  expect(entity.shared_abilities?.[0]?.asset).toBe(ability.id)
+  expect(ability.dependencies).toEqual([f.mapping[6]!.target])
+
+  const output = path.join(f.root, "sources")
+  const generated = await tree(f.main, output)
+  const files = Object.keys(generated.files).filter((file) => file.endsWith(".java") || /\/(lang|loot_tables?|recipes?)\//.test(file))
+  const text = (await Promise.all(files.map((file) => readFile(path.join(output, file), "utf8")))).join("\n")
+  expect(text).toContain("forge_token")
+  expect(text).toContain("forge_floor")
+  expect(text).toContain("forge_core")
+  expect(text).toContain("item.forge_boss.forge_token")
+  expect(text).toContain("block.forge_boss.forge_floor")
+  expect(text).not.toContain("item.forge_boss.token")
+  expect(text).not.toMatch(/crater:(?:core|token)|forge_boss:(?:core|token)\b|gear_floor/)
+}, 45_000)
+
+test("六个场地实例保持原名并按顺序点亮，五份共用粒子各只留一份", async () => {
+  const f = await mappedBoss()
+  const sample = f.source.workspace.assets.find((asset) => asset.document.kind === "particle")!
+  const duplicates = ["mist", "embers", "dust", "heat"].map((name) => {
+    const made = WorkspaceAssetSchema.parse({ ...sample, id: randomUUID(), title: name, document: { ...sample.document, name: "gear_" + name } })
+    const held = WorkspaceAssetSchema.parse({ ...made, id: randomUUID(), document: { ...made.document, name: "forge_" + name } })
+    return { made, held }
+  })
+  await saveProject(f.main, { ...f.before, workspace: { assets: [...f.before.workspace.assets, ...duplicates.map(({ held }) => held)] } }, f.before.revision)
+  await saveProject(f.from, { ...f.source, workspace: {
+    assets: [...f.source.workspace.assets.map((asset) => asset.document.kind === "entity"
+      ? { ...asset, dependencies: [...asset.dependencies, ...duplicates.map(({ made }) => made.id)] } : asset), ...duplicates.map(({ made }) => made)],
+  } }, f.source.revision)
+  const rows: ImportMapping = duplicates.map(({ made, held }) => ({ source: made.id, action: "map", target: held.id }))
+  const { project } = await f.apply({ mapping: [...f.mapping, ...rows] })
+  expect(project.workspace.assets.filter((asset) => asset.module === "particle").map((asset) => asset.id)).toEqual([f.particle.id, ...duplicates.map(({ held }) => held.id)])
+  const entity = project.entities[0]!
+  expect(entity.boss?.arena?.fixtures).toEqual([expect.objectContaining({ id: "beacon", look: { asset: f.mapping[5]!.target }, place: { ring: { count: 6, radius: 6 } } })])
+  expect(entity.boss?.death.steps?.[1]).toMatchObject({ type: "fixture", do: "light", every_seconds: 0.1, which: Array.from({ length: 6 }, (_, index) => ({ instance: "beacon_" + (index + 1) })) })
+}, 45_000)
+
+test("对照表沿用，重导不增资产；新行按源编号合并并标出哪行变了", async () => {
+  const f = await mappedBoss()
+  const first = await f.apply({ mapping: f.mapping })
+  const second = await f.apply()
+  expect(second.project.workspace.assets.map((asset) => asset.id)).toEqual(first.project.workspace.assets.map((asset) => asset.id))
+  expect(second.project.entities).toEqual(first.project.entities)
+  expect(second.record.mapping).toEqual(first.record.mapping)
+  const next = await f.apply({ mapping: [{ source: "core", action: "map", target: "alternate_core" }] })
+  expect(next.plan.columns?.mapped.filter((item) => item.mapping_changed)).toEqual([expect.objectContaining({ same_as: expect.objectContaining({ title: "备用核心" }) })])
+  expect(next.project.entities[0]?.loot?.[0]?.item).toBe("alternate_core")
+  expect(next.project.workspace.assets.map((asset) => asset.id)).toEqual(first.project.workspace.assets.map((asset) => asset.id))
+  const newFixtureId = randomUUID()
+  const last = await f.apply({ mapping: [{ source: f.fixture.id, action: "rename", target: newFixtureId }] })
+  expect(last.project.workspace.assets).toHaveLength(first.project.workspace.assets.length)
+  expect(last.project.workspace.assets.some((asset) => asset.id === f.mapping[5]!.target)).toBe(false)
+  expect(last.project.entities[0]?.boss?.arena?.fixtures[0]?.look.asset).toBe(newFixtureId)
+  expect(last.plan.columns?.renamed.filter((item) => item.mapping_changed)).toEqual([expect.objectContaining({ target_id: newFixtureId })])
+  await undoProjectImport(f.main, last.record.id, last.project.revision)
+  expect(await openProject(f.main)).toEqual(next.project)
+}, 45_000)
+
+test("撤销最近的对照表导入恢复清单及原项目文件字节", async () => {
+  const f = await mappedBoss()
+  const before = await hashes(f.main)
+  const source = await hashes(f.from)
+  const imported = await f.apply({ mapping: f.mapping })
+  await undoProjectImport(f.main, imported.record.id, imported.project.revision)
+  const after = await hashes(f.main)
+  delete after[`.minemods/imports/${imported.record.id}.json`]
+  expect(after).toEqual(before)
+  expect(await hashes(f.from)).toEqual(source)
+}, 45_000)
+
+test("对照表的缺目标、错种类和改名撞车均指出行号", async () => {
+  const f = await mappedBoss()
+  const plan = await previewProjectImport(f.from, f.main, { picks: f.picks, mapping: [
+    { source: "take_spark", action: "map", target: "不存在" },
+    { source: "roar", action: "map", target: f.particle.id },
+    { source: "token", action: "rename", target: "forge_core" },
+  ] })
+  expect(plan.blocked).toEqual(expect.arrayContaining([
+    expect.stringMatching(/第 1 行.*找不到目标/),
+    expect.stringMatching(/第 2 行.*种类不同/),
+    expect.stringMatching(/第 3 行.*已经有人用/),
+  ]))
+  expect(await openProject(f.main)).toEqual(f.before)
+}, 45_000)
+
+test("空对照表和旧调用有相同清单、指纹和逐字节相同的预期工程", async () => {
+  const f = await mappedBoss()
+  const sides = await readImportSides(f.from, f.main)
+  const input = { picks: f.picks }
+  const existing = planProjectImport(sides, input)
+  const empty = planProjectImport(sides, { ...input, mapping: [] })
+  expect(JSON.stringify(existing.next)).toBe(JSON.stringify(empty.next))
+  expect(JSON.stringify(existing.plan)).toBe(JSON.stringify(empty.plan))
+  expect(await previewProjectImport(f.from, f.main, input)).toEqual(await previewProjectImport(f.from, f.main, { ...input, mapping: [] }))
+  expect(existing.plan).not.toHaveProperty("columns")
+}, 45_000)
+
+test("生物和书可以按注册名改名，再从另一个源按注册名对上", async () => {
+  const f = await mappedBoss()
+  const sourceEntity = f.source.entities[0]!
+  const setting = f.source.workspace.assets.find((asset) => asset.document.kind === "entity")!
+  const book = WorkspaceAssetSchema.parse({
+    ...f.particle, id: randomUUID(), module: "book", title: "机械手册", dependencies: [],
+    document: { kind: "book", name: "机械手册", identifier: "gear_manual", pages: [{ body: "开机前先检查。" }] },
+  })
+  const saved = await saveProject(f.from, {
+    ...f.source,
+    entities: [{ ...sourceEntity, identifier: "gear_guard" }],
+    workspace: { assets: [...f.source.workspace.assets.map((asset) => asset.document.kind === "entity"
+      ? { ...asset, document: { ...asset.document, identifier: "gear_guard" } } : asset), book] },
+  }, f.source.revision)
+  const picks = [setting.id, book.id]
+  const sides = await readImportSides(f.from, f.main)
+  const first = planProjectImport(sides, { picks, mapping: [
+    ...f.mapping,
+    { source: "gear_guard", action: "rename", target: "forge_guard" },
+    { source: "gear_manual", action: "rename", target: "forge_manual" },
+  ] })
+  expect(first.plan.blocked).toEqual([])
+  expect(first.next.entities[0]?.identifier).toBe("forge_guard")
+  expect(first.next.workspace.assets.find((asset) => asset.id === setting.id)?.document).toMatchObject({ identifier: "forge_guard" })
+  expect(first.next.workspace.assets.find((asset) => asset.id === book.id)?.document).toMatchObject({ identifier: "forge_manual" })
+  const matched = planProjectImport({ ...sides, main: first.next }, { picks, mapping: [
+    { source: "gear_guard", action: "map", target: "forge_guard" },
+    { source: "gear_manual", action: "map", target: "forge_manual" },
+  ] })
+  expect(matched.plan.blocked).toEqual([])
+  expect(matched.plan.columns?.mapped.map(({ kind }) => kind).sort()).toEqual(["book", "creature", "entity", "model"])
+  expect(matched.records).toEqual([])
+  expect(matched.next).toEqual(first.next)
+  expect(await openProject(f.from)).toEqual(saved)
+}, 45_000)

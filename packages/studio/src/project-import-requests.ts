@@ -1,3 +1,4 @@
+import { ImportMappingSchema } from "@minemods/mod-core/project-import-map"
 import { z } from "zod"
 
 /** r29c: a project folder anywhere on disk, by its full path (the folder that holds minemods.project.json, or that file itself): read where it is, never copied or written. */
@@ -13,6 +14,7 @@ const Picks = {
   projectId: z.uuid(),
   sourceId: z.uuid().optional(),
   sourcePath: ProjectFolderPath.optional(),
+  mapping: ImportMappingSchema.optional(),
   picks: z.array(z.uuid()).min(1).max(64),
   conflict: z.enum(["rename", "reuse_same"]).optional(),
   // "replace" (r29b): only where the list found a namesake in the main project (`ImportItem.namesake`); the same list as mod-core's `IMPORT_CHOICES`.
@@ -34,6 +36,7 @@ export const ExternalProjectImportInput = z.strictObject({
   picks: Picks.picks,
   conflict: Picks.conflict,
   choices: Picks.choices,
+  mapping: Picks.mapping,
   expectedRevision: z.int().nonnegative().optional(),
   fingerprint: z.string().regex(/^[0-9a-f]{64}$/).optional(),
 }).refine((input) => (input.sourceProjectId === undefined) !== (input.sourceProjectPath === undefined), { message: "源工程写一个：Studio 里的工程用 sourceProjectId，别处的工程文件夹用 sourceProjectPath（完整路径）。" })

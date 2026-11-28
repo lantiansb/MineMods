@@ -150,3 +150,30 @@ test("别处的工程文件夹能直接导入：只读、不复制、不登记�
     await rm(base, { recursive: true, force: true })
   }
 }, 300000)
+
+test("MCP 写入、窗口从上次记录带出，同一个对照表经过两条入口", async () => {
+  const base = await mkdtemp(path.join(os.tmpdir(), "studio-map-import-"))
+  try {
+    const workspace = path.join(base, "projects")
+    const source = await createImportBossSample(path.join(workspace, "source"), "lava")
+    const service = await createStudioService({ workspaceDirectory: workspace, runtimeDirectory: path.join(base, "runtime"), templateDirectory: path.join(base, "templates"), ai: {} })
+    const { source: _source, hasApiKey: _has, ...settings } = await service.getConnection()
+    await service.saveConnection({ ...settings, mode: "mcp" })
+    const main = (await service.createProject({ name: "机械工坊", description: "" })).project
+    const particle = source.workspace.assets.find((asset) => asset.module === "particle")!
+    const mapping = [{ source: "spark", action: "rename" as const, target: "forge_spark" }]
+    const data = { projectId: main.id, picks: [particle.id], mapping }
+    const request = StudioRequestSchema.parse({ method: "previewProjectImport", input: { ...data, sourceId: source.id } })
+    if (request.method !== "previewProjectImport") throw new Error("unexpected request")
+    const windowPlan = await service.previewProjectImport(request.input)
+    const mcp = { ...data, sourceProjectId: source.id }
+    const preview = await dispatchExternal(service, { method: "importFromProject", input: mcp }) as { written: boolean; fingerprint: string }
+    expect(preview).toMatchObject({ written: false, fingerprint: windowPlan.fingerprint, columns: { mapped: [], renamed: [expect.objectContaining({ sourceId: particle.id })], saved: [] } })
+    const written = await dispatchExternal(service, { method: "importFromProject", input: { ...mcp, fingerprint: preview.fingerprint, expectedRevision: main.revision } })
+    expect(written).toMatchObject({ written: true })
+    const remembered = (await service.projectImportSources({ projectId: main.id })).find((value) => value.id === source.id)?.mapping
+    expect(remembered).toEqual([{ ...mapping[0]!, source: particle.id }])
+  } finally {
+    await rm(base, { recursive: true, force: true })
+  }
+}, 45_000)

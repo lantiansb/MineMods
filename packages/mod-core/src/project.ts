@@ -315,11 +315,22 @@ export function readProjectRecord(directory: string) {
 
 /** Atomic replacement of a validated JSON record. Caller must hold the project write lock. */
 export async function writeRecord(directory: string, segments: string[], value: unknown) {
+  return writeRecordBytes(directory, segments, JSON.stringify(value, null, 2) + "\n")
+}
+
+/** Restore an exact, previously saved manifest. Caller holds the project lock. */
+export async function restoreProjectRecordUnlocked(directory: string, bytes: Buffer, projectId: string, revision: number) {
+  const project = ProjectSchema.parse(JSON.parse(bytes.toString("utf8")))
+  if (project.id !== projectId || project.revision !== revision) throw new Error("导入前的工程清单和记录对不上。")
+  await writeRecordBytes(directory, [MANIFEST], bytes)
+  return project
+}
+
+async function writeRecordBytes(directory: string, segments: string[], bytes: string | Uint8Array) {
   const manifest = segments.length === 1 && segments[0]!.toLowerCase() === MANIFEST
   const write = async (root: string) => {
     const target = await storagePath(root, segments, true)
     const temporary = `${target}.${randomUUID()}.tmp`
-    const bytes = JSON.stringify(value, null, 2) + "\n"
     const handle = await open(temporary, "wx", 0o600)
     try {
       await handle.writeFile(bytes, "utf8").then(() => handle.sync()).finally(() => handle.close())
@@ -478,7 +489,7 @@ export async function openProject(directory: string) {
 }
 
 /** Internal transaction primitive: caller must hold withProjectLock. */
-export async function saveProjectUnlocked(directory: string, input: Project, expectedRevision: number) {
+export async function saveProjectUnlocked(directory: string, input: Project, expectedRevision: number, addedVersions?: { id: string; revision: number }[]) {
   const project = ProjectSchema.parse(input)
   const current = await openProject(directory)
   if (current.revision !== expectedRevision) throw new RevisionConflictError(expectedRevision, current.revision)
@@ -502,7 +513,7 @@ export async function saveProjectUnlocked(directory: string, input: Project, exp
     updated_at: new Date().toISOString(),
   })
   await writeRecord(directory, ["minemods.project.json"], updated)
-  await keepAssetVersions(directory, current, updated).catch(() => undefined)
+  await keepAssetVersions(directory, current, updated, addedVersions).catch(() => undefined)
   return updated
 }
 
@@ -531,13 +542,14 @@ export type KeptVersion = { revision: number; at: string; by: "ai" | "person" | 
  * Every way a thing gets saved comes through `saveProjectUnlocked`, so this is the one place that can see them all, the AI's and the person's alike. A record already
  * there is left alone (a step back to an old version wrote its own, saying so); the version being replaced is kept too when an older project never recorded it.
  */
-async function keepAssetVersions(directory: string, before: Project, after: Project) {
+async function keepAssetVersions(directory: string, before: Project, after: Project, addedVersions?: { id: string; revision: number }[]) {
   const write = async (asset: Project["workspace"]["assets"][number]) => {
     const segments = assetVersionSegments(asset.id, asset.revision)
     const target = await storagePath(directory, segments, true)
     if (await lstat(target).then(() => true, () => false)) return
     const kept: KeptVersion = { revision: asset.revision, at: asset.updated_at, by: asset.provenance.model === null ? "person" : "ai", title: asset.title, document: asset.document }
     await writeRecord(directory, segments, kept)
+    addedVersions?.push({ id: asset.id, revision: asset.revision })
   }
   for (const asset of after.workspace.assets) {
     const was = before.workspace.assets.find((value) => value.id === asset.id)

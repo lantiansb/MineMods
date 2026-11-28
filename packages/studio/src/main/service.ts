@@ -752,7 +752,11 @@ export async function createStudioService(options: {
   }
 
   /** 从别的工程导入: one project as the window lists it to pick from. */
-  const importSourceOf = (project: projects.Project) => ({ id: project.id, name: project.name, mod_id: project.mod_id, revision: project.revision, targets: projects.projectTargets(project), things: importableThings(project) })
+  const importSourceOf = (project: projects.Project, history: Awaited<ReturnType<typeof listProjectImports>>) => ({
+    id: project.id, name: project.name, mod_id: project.mod_id, revision: project.revision,
+    targets: projects.projectTargets(project), things: importableThings(project),
+    mapping: history.find((record) => !record.undone_at && record.source.id === project.id && record.mapping)?.mapping,
+  })
 
   /**
    * r29c: the project folder at `given` (the folder that holds minemods.project.json, or that file itself), checked to be a MineMods project other than the main one, and read where it is:
@@ -1806,13 +1810,13 @@ export async function createStudioService(options: {
     },
     // 从别的工程导入: the source is opened read-only (no recovery, no repair writes to it); the main project is written once, under its lock, by `applyProjectImport`.
     async projectImportSources(input: Parameters<StudioApi["projectImportSources"]>[0]) {
-      await directoryFor(input.projectId, true)
-      return (await discover()).filter((entry) => entry.project.id !== input.projectId).map(({ project }) => importSourceOf(project))
+      const history = await listProjectImports(await directoryFor(input.projectId, true))
+      return (await discover()).filter((entry) => entry.project.id !== input.projectId).map(({ project }) => importSourceOf(project, history))
     },
     // r29c: a project folder anywhere on disk, chosen in the window or named by an outside AI: read where it is, never copied, registered or written.
     async projectImportSourceAt(input: Parameters<StudioApi["projectImportSourceAt"]>[0]) {
       const found = await importFolder(input.projectId, input.sourcePath)
-      return { ...importSourceOf(found.project), path: found.directory }
+      return { ...importSourceOf(found.project, await listProjectImports(await directoryFor(input.projectId, true))), path: found.directory }
     },
     async previewProjectImport(input: Parameters<StudioApi["previewProjectImport"]>[0]) {
       return previewProjectImport(await importSourceDirectory(input), await directoryFor(input.projectId, true), input).catch(importError)

@@ -1189,4 +1189,4 @@ export type ModsAdded = { added: PreinstalledMod[]; skipped: { name: string; why
 
 /** Another project of the person's, as 从别的工程导入 lists it: who it is and what can be picked in it. */
 /** `path` (r29c): a project folder outside Studio's projects, read where it is; absent for one of Studio's own. */
-export type ProjectImportSource = { id: string; name: string; mod_id: string; revision: number; targets: string[]; things: { id: string; kind: string; title: string }[]; path?: string }
+export type ProjectImportSource = { id: string; name: string; mod_id: string; revision: number; targets: string[]; things: { id: string; kind: string; title: string }[]; path?: string; mapping?: import("@minemods/mod-core/project-import").ImportMapping }

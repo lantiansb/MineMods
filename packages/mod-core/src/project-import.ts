@@ -9,13 +9,15 @@ import { BlockSchema, ItemSchema, LogicSchema, RecipeSchema, validateContent } f
 import { creatureLairIssues, creatureLootIssues, creatureSummonIssues, creatureTemptIssues, creatureTerrainIssues } from "./creature-life"
 import { compileSavedModel } from "./editable-model"
 import { creatureName } from "./gameplay"
-import { bookName } from "./registry-name"
+import { bookName, RegistryNameSchema } from "./registry-name"
+import { ImportMappingSchema, importNameField, importThings, isAssetId, mappingLine, resolveImportMapping, type ImportMapping, type MappingDecision } from "./project-import-map"
+export { ImportMappingSchema, type ImportMapping } from "./project-import-map"
 import { mediaHashes, mediaPath, readMedia, storeMedia } from "./media"
-import { openProject, projectTargets, ProjectSchema, saveProjectUnlocked, storagePath, withProjectLock, writeRecord, type Project } from "./project"
+import { assetVersionSegments, openProject, projectTargets, ProjectSchema, readProjectRecord, restoreProjectRecordUnlocked, saveProjectUnlocked, storagePath, withProjectLock, writeRecord, type Project } from "./project"
 import { reconcile, type Finding } from "./reconcile"
 import { recipeClashes, recipeThing } from "./recipe-clash"
 import { targetMinecraft, lacksOf } from "./version-lacks"
-import { mirrorContent, type WorkspaceAsset } from "./workspace"
+import { getModuleSchema, mirrorContent, type WorkspaceAsset } from "./workspace"
 import { assetKind, type ModuleKind } from "./workspace-modules"
 import { kindGap } from "./platform/kind-gaps"
 import type { TargetId } from "./target/ids"
@@ -46,6 +48,7 @@ export const ProjectImportInputSchema = z.strictObject({
    * project's own takes the imported content, under its own id and game name.
    */
   choices: z.record(z.uuid(), z.enum(IMPORT_CHOICES)).optional(),
+  mapping: ImportMappingSchema.optional(),
 })
 export type ProjectImportInput = z.input<typeof ProjectImportInputSchema>
 
@@ -97,6 +100,9 @@ export type ImportPlan = {
   blocked: string[]
   /** Hash of the list: the person confirms this list, and the import refuses when the projects changed in between. */
   fingerprint: string
+  /** Only present for imports using an explicit or remembered table. */
+  mapping?: ImportMapping
+  columns?: Record<"mapped" | "renamed" | "saved", (ImportItem & { mapping_changed?: boolean })[]>
 }
 
 const KIND_ORDER: readonly ModuleKind[] = ["worldview", "texture", "model", "animation", "sound", "music", "particle", "effect", "gesture", "fixture", "bossbar", "item", "block", "recipe", "logic", "ability", "entity", "biome", "dimension", "terrain", "gameplay"]
@@ -172,6 +178,7 @@ export type ImportSides = {
   hasMedia: (hash: string) => boolean
   /** r29b: what earlier imports from this very source (not undone) brought, by source id: its id in the main project and when it was brought (the newest import's). */
   earlier?: ReadonlyMap<string, { target: string; at: string; kept?: boolean }>
+  mapping?: ImportMapping
 }
 
 type Node = { id: string; kind: ModuleKind | "creature"; title: string; why: string[] }
@@ -189,6 +196,7 @@ type Built = {
   blueprint: { created: boolean; keys: string[] }
   /** r29b: what of the main project the import writes over ("replace", "update"), as it was before, for the undo to put back. */
   overwritten: ImportOverwritten
+  movedIdentity: boolean
 }
 export type ImportOverwritten = { workspace: WorkspaceAsset[]; entities: Project["entities"]; assets: Project["assets"]; blocks: Project["blocks"]; items: Project["items"]; recipes: Project["recipes"]; logic: Project["logic"]; conception: Project["conception"]["entries"] }
 export type ImportedIds = { workspace: string[]; entities: string[]; assets: string[]; blocks: string[]; items: string[]; recipes: string[]; logic: string[]; conception: string[] }
@@ -197,8 +205,8 @@ const label = (kind: ModuleKind | "creature") => (kind === "creature" ? "生物"
 
 /** The list and the main project as it would be after the import, without writing anything. */
 export function planProjectImport(sides: ImportSides, given: ProjectImportInput): Built {
-  const input = ProjectImportInputSchema.parse({ picks: given.picks, conflict: given.conflict, choices: given.choices })
-  const main = sides.main
+  const input = ProjectImportInputSchema.parse({ picks: given.picks, conflict: given.conflict, choices: given.choices, mapping: given.mapping })
+  let main = sides.main
   // A block, item, recipe or rule kept only in the content lists gets the asset that stands for it, in memory: the source stays as it is on disk.
   const source = mirrorContent(sides.source, new Set([...sides.source.blocks, ...sides.source.items, ...sides.source.recipes, ...sides.source.logic].map((value) => value.id)))
   const srcMod = source.mod_id
@@ -207,6 +215,19 @@ export function planProjectImport(sides: ImportSides, given: ProjectImportInput)
   const things = new Map(source.workspace.assets.flatMap((asset) => (asset.document.kind === "item" || asset.document.kind === "block" ? [[asset.document.identifier, asset] as const] : [])))
   const local = (text: string) => (text.startsWith(`${srcMod}:`) ? text.slice(srcMod.length + 1) : text.includes(":") || text.startsWith("#") ? null : text)
   const blocked: string[] = []
+  const mapping = input.mapping?.length || sides.mapping?.length
+    ? resolveImportMapping(source, main, sides.mapping ?? [], input.mapping ?? [], blocked)
+    : new Map<string, MappingDecision>()
+  const creatureMapping = (id: string) => mapping.get(`row:${id}`)
+  const mappedCreaturePart = (asset: WorkspaceAsset) => {
+    const modelId = asset.document.kind === "entity" ? asset.document.model_asset_id : asset.module === "model" ? asset.id : null
+    const decision = modelId ? creatureMapping(modelId) : undefined
+    if (!decision?.target) return undefined
+    const id = decision.target.id
+    const existing = asset.module === "entity" ? main.workspace.assets.find((value) => value.document.kind === "entity" && value.document.model_asset_id === id) : main.workspace.assets.find((value) => value.id === id && value.module === "model")
+    if (!existing) blocked.push(`${mappingLine(decision)}的目标生物缺少模型或生物设定。`)
+    return existing ? { id: existing.id, title: existing.title } : undefined
+  }
   const nodes = new Map<string, Node>()
   const queue: string[] = []
   const add = (id: string, kind: Node["kind"], title: string, why: string) => {
@@ -253,10 +274,11 @@ export function planProjectImport(sides: ImportSides, given: ProjectImportInput)
     const node = nodes.get(queue.shift()!)!
     if (node.kind === "creature") {
       const row = rows.get(node.id.slice(4))!
-      reach(node, row, [])
+      if (!mapping.get(node.id)?.target) reach(node, row, [])
       const model = assets.get(row.id)
       if (model?.module === "model") addAsset(model, `生物「${row.name}」的模型`)
       for (const owner of source.workspace.assets.filter((asset) => asset.document.kind === "entity" && asset.document.model_asset_id === row.id)) addAsset(owner, `生物「${row.name}」的设定`)
+      if (mapping.get(node.id)?.target) continue
       for (const rule of source.workspace.assets.filter((asset) => asset.document.kind === "logic" && asset.document.entity_id === row.id)) addAsset(rule, `生物「${row.name}」的规则`)
       continue
     }
@@ -266,7 +288,14 @@ export function planProjectImport(sides: ImportSides, given: ProjectImportInput)
       blocked.push(`「${asset.title}」是玩法代码，这一版还不能跨工程导入：代码里写死的名字没法跟着改。先在主工程里重新做这段玩法，或者别带上用它的东西。`)
       continue
     }
-    reach(node, GEOMETRY.has(asset.module) ? null : document, asset.dependencies)
+    const mapped = Boolean(mapping.get(node.id)?.target)
+    if (mapped && document.kind !== "item" && document.kind !== "block") continue
+    if (mappedCreaturePart(asset)) {
+      if (document.kind === "entity") addRow(document.model_asset_id, `「${asset.title}」这只生物本身`)
+      if (document.kind === "model") addRow(asset.id, `模型「${asset.title}」的生物`)
+      continue
+    }
+    if (!mapped) reach(node, GEOMETRY.has(asset.module) ? null : document, asset.dependencies)
     if (document.kind === "model") {
       if (rows.has(asset.id)) addRow(asset.id, `模型「${asset.title}」的生物`)
       for (const part of source.workspace.assets.filter((candidate) => (candidate.module === "animation" || candidate.module === "texture") && candidate.dependencies.includes(asset.id)))
@@ -283,13 +312,113 @@ export function planProjectImport(sides: ImportSides, given: ProjectImportInput)
 
   // ---- the same thing, new ids, new names ----
   const order = [...nodes.values()].sort((a, b) => KIND_ORDER.indexOf(a.kind === "creature" ? "entity" : a.kind) - KIND_ORDER.indexOf(b.kind === "creature" ? "entity" : b.kind))
+  const movedIds = new Map<string, string>()
+  const movedNames = new Map<string, string>()
+  if (mapping.size) {
+    const occupied = new Set([...main.workspace.assets, ...main.entities, ...main.assets, ...main.items, ...main.blocks, ...main.recipes, ...main.logic, ...main.conception.entries].map(({ id }) => id))
+    for (const decision of mapping.values()) {
+      const { source: thing, row } = decision
+      const prior = sides.earlier?.get(thing.id)?.target
+      if (!nodes.has(thing.node) || row.action !== "rename" || !isAssetId(row.target) || !prior || prior === row.target || !occupied.has(prior) || occupied.has(row.target)) continue
+      // Only a prior import's own copy can move. Never change the id of an asset that a duplicate merge chose to keep.
+      if (sides.earlier?.get(thing.id)?.kept) continue
+      occupied.add(row.target)
+      movedIds.set(prior, row.target)
+      const entity = main.entities.find((value) => value.id === prior)
+      const book = main.workspace.assets.find((value) => value.id === prior)?.document
+      if (entity && !entity.identifier) {
+        const old = creatureName(entity), next = creatureName({ id: row.target })
+        movedNames.set(old, next)
+        movedNames.set(old + "_spawn_egg", next + "_spawn_egg")
+      }
+      if (book?.kind === "book" && !book.identifier)
+        movedNames.set(bookName({ id: prior, document: book }), bookName({ id: row.target, document: book }))
+    }
+    if (movedIds.size) main = walk(main, null, (text, key) => {
+      if (movedIds.has(text)) return movedIds.get(text)!
+      const prefix = text.startsWith("#") ? "#" + main.mod_id + ":" : main.mod_id + ":"
+      if (text.startsWith(prefix)) return prefix + (movedNames.get(text.slice(prefix.length)) ?? text.slice(prefix.length))
+      return key && IDENTIFIER_KEYS.has(key) ? movedNames.get(text) ?? text : text
+    }) as Project
+  }
+  const previousTarget = (id: string) => {
+    const target = sides.earlier?.get(id)?.target
+    return target ? movedIds.get(target) ?? target : undefined
+  }
   const ids = new Map<string, string>()
   const names = new Map<string, string>()
+  const registryNames = new Map<string, string>()
   const mainIds = new Set([...main.workspace.assets.map((asset) => asset.id), ...main.entities.map((entity) => entity.id), ...main.assets.map((asset) => asset.id), ...[...main.blocks, ...main.items, ...main.recipes, ...main.logic].map((value) => value.id), ...main.conception.entries.map((entry) => entry.id)])
   const takenIds = new Set(mainIds)
   // The item registry: blocks and items, and (r29b) books and the main project's spawn eggs, which a book or a creature naming itself may clash with.
   const identifiers = new Set([...[...main.blocks, ...main.items].map((value) => value.identifier), ...main.workspace.assets.flatMap((asset) => (asset.document.kind === "book" ? [bookName({ id: asset.id, document: asset.document })] : [])), ...main.entities.map((entity) => `${creatureName(entity)}_spawn_egg`)])
   const gameNames: Record<string, Set<string>> = Object.fromEntries((["sound", "music", "particle"] as const).map((kind) => [kind, new Set(main.workspace.assets.flatMap((asset) => (asset.document.kind === kind ? [asset.document.name] : [])))]))
+  // Reserve explicit destinations before allocating ordinary imports. Explicit rows take precedence over choices.
+  const explicitNames = new Map<string, string>()
+  const claimedNames = new Set<string>()
+  const itemRegistry = (kind: Node["kind"]) => kind === "item" || kind === "block" || kind === "book"
+  const catalog = mapping.size ? importThings(main).byName : []
+  for (const [node, decision] of mapping) {
+    if (!nodes.has(node)) continue
+    const { source: thing, row, target } = decision
+    if (target) {
+      ids.set(thing.id, target.id)
+      if (thing.name && target.name && (itemRegistry(thing.kind) || thing.kind === "creature")) {
+        registryNames.set(thing.name, target.name)
+        if (thing.kind === "creature") registryNames.set(thing.name + "_spawn_egg", target.name + "_spawn_egg")
+      }
+      continue
+    }
+    if (row.action !== "rename") continue
+    const prior = previousTarget(thing.id)
+    if (isAssetId(row.target)) {
+      if ((mainIds.has(row.target) && prior !== row.target) || (takenIds.has(row.target) && !mainIds.has(row.target))) {
+        blocked.push(`${mappingLine(decision)}的新编号已经有人用。`)
+      } else if (prior && mainIds.has(prior) && prior !== row.target) {
+        blocked.push(`${mappingLine(decision)}上次已带进主工程，不能直接换掉它的编号。可改注册名，或者先撤销上次导入。`)
+      } else {
+        ids.set(thing.id, row.target)
+        takenIds.add(row.target)
+        if (thing.kind === "creature" && thing.name === creatureName({ id: thing.id })) {
+          const name = creatureName({ id: row.target })
+          registryNames.set(thing.name, name)
+          registryNames.set(thing.name + "_spawn_egg", name + "_spawn_egg")
+        }
+        if (thing.kind === "book" && thing.name === bookName({ id: thing.id, document: {} }))
+          registryNames.set(thing.name, bookName({ id: row.target, document: {} }))
+      }
+      continue
+    }
+    const name = row.target
+    const field = importNameField(thing.kind)
+    const asset = assets.get(thing.id)
+    const valid = field === "identifier" ? RegistryNameSchema.safeParse(name).success
+      : field === "name" && asset ? getModuleSchema(asset.module).safeParse({ ...asset.document, name }).success : false
+    if (!valid) {
+      blocked.push(`${mappingLine(decision)}的新名字不合用。核对这一类内容的命名规则，或写新的资产编号。`)
+      continue
+    }
+    const conflicts = (other: typeof thing) => {
+      if (other.id === prior) return false
+      if (other.kind === "creature") return thing.kind === "creature" ? other.name === name : itemRegistry(thing.kind) && other.name + "_spawn_egg" === name
+      if (itemRegistry(other.kind)) return itemRegistry(thing.kind) ? other.name === name : thing.kind === "creature" && other.name === name + "_spawn_egg"
+      return other.kind === thing.kind && other.name === name
+    }
+    const slots = itemRegistry(thing.kind) ? ["item:" + name] : thing.kind === "creature" ? ["creature:" + name, "item:" + name + "_spawn_egg"] : [thing.kind + ":" + name]
+    if (catalog.some(conflicts) || slots.some((key) => claimedNames.has(key))) {
+      blocked.push(`${mappingLine(decision)}的新名字已经有人用。`)
+      continue
+    }
+    slots.forEach((key) => claimedNames.add(key))
+    explicitNames.set(thing.id, name)
+    if (field === "identifier" && thing.name) {
+      registryNames.set(thing.name, name)
+      if (thing.kind === "creature") registryNames.set(thing.name + "_spawn_egg", name + "_spawn_egg")
+    }
+    if (itemRegistry(thing.kind)) identifiers.add(name)
+    if (thing.kind === "creature") identifiers.add(name + "_spawn_egg")
+    gameNames[thing.kind]?.add(name)
+  }
   const titles = new Map<string, Set<string>>()
   const titlesOf = (kind: string) =>
     titles.get(kind) ??
@@ -309,16 +438,17 @@ export function planProjectImport(sides: ImportSides, given: ProjectImportInput)
       if (text.startsWith(`${srcMod}:`) || text.startsWith(`#${srcMod}:`)) {
         const hash = text.startsWith("#") ? "#" : ""
         const name = text.slice(hash.length + srcMod.length + 1)
-        return `${hash}${main.mod_id}:${names.get(name) ?? name}`
+        return `${hash}${main.mod_id}:${registryNames.get(name) ?? names.get(name) ?? name}`
       }
+      if (key && IDENTIFIER_KEYS.has(key) && registryNames.has(text)) return registryNames.get(text)!
       if (key && (IDENTIFIER_KEYS.has(key) || (own && key === "identifier")) && names.has(text)) return names.get(text)!
       return text
     })
   // r29b: a thing that becomes the main project's own is named in the documents brought by the main project's game name.
   const sameName = (document: { kind: string }, own: { kind: string }) => ((from, to) => (from && to ? void names.set(from, to) : undefined))(gameName(document), gameName(own))
   // r29b: what an earlier import from this source brought and the main project still has, of the same kind: brought again, it is written over in place.
-  const priorAsset = (asset: WorkspaceAsset) => ((found) => (found ? main.workspace.assets.find((value) => value.id === found.target && value.module === asset.module) : undefined))(sides.earlier?.get(asset.id))
-  const priorRow = (id: string) => ((found) => (found ? main.entities.find((value) => value.id === found.target) : undefined))(sides.earlier?.get(id))
+  const priorAsset = (asset: WorkspaceAsset) => ((found) => (found ? main.workspace.assets.find((value) => value.id === found && value.module === asset.module) : undefined))(previousTarget(asset.id))
+  const priorRow = (id: string) => ((found) => (found ? main.entities.find((value) => value.id === found) : undefined))(previousTarget(id))
   const editedSince = (id: string, updated: string | undefined) => Boolean(updated && sides.earlier?.get(id) && updated > sides.earlier.get(id)!.at)
   // A creature's name is decided first: its setting (the entity asset) is listed and shown under the same name. One brought again keeps the name it has.
   const creatureTitles = new Map(order.filter((node) => node.kind === "creature").map((node) => {
@@ -328,6 +458,14 @@ export function planProjectImport(sides: ImportSides, given: ProjectImportInput)
     if (prior) return [row.id, prior.name] as const
     return [row.id, taken.has(row.name) ? freshTitle(row.name, source.name, taken) : (taken.add(row.name), row.name)] as const
   }))
+  const rowOf = (item: ImportItem) => item.kind === "creature" ? creatureMapping(item.source_id) : mapping.get(item.source_id)
+  const explicitRenameOf = (id: string, kind: Node["kind"], before: string | null | undefined): ImportRename[] => {
+    const decision = kind === "creature" ? creatureMapping(id) : mapping.get(id)
+    if (decision?.row.action === "rename" && isAssetId(decision.row.target) && decision.row.target !== id)
+      return [{ what: "id", from: id, to: decision.row.target }]
+    const after = explicitNames.get(id)
+    return after && before && after !== before ? [{ what: importNameField(kind) === "identifier" ? "identifier" : "name", from: before, to: after }] : []
+  }
   const items: ImportItem[] = []
   for (const node of order) {
     if (node.kind === "creature") continue
@@ -337,14 +475,22 @@ export function planProjectImport(sides: ImportSides, given: ProjectImportInput)
       ? main.workspace.assets.find((candidate) => candidate.module === asset.module && canonical(candidate.document) === canonical(rewrite(asset.document, false)) && canonical([...candidate.dependencies].sort()) === canonical([...new Set(asset.dependencies.map((id) => ids.get(id) ?? id))].sort()))
       : undefined
     const document = asset.document
-    const asked = input.choices?.[asset.id]
+    const explicit = mapping.get(asset.id)
+    const target = explicit?.target ?? mappedCreaturePart(asset)
+    if (target) {
+      ids.set(asset.id, target.id)
+      items.push({ source_id: asset.id, kind: asset.module, title: asset.title, why: node.why, action: "reuse", target_id: target.id, same_as: { id: target.id, title: target.title }, renames: [] })
+      continue
+    }
+    const requested = explicitNames.get(asset.id)
+    const asked = explicit ? undefined : input.choices?.[asset.id]
     // r29b: brought again from the same source: written over in place, unless the person asks for a copy beside it.
     const prior = asked === "rename" ? undefined : priorAsset(asset)
     if (prior) {
       ids.set(asset.id, prior.id)
       sameName(document, prior.document)
-      const reused = asked === "reuse" || (asked === undefined && sides.earlier?.get(asset.id)?.kept === true)
-      items.push({ source_id: asset.id, kind: asset.module, title: asset.title, why: node.why, action: reused ? "reuse" : "update", target_id: prior.id, same_as: reused ? { id: prior.id, title: prior.title } : null, renames: [], again: { id: prior.id, title: prior.title, edited: !reused && editedSince(asset.id, prior.updated_at) } })
+      const reused = !explicit && (asked === "reuse" || (asked === undefined && sides.earlier?.get(asset.id)?.kept === true))
+      items.push({ source_id: asset.id, kind: asset.module, title: asset.title, why: node.why, action: reused ? "reuse" : "update", target_id: prior.id, same_as: reused ? { id: prior.id, title: prior.title } : null, renames: explicitRenameOf(asset.id, asset.module, explicit?.source.name), again: { id: prior.id, title: prior.title, edited: !reused && editedSince(asset.id, prior.updated_at) } })
       continue
     }
     // r29b: the main project's own of the same id or game name, with other content.
@@ -354,13 +500,13 @@ export function planProjectImport(sides: ImportSides, given: ProjectImportInput)
     if (asked === "reuse" && !same && !namesake) blocked.push(`「${asset.title}」在主工程里没有一样的东西，也没有同编号、同名的，不能选「用主工程里已有的」。`)
     if (asked === "replace" && !namesake) blocked.push(`「${asset.title}」在主工程里没有同编号、同名的东西，不能选「用导入的替换主工程那份」。`)
     const with_ = namesake ? { namesake: { id: namesake.id, title: namesake.title, fields: differs } } : {}
-    if (namesake && (choice === "replace" || asked === "reuse")) {
+    if (!explicit && namesake && (choice === "replace" || asked === "reuse")) {
       ids.set(asset.id, namesake.id)
       sameName(document, namesake.document)
       items.push({ source_id: asset.id, kind: asset.module, title: asset.title, why: node.why, action: choice === "replace" ? "replace" : "reuse", target_id: namesake.id, same_as: choice === "replace" ? null : { id: namesake.id, title: namesake.title }, renames: [], ...with_ })
       continue
     }
-    if (same && choice === "reuse") {
+    if (!explicit && same && choice === "reuse") {
       ids.set(asset.id, same.id)
       if (document.kind === "item" || document.kind === "block") names.set(document.identifier, document.identifier)
       const item: ImportItem = { source_id: asset.id, kind: asset.module, title: asset.title, why: node.why, action: "reuse", target_id: same.id, same_as: { id: same.id, title: same.title }, renames: [] }
@@ -368,23 +514,25 @@ export function planProjectImport(sides: ImportSides, given: ProjectImportInput)
       continue
     }
     const renames: ImportRename[] = []
-    const target = newId(asset.id)
-    if (target !== asset.id) renames.push({ what: "id", from: asset.id, to: target })
+    const newTarget = newId(asset.id)
+    if (newTarget !== asset.id) renames.push({ what: "id", from: asset.id, to: newTarget })
     if (document.kind === "item" || document.kind === "block") {
-      const identifier = identifiers.has(document.identifier) ? freshName(document.identifier, suffix, identifiers, 64) : (identifiers.add(document.identifier), document.identifier)
+      const identifier = requested ?? (identifiers.has(document.identifier) ? freshName(document.identifier, suffix, identifiers, 64) : (identifiers.add(document.identifier), document.identifier))
       names.set(document.identifier, identifier)
       if (identifier !== document.identifier) renames.push({ what: "identifier", from: document.identifier, to: identifier })
     }
     // r29b: a book that names itself is an item by that name: kept, unless the main project already has an item of that name.
-    if (document.kind === "book" && document.identifier) {
-      const identifier = identifiers.has(document.identifier) ? freshName(document.identifier, suffix, identifiers, 64) : (identifiers.add(document.identifier), document.identifier)
-      if (identifier !== document.identifier) renames.push({ what: "identifier", from: document.identifier, to: identifier })
+    if (document.kind === "book" && (document.identifier || requested)) {
+      const before = bookName({ id: asset.id, document })
+      const identifier = requested ?? (identifiers.has(before) ? freshName(before, suffix, identifiers, 64) : (identifiers.add(before), before))
+      if (identifier !== before) renames.push({ what: "identifier", from: before, to: identifier })
     }
     if (document.kind === "sound" || document.kind === "music" || document.kind === "particle") {
       const taken = gameNames[document.kind]!
-      const name = taken.has(document.name) ? freshName(document.name, suffix, taken, document.kind === "particle" ? 32 : 48) : (taken.add(document.name), document.name)
+      const name = requested ?? (taken.has(document.name) ? freshName(document.name, suffix, taken, document.kind === "particle" ? 32 : 48) : (taken.add(document.name), document.name))
       if (name !== document.name) renames.push({ what: "name", from: document.name, to: name })
     }
+    if (requested && !renames.some((rename) => rename.what === "identifier" || rename.what === "name")) renames.push(...explicitRenameOf(asset.id, asset.module, explicit?.source.name))
     const taken = titlesOf(asset.module)
     // A creature's setting keeps its own title, and takes the creature's new name only when the creature is renamed.
     const creatureTitle = document.kind === "entity" ? creatureTitles.get(document.model_asset_id) : undefined
@@ -393,25 +541,29 @@ export function planProjectImport(sides: ImportSides, given: ProjectImportInput)
       ? creatureTitle === undefined || creatureTitle === creatureRow?.name ? asset.title : asset.title === creatureRow?.name ? creatureTitle : freshTitle(asset.title, source.name, taken)
       : taken.has(asset.title) ? freshTitle(asset.title, source.name, taken) : (taken.add(asset.title), asset.title)
     if (title !== asset.title) renames.push({ what: "title", from: asset.title, to: title })
-    const item: ImportItem = { source_id: asset.id, kind: asset.module, title: asset.title, why: node.why, action: "add", target_id: target, same_as: same ? { id: same.id, title: same.title } : null, renames, ...with_ }
+    const item: ImportItem = { source_id: asset.id, kind: asset.module, title: asset.title, why: node.why, action: "add", target_id: newTarget, same_as: same ? { id: same.id, title: same.title } : null, renames, ...with_ }
     items.push(item)
   }
   // A creature's own id is its model's: decided with the model above when it has one.
-  const registries = new Set(main.entities.map((entity) => creatureName(entity)))
+  const registries = new Set([...main.entities.map((entity) => creatureName(entity)), ...order.flatMap((node) => node.kind === "creature" && explicitNames.has(node.id.slice(4)) ? [explicitNames.get(node.id.slice(4))!] : [])])
   const creatures = order.filter((node) => node.kind === "creature").map((node) => {
     const row = rows.get(node.id.slice(4))!
     // r29b: a creature an earlier import from this source brought is written over in place, under its id and registry name.
-    const prior = input.choices?.[row.id] === "rename" ? undefined : priorRow(row.id)
+    const decision = creatureMapping(row.id)
+    const matched = decision?.target
+    const requested = explicitNames.get(row.id)
+    if (matched) return { row, node, target: matched.id, title: matched.title, renames: [] as ImportRename[], identifier: null, prior: undefined, matched }
+    const prior = !decision && input.choices?.[row.id] === "rename" ? undefined : priorRow(row.id)
     if (prior) {
       ids.set(row.id, prior.id)
-      return { row, node, target: prior.id, title: prior.name, renames: [] as ImportRename[], identifier: prior.identifier ?? null, prior }
+      return { row, node, target: prior.id, title: prior.name, renames: explicitRenameOf(row.id, "creature", creatureName(row)), identifier: requested ?? prior.identifier ?? null, prior, matched: undefined }
     }
     const target = newId(row.id)
     const title = creatureTitles.get(row.id)!
     // Its registry name (`creatureName`) is kept, unless the main project already registers that very name, and then said. One made of its id is
     // taken only when the id is; r29b: one it names itself (`identifier`) is taken by a creature of the main project of that name, or by an item named as its spawn egg would be.
     const clashes = (name: string) => registries.has(name) || identifiers.has(`${name}_spawn_egg`)
-    const identifier = row.identifier ? (clashes(row.identifier) ? freshName(row.identifier, suffix, new Set([...registries, ...[...identifiers].flatMap((name) => (name.endsWith("_spawn_egg") ? [name.slice(0, -"_spawn_egg".length)] : []))]), 64) : row.identifier) : null
+    const identifier = requested ?? (row.identifier ? (clashes(row.identifier) ? freshName(row.identifier, suffix, new Set([...registries, ...[...identifiers].flatMap((name) => (name.endsWith("_spawn_egg") ? [name.slice(0, -"_spawn_egg".length)] : []))]), 64) : row.identifier) : null)
     const registry = (id: string, mod: string, own: string | null) => `${mod}:${creatureName({ id, identifier: own })}`
     const renamed = identifier ? identifier !== row.identifier : target !== row.id
     registries.add(creatureName({ id: target, identifier }))
@@ -420,10 +572,11 @@ export function planProjectImport(sides: ImportSides, given: ProjectImportInput)
       ...(renamed ? [{ what: "registry" as const, from: registry(row.id, srcMod, row.identifier ?? null), to: registry(target, main.mod_id, identifier) }] : []),
       ...(title !== row.name ? [{ what: "title" as const, from: row.name, to: title }] : []),
     ]
-    return { row, node, target, title, renames, identifier, prior: undefined }
+    return { row, node, target, title, renames, identifier, prior: undefined, matched: undefined }
   })
-  items.push(...creatures.map((creature): ImportItem => ({ source_id: creature.row.id, kind: "creature", title: creature.row.name, why: creature.node.why, action: creature.prior ? "update" : "add", target_id: creature.target, same_as: null, renames: creature.renames, ...(creature.prior ? { again: { id: creature.prior.id, title: creature.prior.name, edited: false } } : {}) })))
+  items.push(...creatures.map((creature): ImportItem => ({ source_id: creature.row.id, kind: "creature", title: creature.row.name, why: creature.node.why, action: creature.matched ? "reuse" : creature.prior ? "update" : "add", target_id: creature.target, same_as: creature.matched ? { id: creature.matched.id, title: creature.matched.title } : null, renames: creature.renames, ...(creature.prior ? { again: { id: creature.prior.id, title: creature.prior.name, edited: false } } : {}) })))
   const records = creatures.flatMap((creature): { reference: Project["assets"][number]; record: ModelAsset; bytes: Uint8Array; over?: Project["assets"][number] }[] => {
+    if (creature.matched) return []
     const reference = source.assets.find((asset) => asset.id === creature.row.model_asset_id)
     if (!reference) return []
     const saved = sides.records.get(reference.id)
@@ -455,19 +608,24 @@ export function planProjectImport(sides: ImportSides, given: ProjectImportInput)
     const own = asset.module === "item" || asset.module === "block"
     const document = rewrite(asset.document, own) as Record<string, unknown>
     const title = renamed(item, "title", asset.title)
+    const field = importNameField(asset.module)
+    const wanted = explicitNames.get(asset.id)
+    const explicit = field && wanted ? { [field]: wanted } : {}
     const named = asset.module === "sound" || asset.module === "music" || asset.module === "particle" ? { name: renamed(item, "name", String(document.name)) } : {}
     // An item's or block's name in the game follows its title (so a renamed one shows renamed), unless the source gave it a name of its own (合包, 山𤟤: titled 「山𤟤之筋」, named 「山晖之筋」 because the game lacks 𤟤).
     const shown = own || asset.module === "recipe" ? { name: ownName(asset, title) } : asset.module === "entity" ? { name: creatureTitles.get(String(document.model_asset_id)) ?? String(document.name) } : {}
     // r29b: the registry name decided above, on the creature's setting and on a book (the creature's row takes it below).
     const creature = asset.document.kind === "entity" ? creatures.find((value) => value.row.id === (asset.document as { model_asset_id: string }).model_asset_id) : undefined
     const identifier = creature?.identifier ? { identifier: creature.identifier } : asset.document.kind === "book" && asset.document.identifier ? { identifier: renamed(item, "identifier", asset.document.identifier) } : {}
-    return { ...asset, id: item.target_id, title, dependencies: [...new Set(asset.dependencies.map((id) => ids.get(id) ?? id))], document: { ...document, ...named, ...shown, ...identifier } } as WorkspaceAsset
+    return { ...asset, id: item.target_id, title, dependencies: [...new Set(asset.dependencies.map((id) => ids.get(id) ?? id))], document: { ...document, ...named, ...shown, ...identifier, ...explicit } } as WorkspaceAsset
   })
   const overwrite = placed.map((item) => {
     const asset = assets.get(item.source_id)!
     const before = main.workspace.assets.find((value) => value.id === item.target_id)!
     const own = asset.module === "item" || asset.module === "block"
-    const document = { ...(rewrite(asset.document, own) as Record<string, unknown>), ...keptName(before.document) }
+    const field = importNameField(asset.module)
+    const wanted = explicitNames.get(asset.id)
+    const document = { ...(rewrite(asset.document, own) as Record<string, unknown>), ...keptName(before.document), ...(field && wanted ? { [field]: wanted } : {}) }
     const creature = asset.document.kind === "entity" ? creatures.find((value) => value.row.id === (asset.document as { model_asset_id: string }).model_asset_id) : undefined
     return { ...asset, id: before.id, title: before.title, revision: before.revision + 1, created_at: before.created_at, dependencies: [...new Set(asset.dependencies.map((id) => ids.get(id) ?? id))], document: { ...document, ...(own ? { name: ownName(asset, before.title) } : asset.module === "entity" ? { name: creature?.title ?? String(document.name) } : {}), ...(creature?.identifier ? { identifier: creature.identifier } : {}) } } as WorkspaceAsset
   })
@@ -489,7 +647,7 @@ export function planProjectImport(sides: ImportSides, given: ProjectImportInput)
     recipes: content("recipe", placed, overwrite).map((entry) => RecipeSchema.parse(entry.fields)),
     logic: content("logic", placed, overwrite).map((entry) => LogicSchema.parse(entry.fields)),
   }
-  const allEntities = creatures.map((creature) => {
+  const allEntities = creatures.filter((creature) => !creature.matched).map((creature) => {
     const row = rewrite(creature.row, false) as typeof creature.row
     const record = records.find((value) => value.record.entity_id === creature.target)
     return { ...row, id: creature.target, name: creature.title, ...(creature.identifier ? { identifier: creature.identifier } : {}), model_asset_id: record ? record.reference.id : row.model_asset_id }
@@ -499,7 +657,7 @@ export function planProjectImport(sides: ImportSides, given: ProjectImportInput)
   const overRows = allEntities.filter((entity) => updatedRows.has(entity.id))
   // r29b: a creature brought again writes over its conception entries that the main project still has under the same id.
   const overIds = new Set(main.conception.entries.filter((entry) => entry.entity_id && updatedRows.has(entry.entity_id)).map((entry) => entry.id))
-  const allConception = source.conception.entries.filter((entry) => entry.entity_id && creatures.some((creature) => creature.row.id === entry.entity_id)).map((entry) => {
+  const allConception = source.conception.entries.filter((entry) => entry.entity_id && creatures.some((creature) => !creature.matched && creature.row.id === entry.entity_id)).map((entry) => {
     const moved = rewrite(entry, false) as typeof entry
     const id = overIds.has(entry.id) ? entry.id : takenIds.has(entry.id) && !ids.has(entry.id) ? newId(entry.id) : (ids.get(entry.id) ?? (takenIds.add(entry.id), entry.id))
     const creature = creatures.find((value) => value.row.id === entry.entity_id)!
@@ -528,6 +686,14 @@ export function planProjectImport(sides: ImportSides, given: ProjectImportInput)
   const chosen = (plan?.entries ?? []).filter((entry) => entry.asset_id && brought.has(entry.asset_id))
   const keys = new Set(main.blueprint?.entries.map((entry) => entry.key) ?? [])
   const keyOf = new Map(chosen.map((entry) => [entry.key, keys.has(entry.key) ? freshName(entry.key, suffix, keys, 64) : (keys.add(entry.key), entry.key)] as const))
+  if (mapping.size) {
+    for (const entry of plan?.entries ?? []) {
+      if (keyOf.has(entry.key) || !entry.asset_id) continue
+      const target = ids.get(entry.asset_id)
+      const linked = target ? main.blueprint?.entries.find((candidate) => candidate.asset_id === target) : undefined
+      if (linked) keyOf.set(entry.key, linked.key)
+    }
+  }
   const entries = chosen.map((entry) => ({
     ...entry,
     key: keyOf.get(entry.key)!,
@@ -559,6 +725,7 @@ export function planProjectImport(sides: ImportSides, given: ProjectImportInput)
   const mainTargets = projectTargets(main)
   const newTargets = mainTargets.filter((target) => !sourceTargets.includes(target))
   for (const item of items) for (const rename of item.renames) {
+    if (rowOf(item)) continue
     if (rename.what === "registry") notes.push({ text: `「${item.title}」的注册名从 ${rename.from} 改成 ${rename.to}：主工程里已经有这个注册名了。玩家旧存档里的这只会丢。`, refs: [] })
     if (rename.what === "identifier") notes.push({ text: `「${item.title}」的注册名从 ${srcMod}:${rename.from} 改成 ${main.mod_id}:${rename.to}：主工程里已经有 ${main.mod_id}:${rename.from} 了。玩家旧存档里的这样东西会丢。`, refs: [] })
   }
@@ -615,11 +782,11 @@ export function planProjectImport(sides: ImportSides, given: ProjectImportInput)
       }
     })()
     if (contentIssue) blocked.push(`合进主工程后内容检查没过：${contentIssue}`)
-    for (const asset of workspace) {
+    for (const asset of mapping.size ? [...workspace, ...overwrite] : workspace) {
       const document = asset.document
       if (document.kind === "entity") blocked.push(...[...creatureTerrainIssues(next, document), ...creatureLootIssues(next, { ...document, name: document.name }), ...creatureTemptIssues(next, document), ...creatureLairIssues(next, document), ...creatureSummonIssues(next, document)])
     }
-    for (const recipe of contentOf.recipes) {
+    for (const recipe of mapping.size ? [...contentOf.recipes, ...overContent.recipes] : contentOf.recipes) {
       const clash = recipeClashes(recipe, next.recipes, (reference) => recipeThing({ mod_id: next.mod_id, blocks: next.blocks, items: next.items }, reference)).find((found) => found.stops)
       if (clash) blocked.push(`${clash.text}${clash.fix}`)
     }
@@ -634,11 +801,21 @@ export function planProjectImport(sides: ImportSides, given: ProjectImportInput)
     logic: contentOf.logic.map((value) => value.id),
     conception: conception.map((entry) => entry.id),
   }
+  const columns: NonNullable<ImportPlan["columns"]> = { mapped: [], renamed: [], saved: [] }
+  if (mapping.size) for (const item of items) {
+    const asset = assets.get(item.source_id)
+    const linkedRow = asset?.document.kind === "entity" ? asset.document.model_asset_id : item.source_id
+    const decision = rowOf(item) ??
+      (item.action === "reuse" && (item.kind === "model" || item.kind === "entity") && creatureMapping(linkedRow)?.target ? creatureMapping(linkedRow) : undefined)
+    const row = decision?.changed ? { ...item, mapping_changed: true } : item
+    columns[decision?.row.action === "map" ? "mapped" : decision?.row.action === "rename" ? "renamed" : "saved"].push(row)
+  }
   return {
     plan: {
       source: { id: source.id, name: source.name, mod_id: source.mod_id, revision: source.revision, targets: sourceTargets, sha256: sides.sourceSha256 },
       main: { id: main.id, name: main.name, mod_id: main.mod_id, revision: main.revision, targets: mainTargets },
       items,
+      ...(mapping.size ? { mapping: [...mapping.values()].map(({ row }) => row), columns } : {}),
       models: records.length,
       media: media.length,
       left_out,
@@ -653,6 +830,7 @@ export function planProjectImport(sides: ImportSides, given: ProjectImportInput)
     ids,
     blueprint: { created: !main.blueprint && entries.length > 0, keys: entries.map((entry) => entry.key) },
     overwritten,
+    movedIdentity: movedIds.size > 0,
   }
 }
 
@@ -680,9 +858,10 @@ export async function readImportSides(sourceDirectory: string, mainDirectory: st
   // A copy merged into the main project's own since (`mergeDuplicateAssets`) is that one now, and brought again uses it as it is (`kept`).
   const merged = new Map((await listAssetMerges(mainDirectory)).filter((value) => !value.undone_at).flatMap((value) => value.pairs.map((pair) => [pair.drop, pair.keep] as const)))
   const earlier = new Map<string, { target: string; at: string; kept?: boolean }>()
-  for (const record of (await listProjectImports(mainDirectory)).filter((value) => value.source.id === source.id && !value.undone_at))
+  const history = (await listProjectImports(mainDirectory)).filter((value) => value.source.id === source.id && !value.undone_at)
+  for (const record of history)
     for (const item of record.items) if (item.action !== "reuse" && !earlier.has(item.source_id)) earlier.set(item.source_id, merged.has(item.target_id) ? { target: merged.get(item.target_id)!, at: record.at, kept: true } : { target: item.target_id, at: record.at })
-  return { source, main, sourceSha256: sha(manifest), records, hasMedia: (hash) => held.has(hash), earlier }
+  return { source, main, sourceSha256: sha(manifest), records, hasMedia: (hash) => held.has(hash), earlier, mapping: history.find((record) => record.mapping)?.mapping }
 }
 
 async function designsOf(project: Project, read: (entity: Project["entities"][number]) => Promise<unknown>) {
@@ -711,6 +890,9 @@ const findingKey = (finding: Finding, id: (value: string) => string) => `${findi
 async function checkNotes(built: Built, sides: ImportSides, mainDirectory: string): Promise<{ notes: ImportNote[]; blocked: string[] }> {
   const next = built.next
   const fresh = new Set([...built.imported.workspace, ...built.imported.entities, ...built.imported.blocks, ...built.imported.items, ...built.imported.recipes, ...built.imported.logic])
+  if (built.plan.mapping) for (const item of built.plan.items) {
+    if (item.action !== "reuse") fresh.add(item.target_id)
+  }
   const merged = findingsOf(next, await designsOf(next, async (entity) => {
     const imported = built.records.find((value) => value.record.id === entity.model_asset_id)
     if (imported) return imported.record.data
@@ -745,6 +927,11 @@ export const ImportRecordSchema = z.strictObject({
   at: z.iso.datetime(),
   source: z.strictObject({ id: z.uuid(), name: z.string(), mod_id: z.string(), revision: z.number().int().nonnegative(), sha256: z.string() }),
   revision_before: z.number().int().nonnegative(),
+  mapping: ImportMappingSchema.optional(),
+  manifest_before: z.string().optional(),
+  manifest_after: z.string().optional(),
+  moved_identity: z.literal(true).optional(),
+  asset_versions: z.array(z.strictObject({ id: z.uuid(), revision: z.number().int().positive() })).optional(),
   revision_after: z.number().int().positive(),
   imported: z.strictObject({ workspace: z.array(z.uuid()), entities: z.array(z.uuid()), assets: z.array(z.uuid()), blocks: z.array(z.uuid()), items: z.array(z.uuid()), recipes: z.array(z.uuid()), logic: z.array(z.uuid()), conception: z.array(z.uuid()) }),
   media: z.array(z.string()),
@@ -765,6 +952,7 @@ export const ImportRecordSchema = z.strictObject({
 })
 export type ImportRecord = z.infer<typeof ImportRecordSchema>
 const recordSegments = (id: string) => [".minemods", "imports", `${z.uuid().parse(id)}.json`]
+const beforeSegments = (id: string) => [".minemods", "imports", `${z.uuid().parse(id)}.before`]
 
 export class ImportRefusal extends Error {
   constructor(message: string) {
@@ -790,7 +978,15 @@ export async function applyProjectImport(sourceDirectory: string, mainDirectory:
     if (input.fingerprint && input.fingerprint !== plan.fingerprint) throw new ImportRefusal("清单和你确认的那一份不一样了（源工程或主工程在这期间改过）。重新看一遍清单再导入。")
     const written: string[] = []
     const media: string[] = []
+    let beforeHash: string | undefined
     try {
+      if (plan.mapping?.length) {
+        const backup = await storagePath(mainDirectory, beforeSegments(input.importId), true)
+        const bytes = await readProjectRecord(mainDirectory)
+        beforeHash = sha(bytes)
+        await writeFile(backup, bytes, { flag: "wx" })
+        written.push(backup)
+      }
       for (const hash of built.media) {
         const bytes = await readMedia(sourceDirectory, hash)
         if (!(await exists(path.join(mainDirectory, ...mediaPath(hash).split("/"))))) media.push(hash)
@@ -807,13 +1003,17 @@ export async function applyProjectImport(sourceDirectory: string, mainDirectory:
         // The source's own bytes when nothing in the record changed, else the record as `writeRecord` writes it: either way the hash the manifest keeps.
         await writeFile(target, value.bytes, { flag: orphan ? "w" : "wx" })
       }
-      const saved = await saveProjectUnlocked(mainDirectory, built.next, sides.main.revision)
+      const assetVersions: NonNullable<ImportRecord["asset_versions"]> = []
+      const saved = await saveProjectUnlocked(mainDirectory, built.next, sides.main.revision, plan.mapping?.length ? assetVersions : undefined)
       const record: ImportRecord = {
         schema_version: 1,
         id: input.importId,
         at: new Date().toISOString(),
         source: { id: plan.source.id, name: plan.source.name, mod_id: plan.source.mod_id, revision: plan.source.revision, sha256: plan.source.sha256 },
         revision_before: sides.main.revision,
+        ...(built.movedIdentity ? { moved_identity: true as const } : {}),
+        ...(assetVersions.length ? { asset_versions: assetVersions } : {}),
+        ...(plan.mapping?.length ? { mapping: plan.mapping, manifest_before: beforeHash, manifest_after: sha(await readProjectRecord(mainDirectory)) } : {}),
         revision_after: saved.revision,
         imported: built.imported,
         media,
@@ -881,7 +1081,13 @@ export async function undoProjectImport(mainDirectory: string, importId: string,
     } catch (error) {
       throw new ImportRefusal(`还不能撤销：去掉导进来的东西以后，${error instanceof z.ZodError ? error.issues.map((issue) => issue.message).join("；") : String(error)}`)
     }
-    const saved = await saveProjectUnlocked(mainDirectory, parsed.data, project.revision)
+    const exact = record.manifest_after && project.revision === record.revision_after && sha(await readProjectRecord(mainDirectory)) === record.manifest_after
+    if (record.moved_identity && !exact) throw new ImportRefusal("这次导入换了已有内容的编号，工程后来也改过。先撤销后来的修改，再撤销这次导入。")
+    const before = exact ? await readFile(await storagePath(mainDirectory, beforeSegments(importId))) : null
+    if (before && record.manifest_before && sha(before) !== record.manifest_before) throw new ImportRefusal("导入前留下的工程清单已经变了，不能用它撤销。")
+    const saved = before
+      ? await restoreProjectRecordUnlocked(mainDirectory, before, project.id, record.revision_before)
+      : await saveProjectUnlocked(mainDirectory, parsed.data, project.revision)
     for (const id of record.imported.assets) {
       // r29b: the folder by a file in it: `storagePath` refuses a folder as its last segment, so the folder was never found and stayed (the same creature could then not be brought again).
       const folder = await storagePath(mainDirectory, [".minemods", "assets", id, "-"]).then(path.dirname, () => null)
@@ -895,7 +1101,10 @@ export async function undoProjectImport(mainDirectory: string, importId: string,
     }
     const held = new Set(mediaHashes(saved.workspace))
     for (const hash of record.media.filter((value) => !held.has(value))) await rm(await storagePath(mainDirectory, mediaPath(hash).split("/")), { force: true }).catch(() => undefined)
+    if (exact) for (const version of record.asset_versions ?? [])
+      await rm(await storagePath(mainDirectory, assetVersionSegments(version.id, version.revision)), { force: true })
     await writeRecord(mainDirectory, recordSegments(importId), { ...record, undone_at: new Date().toISOString() })
+    if (record.manifest_after) await rm(await storagePath(mainDirectory, beforeSegments(importId)), { force: true })
     return { project: saved, record }
   })
 }

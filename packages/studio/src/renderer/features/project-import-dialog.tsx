@@ -4,7 +4,7 @@ import type { DuplicatePair, ImportItem, ImportPlan } from "@minemods/mod-core/p
 import type { ProjectImportSource, StudioView } from "../../api"
 import { Button } from "../ui"
 import { CardShell } from "./project-assets"
-import { importKindName as kindName } from "./project-import-words"
+import { importKindName as kindName, readMappingTable, writeMappingTable } from "./project-import-words"
 import "./project-import-dialog.css"
 
 const renameWords = { title: "名字改成", identifier: "注册名改成", registry: "注册名改成", name: "游戏里的名字改成", id: "" } as const
@@ -25,6 +25,7 @@ export function ProjectImportDialog(props: { project: Project; close: () => void
   const [source, setSource] = createSignal<ProjectImportSource | null>(null)
   const [picked, setPicked] = createSignal<string[]>([])
   const [same, setSame] = createSignal(true)
+  const [table, setTable] = createSignal("")
   const [choices, setChoices] = createSignal<Record<string, Choice>>({})
   // r29b 合并重复件: the list, which of it is chosen, and the merge just made (to take back).
   const [duplicates, setDuplicates] = createSignal<DuplicatePair[] | null>(null)
@@ -40,7 +41,10 @@ export function ProjectImportDialog(props: { project: Project; close: () => void
   })
   // r29c: a project folder outside Studio's projects is read where it is, by its path.
   const from = () => (source()!.path ? { sourcePath: source()!.path } : { sourceId: source()!.id })
-  const input = () => ({ projectId: props.project.id, ...from(), picks: picked(), conflict: same() ? ("reuse_same" as const) : ("rename" as const), ...(Object.keys(choices()).length ? { choices: choices() } : {}) })
+  const input = () => {
+    const mapping = readMappingTable(table())
+    return { projectId: props.project.id, ...from(), picks: picked(), conflict: same() ? ("reuse_same" as const) : ("rename" as const), ...(Object.keys(choices()).length ? { choices: choices() } : {}), ...(mapping.length ? { mapping } : {}) }
+  }
   const run = async (step: () => Promise<void>) => {
     setBusy(true)
     setProblem("")
@@ -87,7 +91,7 @@ export function ProjectImportDialog(props: { project: Project; close: () => void
   })
   const title = () => (merged() ? "合并了" : duplicates() ? "以前带进来时留下的重复件" : done() ? "已经带进来了" : plan() ? "会带进来这些" : source() ? `从「${source()!.name}」选要带进来的东西` : "从别的工程导入")
   return (
-    <CardShell title={title()} wide manageFocus onClose={props.close} onBack={duplicates() && !merged() ? () => setDuplicates(null) : plan() && !done() ? () => setPlan(null) : source() && !done() ? () => { setSource(null); setPicked([]); setChoices({}) } : undefined}>
+    <CardShell title={title()} wide manageFocus onClose={props.close} onBack={duplicates() && !merged() ? () => setDuplicates(null) : plan() && !done() ? () => setPlan(null) : source() && !done() ? () => { setSource(null); setPicked([]); setChoices({}); setTable("") } : undefined}>
       <div class="pji-body">
         <Show when={duplicates() && !merged()}>
           <Show when={!duplicates()!.length}><p class="pji-line">没有找到以前带进来时改名另存的重复件。</p></Show>
@@ -149,15 +153,48 @@ export function ProjectImportDialog(props: { project: Project; close: () => void
             两边一模一样的东西（比如同一个声音），用「{props.project.name}」里已有的那一个，不另带一份
           </label>
           <p class="pji-line pji-muted">重名的东西会改个名再带进来，用到它们的地方跟着改。</p>
+          <label class="pji-group pji-mapping">
+            <strong>对照表</strong>
+            <small>可以粘贴或逐行改。每行写原来的东西、对上或改名、要用的新编号或名字，用空格隔开，或直接粘贴三列。</small>
+            <textarea value={table()} rows={4} onInput={(event) => setTable(event.currentTarget.value)} />
+          </label>
+          <Show when={source()!.mapping?.length}>
+            <p class="pji-line pji-muted">会沿用上次的对照表。新写的行会盖过上次同一样东西的安排。</p>
+            <Button disabled={busy()} onClick={() => setTable(writeMappingTable(source()!.mapping!))}>带出上次的对照表</Button>
+          </Show>
           <div class="pji-actions"><Button primary disabled={!picked().length || busy()} onClick={() => void look()}>{busy() ? "正在列清单…" : "看看会带进来什么"}</Button></div>
         </Show>
         <Show when={plan() && !done()}>{(_) => (
           <>
             <p class="pji-line">从「{plan()!.source.name}」带进「{plan()!.main.name}」，共 {plan()!.items.length} 样{plan()!.models ? `，连同 ${plan()!.models} 个生物的模型` : ""}。</p>
+            <Show when={plan()!.columns}>
+              <div class="pji-columns">
+                <For each={([
+                  ["对上了", plan()!.columns!.mapped],
+                  ["改名了", plan()!.columns!.renamed],
+                  ["另存了", plan()!.columns!.saved],
+                ] as const)}>{([label, rows]) => (
+                  <section>
+                    <h4>{label}</h4>
+                    <ul class="pji-notes"><For each={rows}>{(item) => (
+                      <li>
+                        <strong>{item.title}</strong>
+                        <Show when={item.same_as}> → {item.same_as!.title}</Show>
+                        <Show when={item.action === "update" || item.action === "replace"}><small>{item.action === "update" ? "原地换成新版" : "换掉主工程那份"}</small></Show>
+                        <For each={item.renames}>{(rename) => <small>{renameWords[rename.what]}「{rename.to}」</small>}</For>
+                        <small>{item.why.join("；")}</small>
+                        <Show when={item.mapping_changed}><small>这次的安排变了</small></Show>
+                      </li>
+                    )}</For></ul>
+                  </section>
+                )}</For>
+              </div>
+            </Show>
+            <Show when={!plan()!.columns || plan()!.columns!.saved.some((item) => item.namesake || item.again?.edited)}>
             <table class="pji-table">
               <thead><tr><th>东西</th><th>为什么带上</th><th>怎么带</th></tr></thead>
               <tbody>
-                <For each={plan()!.items}>{(item) => (
+                <For each={plan()!.columns ? plan()!.columns!.saved.filter((item) => item.namesake || item.again?.edited) : plan()!.items}>{(item) => (
                   <tr>
                     <td><strong>{item.title}</strong><small>{kindName(item.kind)}</small></td>
                     <td>{item.why.join("；")}</td>
@@ -180,6 +217,7 @@ export function ProjectImportDialog(props: { project: Project; close: () => void
                 )}</For>
               </tbody>
             </table>
+            </Show>
             <Show when={plan()!.left_out.length}>
               <h4>不带的</h4>
               <ul class="pji-notes"><For each={plan()!.left_out}>{(thing) => <li>「{thing.title}」：{thing.why}</li>}</For></ul>
